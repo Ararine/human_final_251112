@@ -1,0 +1,31 @@
+############
+#  Frontend   #
+############
+**/node_modules
+
+# production
+/frontend/build
+
+############
+#   Backend   #
+############
+
+############
+#      DB       #
+############
+
+
+############
+#       AI       #
+############
+
+
+############
+#  Common   #
+############
+**/.env
+**/.env.*
+!**/.env.sample
+
+**/.gitignore
+!.gitignore
