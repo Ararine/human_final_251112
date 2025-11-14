@@ -242,6 +242,8 @@ conda env remove -n final_ai
 - [해외 - 운동 및 커뮤니티](https://www.freeletics.com/en/)
 - [해외 - 식단 및 관리](https://fitbod.me/)
 - [해외 - 운동](https://sworkit.com/)
+- [국민체력100 인증단계](https://nfa.kspo.or.kr/intro/step.kspo)
+- [국민체력100 동영상 정보 API](https://www.data.go.kr/data/15108846/openapi.do)
 
 ## Acknowledgments
 
