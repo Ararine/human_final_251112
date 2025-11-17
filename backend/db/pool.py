@@ -1,5 +1,5 @@
 from sqlalchemy import create_engine
-from backend.config import config
+from config import config
 user_id=config["DB"]["USER_ID"]
 password=config["DB"]["PASSWORD"]
 host=config["DB"]["HOST"]

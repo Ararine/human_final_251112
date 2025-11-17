@@ -2,7 +2,7 @@ import sys, uvicorn
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-from backend.config import config, cors_config
+from config import config
 from routes import auth, community, user, test
 
 app = FastAPI()
@@ -11,10 +11,11 @@ app.add_middleware(
     **config["CORS"]
 )
 
-app.include_router(auth, prefix="")
-app.include_router(community, prefix="/posts")
-app.include_router(user, prefix="")
-app.include_router(test, prefix="")
+
+app.include_router(community.router, prefix="/posts")
+app.include_router(auth.router, prefix="")
+app.include_router(user.router, prefix="")
+app.include_router(test.router, prefix="")
 
 if __name__ == "__main__":
     print("파이썬으로 직접 실행")
