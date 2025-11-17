@@ -7,6 +7,12 @@ const URL = {
   HOME: "/",
   SERVER_URL,
   PY_SERVER_URL,
+  EXERCISE_URL: "/exercise",
+  COMMUNITY_URL: "/community",
+  LOGIN_URL: "/login",
+  PROFILE_URL: "/profile",
+
+  OTHERS: "*",
   TEST_PATH: "/test",
 };
 export default URL;
