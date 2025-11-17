@@ -244,7 +244,11 @@ conda env remove -n final_ai
 - [해외 - 운동](https://sworkit.com/)
 - [국민체력100 인증단계](https://nfa.kspo.or.kr/intro/step.kspo)
 - [국민체력100 동영상 정보 API](https://www.data.go.kr/data/15108846/openapi.do)
-- [쿠팡 API](https://developers.coupangcorp.com/hc/ko)
+- [쿠팡 API - 사업자등록증필요](https://developers.coupangcorp.com/hc/ko)
+- [음식 이미지 및 영양정보](https://aihub.or.kr/aihubdata/data/view.do?pageIndex=1&currMenu=115&topMenu=100&srchOneDataTy=DATA001&srchOptnCnd=OPTNCND001&searchKeyword=%EC%B9%BC%EB%A1%9C%EB%A6%AC&srchDetailCnd=DETAILCND001&srchOrder=ORDER001&srchPagePer=20&aihubDataSe=data&dataSetSn=74)
+- [당뇨 관리 앱을 통한 음식 이미지 활용](https://aihub.or.kr/aihubdata/data/view.do?pageIndex=1&currMenu=115&topMenu=100&srchOneDataTy=DATA001&srchOptnCnd=OPTNCND001&searchKeyword=%EC%8B%9D%EC%82%AC&srchDetailCnd=DETAILCND001&srchOrder=ORDER001&srchPagePer=20&aihubDataSe=data&dataSetSn=71392)
+- [건강 관리를 위한 음식 이미지](https://aihub.or.kr/aihubdata/data/view.do?pageIndex=1&currMenu=115&topMenu=100&srchOneDataTy=DATA001&srchOptnCnd=OPTNCND001&searchKeyword=%EC%8B%9D%EC%82%AC&srchDetailCnd=DETAILCND001&srchOrder=ORDER001&srchPagePer=20&aihubDataSe=data&dataSetSn=242)
+- [한국 이미지 - 음식](https://aihub.or.kr/aihubdata/data/view.do?pageIndex=1&currMenu=115&topMenu=100&srchOneDataTy=DATA001&srchOptnCnd=OPTNCND001&searchKeyword=%EC%8B%9D%EC%82%AC&srchDetailCnd=DETAILCND001&srchOrder=ORDER001&srchPagePer=20&aihubDataSe=data&dataSetSn=79)
 
 ## Acknowledgments
 
