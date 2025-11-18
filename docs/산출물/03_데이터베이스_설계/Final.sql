@@ -1,295 +1,154 @@
-﻿CREATE TABLE `user_base_info` (
-	`id2`	INT	NULL	COMMENT 'auto increment 적용',
-	`gender`	str	NULL,
-	`age`	int	NULL,
-	`height`	float	NULL,
-	`weight`	float	NULL
+﻿-- ---------------------------
+-- User 관련 테이블
+-- ---------------------------
+CREATE TABLE IF NOT EXISTS `user` (
+    `id` INT NOT NULL AUTO_INCREMENT,
+    `email` VARCHAR(255) NOT NULL,
+    `password` VARCHAR(255) NOT NULL COMMENT '암호화된 문자열',
+    `type` ENUM('admin', 'subscribe', 'normal') NOT NULL DEFAULT 'normal',
+    CONSTRAINT chk_email_format CHECK (email LIKE '%_@_%._%'),
+    PRIMARY KEY (`id`)
+);
+-- 유저 기본 정보
+CREATE TABLE IF NOT EXISTS `user_base_info` (
+    `user_id` INT NOT NULL COMMENT 'user 테이블 PK를 참조',
+    `gender` VARCHAR(10) NULL,
+    `age` INT NULL,
+    `height` FLOAT NULL,
+    `weight` FLOAT NULL,
+    `created_at` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    `points` INT NOT NULL DEFAULT 0,
+    `is_public` INT NOT NULL DEFAULT 1,
+    PRIMARY KEY (`user_id`),
+    CONSTRAINT `FK_user_base_info_user` 
+        FOREIGN KEY (`user_id`) REFERENCES `user`(`id`)
+        ON DELETE CASCADE -- 유저 삭제 시 정보 같이 삭제 
 );
 
-CREATE TABLE `admin_user` (
-	`id`	INT	NULL	COMMENT 'auto increment 적용'
+-- 유저 상세 정보
+CREATE TABLE IF NOT EXISTS `user_detail_info` (
+    `user_id` INT NOT NULL COMMENT 'user 테이블 PK 참조',
+    `goal` VARCHAR(255) NULL,
+    `job` VARCHAR(100) NULL,
+    `activity_level` VARCHAR(50) NULL,
+    `activity_duration` TIME NULL COMMENT '운동 시간',
+    `sleep_duration` TIME NULL COMMENT '수면 시간',
+    `chronotype` VARCHAR(50) NULL,
+    `disease` VARCHAR(255) NULL,
+    `equipment` VARCHAR(255) NULL,
+    `food_restrictions` VARCHAR(50) NULL COMMENT '비건 등',
+    `water_intake` INT NULL COMMENT 'ml 단위',
+    PRIMARY KEY (`user_id`),
+    CONSTRAINT `FK_user_detail_info_user` 
+        FOREIGN KEY (`user_id`) REFERENCES `user`(`id`) ON DELETE CASCADE
 );
 
-CREATE TABLE `user` (
-	`id`	INT	NULL	COMMENT 'auto increment 적용',
-	`email`	str	NULL,
-	`password`	str	NULL	COMMENT '암호화된 문자열',
-	`type`	str	NULL,
-	`created_at`	date	NULL,
-	`points`	int	NULL,
-	`is_public`	int	NULL
+-- 구독정보
+CREATE TABLE IF NOT EXISTS `subscribe_info` (
+    `user_id` INT NOT NULL COMMENT 'user 테이블 PK 참조',
+    `subscribed_at` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    `expires_at` DATETIME NOT NULL,
+    PRIMARY KEY (`user_id`),
+    CONSTRAINT `FK_subscribe_info_user` 
+        FOREIGN KEY (`user_id`) REFERENCES `user`(`id`)
+        ON DELETE CASCADE 
 );
 
-CREATE TABLE `unsubscribe_user` (
-	`id`	INT	NULL	COMMENT 'auto increment 적용'
+-- 게시글
+CREATE TABLE IF NOT EXISTS `post` (
+    `id` INT NOT NULL AUTO_INCREMENT,
+    `user_id` INT NOT NULL,
+    `title` VARCHAR(255) NULL,
+    `contents` TEXT NOT NULL,
+    `create_at` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    `updated_at` DATETIME NULL ON UPDATE CURRENT_TIMESTAMP,
+    `is_public` ENUM('1','0','-1') NOT NULL DEFAULT '1' COMMENT '1: 공개, 0: 비공개, -1: 관리자 비공개',
+    PRIMARY KEY (`id`),
+	--     유저 삭제 시 게시글 삭제되지 않음
+    CONSTRAINT `FK_post_user` FOREIGN KEY (`user_id`) REFERENCES `user`(`id`)
+	--     유저 삭제시 게시글 삭제되게 하려면 활성화
+	--     CONSTRAINT `FK_post_user` FOREIGN KEY (`user_id`) REFERENCES `user`(`id`) ON DELETE CASCADE
 );
 
-CREATE TABLE `subscribe_user` (
-	`id`	INT	NULL	COMMENT 'auto increment 적용',
-	`expires_at`	date	NULL,
-	`subscribed_at`	date	NULL
+-- 댓글
+CREATE TABLE IF NOT EXISTS `comment` (
+  	`id` INT NOT NULL AUTO_INCREMENT,
+    `post_id` INT NOT NULL COMMENT '댓글이 달린 게시글 참조',
+    `comment_user_id` INT NOT NULL COMMENT '댓글 작성자(user) 참조',
+    `comment` TEXT NULL,
+    PRIMARY KEY (`id`),
+	--     게시글 삭제 시 댓글 삭제
+    CONSTRAINT `FK_comment_post` FOREIGN KEY (`post_id`) REFERENCES `post`(`id`) ON DELETE CASCADE,
+    CONSTRAINT `FK_comment_user` FOREIGN KEY (`comment_user_id`) REFERENCES `user`(`id`)
 );
 
-CREATE TABLE `post` (
-	`id`	INT	NOT NULL,
-	`user_id`	INT	NULL	COMMENT 'auto increment 적용',
-	`title`	str	NULL,
-	`contents`	str	NOT NULL,
-	`create_at`	date	NULL	COMMENT 'auto increment',
-	`updated_at`	date	NULL,
-	`is_public`	int	NULL	DEFAULT 1	COMMENT '-1은 관리자가 비공개한 경우'
+-- 좋아요/싫어요
+CREATE TABLE IF NOT EXISTS `post_reactions` (
+    `id` INT NOT NULL AUTO_INCREMENT,
+    `post_id` INT NOT NULL COMMENT '게시글 참조',
+    `user_id` INT NOT NULL COMMENT '반응한 유저 참조',
+    `reaction_type` ENUM('like','dislike') NOT NULL,
+    PRIMARY KEY (`post_id`, `user_id`),
+	--     게시글 삭제 시 좋아요/싫어요 삭제
+    CONSTRAINT `FK_post_reactions_post` FOREIGN KEY (`post_id`) REFERENCES `post`(`id`) ON DELETE CASCADE,
+    CONSTRAINT `FK_post_reactions_user` FOREIGN KEY (`user_id`) REFERENCES `user`(`id`)
 );
 
-CREATE TABLE `comment` (
-	`id`	INT	NOT NULL,
-	`id2`	INT	NOT NULL,
-	`comment_user_id`	INT	NULL	COMMENT 'auto increment 적용',
-	`comment`	str	NULL
+-- 신고된 게시글 정보 
+CREATE TABLE IF NOT EXISTS `reported_posts` (
+    `post_id` INT NOT NULL COMMENT '신고된 게시글 참조',
+    `user_id` INT NOT NULL COMMENT '신고자(user) 참조',
+    `comments` TEXT NOT NULL,
+    `reported_at` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY (`post_id`, `user_id`),
+    CONSTRAINT `FK_reported_posts_post` FOREIGN KEY (`post_id`) REFERENCES `post`(`id`),
+    CONSTRAINT `FK_reported_posts_user` FOREIGN KEY (`user_id`) REFERENCES `user`(`id`)
 );
 
-CREATE TABLE `ROM_history` (
-	`id`	INT	NOT NULL,
-	`user_id`	INT	NULL	COMMENT 'auto increment 적용',
-	`measured_at`	date	NULL
+
+-- 관절 가동 범위 정보
+CREATE TABLE IF NOT EXISTS `ROM_history` (
+    `id` INT NOT NULL AUTO_INCREMENT,
+    `user_id` INT NOT NULL COMMENT '측정한 유저 참조',
+    `measured_at` DATE NOT NULL DEFAULT CURRENT_DATE COMMENT '측정일',
+    PRIMARY KEY (`id`),
+    CONSTRAINT `FK_ROM_history_user` FOREIGN KEY (`user_id`) REFERENCES `user`(`id`)
+        -- ON DELETE CASCADE 옵션 추가하면 유저 삭제 시 기록도 삭제 가능
+);
+-- 기본 운동 정보
+CREATE TABLE IF NOT EXISTS `base_exercises` (
+    `id` INT NOT NULL,
+    `name` VARCHAR(100) NULL,
+    `type` VARCHAR(50) NULL,
+    PRIMARY KEY (`id`)
 );
 
-CREATE TABLE `base_exercises` (
-	`id`	INT	NOT NULL,
-	`name`	str	NULL,
-	`type`	str	NULL
+CREATE TABLE IF NOT EXISTS `curriculum` (
+    `exercise_id` INT NOT NULL,
+    `curriculum_id` INT NULL,
+    `sets` INT NULL,
+    `times` INT NULL,
+    PRIMARY KEY (`exercise_id`)
 );
 
-CREATE TABLE `reported_posts` (
-	`id`	INT	NOT NULL,
-	`user_id`	INT	NULL	COMMENT 'auto increment 적용',
-	`comments`	str	NULL,
-	`reported_at`	date	NULL
+CREATE TABLE IF NOT EXISTS `base_meals` (
+    `id` INT NOT NULL,
+    `name` VARCHAR(255) NULL,
+    `calories` INT NULL,
+    PRIMARY KEY (`id`)
 );
 
-CREATE TABLE `post_reactions` (
-	`id`	INT	NOT NULL,
-	`user_id`	INT	NULL	COMMENT 'auto increment 적용',
-	`reaction_type`	str	NULL
+CREATE TABLE IF NOT EXISTS `attendance` (
+    `id` INT NULL COMMENT 'auto increment 적용',
+    `Field` DATE NULL,
+    PRIMARY KEY (`id`)
 );
 
-CREATE TABLE `Untitled` (
-	`exercise_id`	INT	NOT NULL,
-	`curriculum_id`	int	NULL,
-	`sets`	int	NULL,
-	`times`	int	NULL
-);
 
-CREATE TABLE `base_meals` (
-	`id`	int	NOT NULL,
-	`name`	calories	NULL
+CREATE TABLE IF NOT EXISTS `qna` (
+    `id` INT NOT NULL,
+    `user_id` INT NULL COMMENT 'auto increment 적용',
+    `title` VARCHAR(255) NULL,
+    `contants` TEXT NULL,
+    PRIMARY KEY (`id`, `user_id`)
 );
-
-CREATE TABLE `Untitled3` (
-	`id`	INT	NULL	COMMENT 'auto increment 적용',
-	`Field`	date	NULL
-);
-
-CREATE TABLE `user_detail_info` (
-	`id`	INT	NULL	COMMENT 'auto increment 적용',
-	`goal`	str	NULL,
-	`job`	str	NULL,
-	`activity_level`	str	NULL,
-	`activity_duration`	datetime	NULL,
-	`sleep_duration`	datetime	NULL,
-	`chronotype`	str	NULL,
-	`disease`	str	NULL,
-	`equipment`	str	NULL,
-	`food_restrictions`	str	NULL	COMMENT '비건',
-	`water_intake`	int	NULL	COMMENT 'ml단위'
-);
-
-CREATE TABLE `qna` (
-	`id`	int	NOT NULL,
-	`user_id`	INT	NULL	COMMENT 'auto increment 적용',
-	`title`	str	NULL,
-	`contants`	str	NULL
-);
-
-ALTER TABLE `user_base_info` ADD CONSTRAINT `PK_USER_BASE_INFO` PRIMARY KEY (
-	`id2`
-);
-
-ALTER TABLE `admin_user` ADD CONSTRAINT `PK_ADMIN_USER` PRIMARY KEY (
-	`id`
-);
-
-ALTER TABLE `user` ADD CONSTRAINT `PK_USER` PRIMARY KEY (
-	`id`
-);
-
-ALTER TABLE `unsubscribe_user` ADD CONSTRAINT `PK_UNSUBSCRIBE_USER` PRIMARY KEY (
-	`id`
-);
-
-ALTER TABLE `subscribe_user` ADD CONSTRAINT `PK_SUBSCRIBE_USER` PRIMARY KEY (
-	`id`
-);
-
-ALTER TABLE `post` ADD CONSTRAINT `PK_POST` PRIMARY KEY (
-	`id`,
-	`user_id`
-);
-
-ALTER TABLE `comment` ADD CONSTRAINT `PK_COMMENT` PRIMARY KEY (
-	`id`,
-	`id2`,
-	`comment_user_id`
-);
-
-ALTER TABLE `ROM_history` ADD CONSTRAINT `PK_ROM_HISTORY` PRIMARY KEY (
-	`id`,
-	`user_id`
-);
-
-ALTER TABLE `base_exercises` ADD CONSTRAINT `PK_BASE_EXERCISES` PRIMARY KEY (
-	`id`
-);
-
-ALTER TABLE `reported_posts` ADD CONSTRAINT `PK_REPORTED_POSTS` PRIMARY KEY (
-	`id`,
-	`user_id`
-);
-
-ALTER TABLE `post_reactions` ADD CONSTRAINT `PK_POST_REACTIONS` PRIMARY KEY (
-	`id`,
-	`user_id`
-);
-
-ALTER TABLE `Untitled` ADD CONSTRAINT `PK_UNTITLED` PRIMARY KEY (
-	`exercise_id`
-);
-
-ALTER TABLE `base_meals` ADD CONSTRAINT `PK_BASE_MEALS` PRIMARY KEY (
-	`id`
-);
-
-ALTER TABLE `Untitled3` ADD CONSTRAINT `PK_UNTITLED3` PRIMARY KEY (
-	`id`
-);
-
-ALTER TABLE `user_detail_info` ADD CONSTRAINT `PK_USER_DETAIL_INFO` PRIMARY KEY (
-	`id`
-);
-
-ALTER TABLE `qna` ADD CONSTRAINT `PK_QNA` PRIMARY KEY (
-	`id`,
-	`user_id`
-);
-
-ALTER TABLE `user_base_info` ADD CONSTRAINT `FK_user_TO_user_base_info_1` FOREIGN KEY (
-	`id2`
-)
-REFERENCES `user` (
-	`id`
-);
-
-ALTER TABLE `admin_user` ADD CONSTRAINT `FK_user_TO_admin_user_1` FOREIGN KEY (
-	`id`
-)
-REFERENCES `user` (
-	`id`
-);
-
-ALTER TABLE `unsubscribe_user` ADD CONSTRAINT `FK_user_TO_unsubscribe_user_1` FOREIGN KEY (
-	`id`
-)
-REFERENCES `user` (
-	`id`
-);
-
-ALTER TABLE `subscribe_user` ADD CONSTRAINT `FK_user_TO_subscribe_user_1` FOREIGN KEY (
-	`id`
-)
-REFERENCES `user` (
-	`id`
-);
-
-ALTER TABLE `post` ADD CONSTRAINT `FK_user_TO_post_1` FOREIGN KEY (
-	`user_id`
-)
-REFERENCES `user` (
-	`id`
-);
-
-ALTER TABLE `comment` ADD CONSTRAINT `FK_post_TO_comment_1` FOREIGN KEY (
-	`id2`
-)
-REFERENCES `post` (
-	`id`
-);
-
-ALTER TABLE `comment` ADD CONSTRAINT `FK_user_TO_comment_1` FOREIGN KEY (
-	`comment_user_id`
-)
-REFERENCES `user` (
-	`id`
-);
-
-ALTER TABLE `ROM_history` ADD CONSTRAINT `FK_user_TO_ROM_history_1` FOREIGN KEY (
-	`user_id`
-)
-REFERENCES `user` (
-	`id`
-);
-
-ALTER TABLE `reported_posts` ADD CONSTRAINT `FK_post_TO_reported_posts_1` FOREIGN KEY (
-	`id`
-)
-REFERENCES `post` (
-	`id`
-);
-
-ALTER TABLE `reported_posts` ADD CONSTRAINT `FK_post_TO_reported_posts_2` FOREIGN KEY (
-	`user_id`
-)
-REFERENCES `post` (
-	`user_id`
-);
-
-ALTER TABLE `post_reactions` ADD CONSTRAINT `FK_post_TO_post_reactions_1` FOREIGN KEY (
-	`id`
-)
-REFERENCES `post` (
-	`id`
-);
-
-ALTER TABLE `post_reactions` ADD CONSTRAINT `FK_post_TO_post_reactions_2` FOREIGN KEY (
-	`user_id`
-)
-REFERENCES `post` (
-	`user_id`
-);
-
-ALTER TABLE `Untitled` ADD CONSTRAINT `FK_base_exercises_TO_Untitled_1` FOREIGN KEY (
-	`exercise_id`
-)
-REFERENCES `base_exercises` (
-	`id`
-);
-
-ALTER TABLE `Untitled3` ADD CONSTRAINT `FK_user_TO_Untitled3_1` FOREIGN KEY (
-	`id`
-)
-REFERENCES `user` (
-	`id`
-);
-
-ALTER TABLE `user_detail_info` ADD CONSTRAINT `FK_user_TO_user_detail_info_1` FOREIGN KEY (
-	`id`
-)
-REFERENCES `user` (
-	`id`
-);
-
-ALTER TABLE `qna` ADD CONSTRAINT `FK_user_TO_qna_1` FOREIGN KEY (
-	`user_id`
-)
-REFERENCES `user` (
-	`id`
-);
-
