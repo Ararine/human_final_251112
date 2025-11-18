@@ -6,9 +6,9 @@ config = {
     "FRONT_PORT": 3000,
     "BACKEND_PORT": 5001,
     "DB":{
-        "USER_ID":"",
-        "PASSWORD":"",
-        "HOST":"localhost:3307"
+        "USER_ID":"root",
+        "PASSWORD":"1234",
+        "HOST":"localhost:3306"
     },
 }
 
