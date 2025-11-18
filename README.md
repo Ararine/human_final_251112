@@ -170,7 +170,14 @@ conda env remove -n final_ai
    ```bash
    # docker-desktop 실행 후 DB 실행
    docker-compose -f environment/docker-compose-db.yml up -d
+   # DBeaver 실행 후 DB 연결
+   # DB 연결 후 Final.sql 실행(Alt + x)
    ```
+
+    <video width="480" controls>
+    <source src="docs/guide/DB테이블구축.mp4" type="video/mp4">
+    브라우저가 video 태그를 지원하지 않습니다.
+    </video>
 
 ---
 
