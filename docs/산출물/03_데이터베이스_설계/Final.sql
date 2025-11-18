@@ -6,9 +6,12 @@ CREATE TABLE IF NOT EXISTS `user` (
     `email` VARCHAR(255) NOT NULL,
     `password` VARCHAR(255) NOT NULL COMMENT '암호화된 문자열',
     `type` ENUM('admin', 'subscribe', 'normal') NOT NULL DEFAULT 'normal',
+    `points` INT NOT NULL DEFAULT 0 COMMENT '유저 포인트',
+    `is_active` ENUM('1','0','-1') NOT NULL DEFAULT '1' COMMENT '1: 활성, 0: 비활성, -1: 관리자 비활성',
     CONSTRAINT chk_email_format CHECK (email LIKE '%_@_%._%'),
     PRIMARY KEY (`id`)
 );
+
 -- 유저 기본 정보
 CREATE TABLE IF NOT EXISTS `user_base_info` (
     `user_id` INT NOT NULL COMMENT 'user 테이블 PK를 참조',
@@ -45,13 +48,15 @@ CREATE TABLE IF NOT EXISTS `user_detail_info` (
 
 -- 구독정보
 CREATE TABLE IF NOT EXISTS `subscribe_info` (
+    `id` INT NOT NULL AUTO_INCREMENT COMMENT '구독번호',
     `user_id` INT NOT NULL COMMENT 'user 테이블 PK 참조',
     `subscribed_at` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
     `expires_at` DATETIME NOT NULL,
-    PRIMARY KEY (`user_id`),
+    PRIMARY KEY (`id`),
+    UNIQUE (`user_id`),  -- 유저 1명당 1개의 구독만 가능
     CONSTRAINT `FK_subscribe_info_user` 
         FOREIGN KEY (`user_id`) REFERENCES `user`(`id`)
-        ON DELETE CASCADE 
+        ON DELETE CASCADE
 );
 
 -- 게시글
