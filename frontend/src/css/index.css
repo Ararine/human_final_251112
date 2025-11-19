@@ -32,3 +32,20 @@ button {
   cursor: pointer;
   transition: background-color 0.2s ease;
 }
+
+header {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 32px;
+  background-color: #ffffff;
+  border-bottom: 1px solid #e5e5e5;
+}
+
+header > div {
+  display: flex;
+  align-items: center;
+}

@@ -8,7 +8,7 @@ import PrivateRoute from "./components/PrivateRoute";
 import URL from "./constants/url";
 
 import "./css/index.css";
-import "./css/App.css";
+import "./css/global.css";
 import "./css/signup.css";
 import "./css/login.css";
 import Exercise from "./pages/Exercise";
@@ -40,75 +40,17 @@ function App() {
   };
 
   return (
-<<<<<<< HEAD
-    <BrowserRouter>
-      {/* 헤더에 로그인 상태 + 로그아웃 함수 전달 */}
-      <Header userInfo={userInfo} onLogout={handleLogout} />
-
-      <Routes>
-        <Route path={URL.HOME} element={<Home />} />
-        <Route path={URL.EXERCISE_URL} element={<Exercise />} />
-        <Route path={URL.COMMUNITY_URL} element={<Community />} />
-        <Route path="/signup" element={<SignUp />} />
-
-        {/* 로그인 페이지 – 로그인 성공 시 setUserInfo 사용 */}
-        <Route
-          path={URL.LOGIN_URL}
-          element={<Login setUserInfo={setUserInfo} />}
-        />
-        <Route path="/forgot-password" element={<ForgotPassword />} />
-        {/* 커뮤니티 글쓰기: 로그인 필요 */}
-        <Route
-          path={`${URL.COMMUNITY_URL}/write`}
-          element={
-            <PrivateRoute userInfo={userInfo}>
-              <CommunityWrite />
-            </PrivateRoute>
-          }
-        />
-        <Route
-          path={`${URL.COMMUNITY_URL}/write/:id`}
-          element={
-            <PrivateRoute userInfo={userInfo}>
-              <CommunityWrite />
-            </PrivateRoute>
-          }
-        />
-
-        {/* 프로필도 로그인 필요 */}
-        <Route
-          path={URL.PROFILE_URL}
-          element={
-            <PrivateRoute userInfo={userInfo}>
-              <Profile userInfo={userInfo} />
-            </PrivateRoute>
-          }
-        />
-        <Route
-          path={URL.PROFILE_URL}
-          element={
-            <PrivateRoute userInfo={userInfo}>
-              {/* ✅ 여기서 Profile 컴포넌트에 userInfo를 넘겨줌 */}
-              <Profile userInfo={userInfo} />
-            </PrivateRoute>
-          }
-        />
-
-        {/* 그 외 주소 → 홈 */}
-        <Route path={URL.OTHERS} element={<Home />} />
-      </Routes>
-
-      <Footer />
-    </BrowserRouter>
-=======
     <>
       <BrowserRouter>
-        <Header />
+        <Header userInfo={userInfo} onLogout={handleLogout} />
         <main>
           <Routes>
             <Route path={URL.HOME} element={<Home />} />
             <Route path={URL.EXERCISE_URL} element={<Exercise />} />
             <Route path={URL.COMMUNITY_URL} element={<Community />} />
+            <Route path="/forgot-password" element={<ForgotPassword />} />
+
+            <Route path="/signup" element={<SignUp />} />
             <Route
               path={`${URL.COMMUNITY_URL}/read/:id`}
               element={<CommunityRead />}
@@ -135,12 +77,15 @@ function App() {
               path={URL.PROFILE_URL}
               element={
                 <PrivateRoute userInfo={userInfo}>
-                  <Profile />
+                  {/* ✅ 여기서 Profile 컴포넌트에 userInfo를 넘겨줌 */}
+                  <Profile userInfo={userInfo} />
                 </PrivateRoute>
               }
             />
 
             {/* Login Route */}
+            {/* 로그인 페이지 – 로그인 성공 시 setUserInfo 사용 */}
+
             <Route
               path={URL.LOGIN_URL}
               element={<Login setUserInfo={setUserInfo} />}
@@ -153,7 +98,6 @@ function App() {
         <Footer />
       </BrowserRouter>
     </>
->>>>>>> 2b7c649d339295325cfa30a6fc844dc529d26481
   );
 }
 
