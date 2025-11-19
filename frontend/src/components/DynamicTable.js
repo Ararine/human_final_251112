@@ -1,8 +1,8 @@
 import { useState, useMemo } from "react";
 
-const DynamicTable = ({ data, rowsPerPage = 10 }) => {
+const DynamicTable = ({ data, setSelectedData, rowsPerPage = 10 }) => {
   const [currentPage, setCurrentPage] = useState(1);
-  const [inputPage, setInputPage] = useState(""); // 페이지 입력 상태
+  const [inputPage, setInputPage] = useState("");
   const [sortColumn, setSortColumn] = useState(null);
   const [sortOrder, setSortOrder] = useState("asc");
 
@@ -15,7 +15,6 @@ const DynamicTable = ({ data, rowsPerPage = 10 }) => {
     return [...data].sort((a, b) => {
       const valA = a[sortColumn];
       const valB = b[sortColumn];
-
       if (valA === valB) return 0;
       if (sortOrder === "asc") return valA > valB ? 1 : -1;
       else return valA < valB ? 1 : -1;
@@ -39,21 +38,21 @@ const DynamicTable = ({ data, rowsPerPage = 10 }) => {
     }
   };
 
-  const handlePageInputChange = (e) => {
-    setInputPage(e.target.value);
-  };
-
+  const handlePageInputChange = (e) => setInputPage(e.target.value);
   const goToPage = () => {
     const pageNum = Number(inputPage);
     if (!isNaN(pageNum)) {
       const validPage = Math.min(Math.max(pageNum, 1), totalPages);
       setCurrentPage(validPage);
-      setInputPage(""); // 입력 초기화
+      setInputPage("");
     }
   };
-
   const handleKeyPress = (e) => {
     if (e.key === "Enter") goToPage();
+  };
+
+  const handleRowClick = (row) => {
+    setSelectedData(row); // 선택된 행 저장
   };
 
   if (!data || data.length === 0) return <div>데이터가 없습니다.</div>;
@@ -69,7 +68,7 @@ const DynamicTable = ({ data, rowsPerPage = 10 }) => {
                 className="border px-4 py-2 text-center cursor-pointer select-none"
                 onClick={() => handleSort(col)}
               >
-                {col}{" "}
+                {col}
                 {sortColumn === col && (
                   <span>{sortOrder === "asc" ? "▲" : "▼"}</span>
                 )}
@@ -79,7 +78,12 @@ const DynamicTable = ({ data, rowsPerPage = 10 }) => {
         </thead>
         <tbody>
           {currentRows.map((row, rowIndex) => (
-            <tr key={rowIndex} className="hover:bg-gray-50">
+            <tr
+              key={rowIndex}
+              onClick={() => handleRowClick(row)}
+              className={`hover:bg-gray-50 cursor-pointer "bg-blue-100"
+              }`}
+            >
               {columns.map((col) => (
                 <td key={col} className="border px-4 py-2 text-center">
                   {row[col]}
@@ -89,7 +93,6 @@ const DynamicTable = ({ data, rowsPerPage = 10 }) => {
           ))}
         </tbody>
       </table>
-
       <div className="flex items-center justify-between mt-4 space-x-2">
         <button
           onClick={handlePrev}

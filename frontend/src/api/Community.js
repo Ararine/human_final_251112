@@ -1,11 +1,11 @@
-import { api } from "./api";
+import { api, apiWithCookie } from "./axios";
 
-export async function createPost({ title, content, authorId }) {
+export async function createPost(title, contents, authorId) {
   try {
-    const res = await api.post("/posts", {
+    const res = await apiWithCookie.post("/posts", {
       title,
-      content,
-      author_id: authorId,
+      contents,
+      user_id: authorId,
     });
     return res.data;
   } catch (err) {
@@ -34,12 +34,12 @@ export async function getPostDetail(postId) {
   }
 }
 
-export async function updatePost(postId, { title, content }) {
+export async function updatePost(postId, { title, contents }) {
+  console.log(contents);
   try {
-    const res = await api.put(`/posts/${postId}`, {
+    const res = await apiWithCookie.put(`/posts/${postId}`, {
       title,
-      content,
-      author_id: authorId,
+      contents,
     });
     return res.data;
   } catch (err) {
@@ -49,7 +49,7 @@ export async function updatePost(postId, { title, content }) {
 }
 export async function deletePost(postId) {
   try {
-    const res = await api.delete(`/posts/${postId}`);
+    const res = await apiWithCookie.delete(`/posts/${postId}`);
     return res.data;
   } catch (err) {
     console.error("게시글 삭제 실패:", err);

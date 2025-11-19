@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 /* ====================== Header ======================= */
 
 .main-header {
@@ -94,4 +95,54 @@
 /* 버튼 호버 공통 */
 .btn-outline:hover {
   background: #f5f5f5;
+=======
+.flex-between {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.flex-column {
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+}
+.flex-row {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.white {
+  color: #fff;
+}
+.blue {
+  color: #3b82f6;
+}
+
+.red {
+  color: #ef4444;
+}
+
+.yellow {
+  color: rgb(236, 236, 85);
+}
+
+.text-center {
+  text-align: center;
+}
+.text-shadow {
+  text-shadow: 0 0 8px rgba(72, 121, 218, 0.6), 2px 2px 6px rgba(0, 0, 0, 0.4);
+}
+
+.border {
+  border: 1px solid #ccc;
+  border-radius: 5px;
+>>>>>>> 2b7c649d339295325cfa30a6fc844dc529d26481
 }
