@@ -13,7 +13,7 @@ import {
   getPostDetail,
   updatePost,
   deletePost,
-} from "../../api/Community";
+} from "../../../api/Community";
 
 const CommunityWrite = () => {
   const navigate = useNavigate();

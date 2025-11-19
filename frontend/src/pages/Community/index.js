@@ -2,8 +2,8 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 // import { samplePosts } from "../constants/sample";
-import DynamicTable from "../components/DynamicTable";
-import { getPosts } from "../api/Community";
+import DynamicTable from "../../components/DynamicTable";
+import { getPosts } from "../../api/Community";
 
 const Community = () => {
   const [posts, setPosts] = useState();

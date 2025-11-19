@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { getPostDetail } from "../../api/Community";
+
+import { getPostDetail } from "../../../api/Community";
 
 const CommunityRead = () => {
   const navigate = useNavigate();

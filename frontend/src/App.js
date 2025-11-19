@@ -11,8 +11,8 @@ import "./css/index.css";
 import "./css/App.css";
 import Exercise from "./pages/Exercise";
 import Community from "./pages/Community";
-import CommunityWrite from "./pages/CommunityWrite";
-import CommunityRead from "./pages/CommunityRead";
+import CommunityWrite from "./pages/Community/Write";
+import CommunityRead from "./pages/Community/Read";
 import Profile from "./pages/Profile";
 
 import Login from "./modals/Login";
