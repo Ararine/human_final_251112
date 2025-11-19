@@ -5,10 +5,10 @@ from services import community
 
 async def create_post(body: dict = Body(...)):
     try:
-        post_id = await community.create_post(
+        post_id = community.create_post(
             title=body.get("title"),
-            content=body.get("content"),
-            author_id=body.get("author_id")
+            contents=body.get("contents"),
+            user_id=body.get("user_id")
         )
         return JSONResponse({"message": "게시글 생성 완료", "post_id": post_id}, status_code=status.HTTP_201_CREATED)
     except Exception:
@@ -17,7 +17,8 @@ async def create_post(body: dict = Body(...)):
 # 게시글 모두 조회
 async def read_posts():
     try:
-        posts = await community.get_posts()
+        posts = community.get_posts()
+        print(posts)
         return JSONResponse(
             {
                 "message":"게시글 조회 성공",
@@ -33,7 +34,7 @@ async def read_posts():
 # 게시글 상세 조회
 async def read_post(post_id: int = Path(...)):
     try:
-        post = await community.get_post(post_id)
+        post = community.get_post(post_id)
         if not post:
             return JSONResponse(
                 {"message": "게시글 없음"}, 
@@ -44,9 +45,9 @@ async def read_post(post_id: int = Path(...)):
                 "data": post
             }, 
             status_code=status.HTTP_200_OK)
-    except Exception:
+    except Exception as e:
         return JSONResponse(
-            {"message": "게시글 조회 실패"}, 
+            {"message": "게시글 조회 실패", "error":str(e)},
             status_code=status.HTTP_404_NOT_FOUND)
 
 # 게시글 수정
@@ -56,9 +57,9 @@ async def update_post(
 ):
     try:
         title = body.get("title")
-        content = body.get("content")
+        contents = body.get("contents")
 
-        updated = await community.update_post(post_id, title, content)
+        updated = community.update_post(post_id, title, contents)
 
         if not updated:
             return JSONResponse(
@@ -70,15 +71,16 @@ async def update_post(
             {"message": "게시글 수정 성공"},
             status_code=status.HTTP_200_OK
         )
-    except Exception:
+    except Exception as e:
         return JSONResponse(
-            {"message": "게시글 수정 실패"}, 
+            {"message": "게시글 수정 실패", "error":str(e)},
             status_code=status.HTTP_400_BAD_REQUEST
         )
 
 async def delete_post(post_id: int = Path(...)):
     try:
-        deleted = await community.delete_post(post_id)
+        deleted = community.delete_post(post_id)
+        print(deleted)
         if not deleted:
             return JSONResponse(
                 {"message": "게시글 없음"}, 
@@ -86,7 +88,7 @@ async def delete_post(post_id: int = Path(...)):
         return JSONResponse(
             {"message": "게시글 삭제 완료"}, 
             status_code=status.HTTP_200_OK)
-    except Exception:
+    except Exception as e:
         return JSONResponse(
-            {"message": "게시글 삭제 실패"}, 
+            {"message": "게시글 삭제 실패", "error":str(e)},
             status_code=status.HTTP_400_BAD_REQUEST)

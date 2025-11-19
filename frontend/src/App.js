@@ -12,6 +12,7 @@ import "./css/App.css";
 import Exercise from "./pages/Exercise";
 import Community from "./pages/Community";
 import CommunityWrite from "./pages/CommunityWrite";
+import CommunityRead from "./pages/CommunityRead";
 import Profile from "./pages/Profile";
 
 import Login from "./modals/Login";
@@ -41,46 +42,52 @@ function App() {
     <>
       <BrowserRouter>
         <Header />
-        <Routes>
-          <Route path={URL.HOME} element={<Home />} />
-          <Route path={URL.EXERCISE_URL} element={<Exercise />} />
-          <Route path={URL.COMMUNITY_URL} element={<Community />} />
+        <main>
+          <Routes>
+            <Route path={URL.HOME} element={<Home />} />
+            <Route path={URL.EXERCISE_URL} element={<Exercise />} />
+            <Route path={URL.COMMUNITY_URL} element={<Community />} />
+            <Route
+              path={`${URL.COMMUNITY_URL}/read/:id`}
+              element={<CommunityRead />}
+            />
 
-          {/* Private Routes */}
-          <Route
-            path={`${URL.COMMUNITY_URL}/write`}
-            element={
-              <PrivateRoute userInfo={userInfo}>
-                <CommunityWrite />
-              </PrivateRoute>
-            }
-          />
-          <Route
-            path={`${URL.COMMUNITY_URL}/write/:id`}
-            element={
-              <PrivateRoute userInfo={userInfo}>
-                <CommunityWrite />
-              </PrivateRoute>
-            }
-          />
-          <Route
-            path={URL.PROFILE_URL}
-            element={
-              <PrivateRoute userInfo={userInfo}>
-                <Profile />
-              </PrivateRoute>
-            }
-          />
+            {/* Private Routes */}
+            <Route
+              path={`${URL.COMMUNITY_URL}/write`}
+              element={
+                <PrivateRoute userInfo={userInfo}>
+                  <CommunityWrite />
+                </PrivateRoute>
+              }
+            />
+            <Route
+              path={`${URL.COMMUNITY_URL}/write/:id`}
+              element={
+                <PrivateRoute userInfo={userInfo}>
+                  <CommunityWrite />
+                </PrivateRoute>
+              }
+            />
+            <Route
+              path={URL.PROFILE_URL}
+              element={
+                <PrivateRoute userInfo={userInfo}>
+                  <Profile />
+                </PrivateRoute>
+              }
+            />
 
-          {/* Login Route */}
-          <Route
-            path={URL.LOGIN_URL}
-            element={<Login setUserInfo={setUserInfo} />}
-          />
+            {/* Login Route */}
+            <Route
+              path={URL.LOGIN_URL}
+              element={<Login setUserInfo={setUserInfo} />}
+            />
 
-          {/* Fallback */}
-          <Route path={URL.OTHERS} element={<Home />} />
-        </Routes>
+            {/* Fallback */}
+            <Route path={URL.OTHERS} element={<Home />} />
+          </Routes>
+        </main>
         <Footer />
       </BrowserRouter>
     </>

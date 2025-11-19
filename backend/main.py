@@ -18,7 +18,6 @@ app.include_router(user.router, prefix="")
 app.include_router(test.router, prefix="")
 
 if __name__ == "__main__":
-    print("파이썬으로 직접 실행")
     try:
         uvicorn.run(
             "main:app", 
