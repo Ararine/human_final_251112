@@ -1,13 +1,34 @@
+html,
+#root,
 body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  height: 100%;
+  width: 100%;
+  margin: 0px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+}
+header {
+  display: flex;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+main {
+  display: flex;
+  overflow-y: auto; /* 휠 생성(auto)/생략(hidden) 등 가능 */
+  padding: 0px 200px 0px 200px;
+}
+
+footer {
+  margin-top: auto;
+  text-align: center;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 10px 0;
+}
+
+button {
+  border: none;
+  border-radius: 6px;
+  padding: 7px 15px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
 }
