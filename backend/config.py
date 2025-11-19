@@ -8,7 +8,8 @@ config = {
     "DB":{
         "USER_ID":"root",
         "PASSWORD":"1234",
-        "HOST":"localhost:3306"
+        "HOST":"localhost",
+        "PORT":3306
     },
 }
 
