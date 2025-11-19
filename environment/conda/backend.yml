@@ -14,3 +14,4 @@ dependencies:
       - sqlalchemy
       - pymysql
       - python-dotenv
+      - pandas
