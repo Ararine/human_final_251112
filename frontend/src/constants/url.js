@@ -8,6 +8,7 @@ const URL = {
   SERVER_URL,
   PY_SERVER_URL,
   EXERCISE_URL: "/exercise",
+  MEAL_URL: "/meal",
   COMMUNITY_URL: "/community",
   LOGIN_URL: "/login",
   PROFILE_URL: "/profile",
