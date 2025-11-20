@@ -1,3 +1,6 @@
+# ORM 사용하지 않으면 불필요한 부분입니다.
+# 로그인 정보는 JWT형태로 쿠키로 주고받게 설정해주시기 바랍니다.
+
 from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
