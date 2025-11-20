@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 
 import Home from "./pages/Home";
 import Header from "./components/Header";
@@ -21,6 +21,11 @@ import Login from "./pages/Login";
 import SignUp from "./pages/SignUp";
 import ForgotPassword from "./pages/ForgotPassword";
 
+import { default as AdminExercise } from "./pages/Admin/Exercise";
+import { default as AdminMeal } from "./pages/Admin/Meal";
+import { default as AdminUser } from "./pages/Admin/User";
+import { default as AdminPostList } from "./pages/Admin/PostList";
+
 function App() {
   // ✅ 로그인 정보 상태
   const [userInfo, setUserInfo] = useState(undefined);
@@ -39,6 +44,7 @@ function App() {
         id: 1,
         username: "testuser",
         email: "testuser@example.com",
+        role: "admin",
       };
       setUserInfo(sampleUser);
       localStorage.setItem("userInfo", JSON.stringify(sampleUser));
@@ -97,14 +103,48 @@ function App() {
 
             {/* Login Route */}
             {/* 로그인 페이지 – 로그인 성공 시 setUserInfo 사용 */}
-
             <Route
               path={URL.LOGIN_URL}
               element={<Login setUserInfo={setUserInfo} />}
             />
 
+            <Route
+              path="/admin/ex"
+              element={
+                <PrivateRoute userInfo={userInfo} requireAdmin={true}>
+                  <AdminExercise />
+                </PrivateRoute>
+              }
+            />
+            <Route
+              path="/admin/meal"
+              element={
+                <PrivateRoute userInfo={userInfo} requireAdmin={true}>
+                  <AdminMeal />
+                </PrivateRoute>
+              }
+            />
+            <Route
+              path="/admin/user"
+              element={
+                <PrivateRoute userInfo={userInfo} requireAdmin={true}>
+                  <AdminUser />
+                </PrivateRoute>
+              }
+            />
+            <Route
+              path="/admin/post"
+              element={
+                <PrivateRoute userInfo={userInfo} requireAdmin={true}>
+                  <AdminPostList />
+                </PrivateRoute>
+              }
+            />
             {/* Fallback */}
-            <Route path={URL.OTHERS} element={<Home />} />
+            <Route
+              path={URL.OTHERS}
+              element={<Navigate to={URL.HOME} replace />}
+            />
           </Routes>
         </main>
         <Footer />

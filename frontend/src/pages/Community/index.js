@@ -1,3 +1,4 @@
+/* 커뮤니티 전반적으로 리팩토링 필요 */
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -8,7 +9,6 @@ import { getPosts } from "../../api/Community";
 const Community = () => {
   const [posts, setPosts] = useState();
   const [selectedData, setSelectedData] = useState(null); // 선택된 행 상태
-  console.log(selectedData);
   const navigate = useNavigate();
 
   useEffect(() => {
