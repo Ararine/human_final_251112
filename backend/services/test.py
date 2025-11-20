@@ -1,4 +1,4 @@
-from models.test import get_hello_message
+# services/test.py
 
 def get_hello_message():
-    return "테스트 성공"
+    return {"message": "Hello from service!"}
