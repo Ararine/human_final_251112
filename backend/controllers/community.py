@@ -18,6 +18,7 @@ async def create_post(body: dict = Body(...)):
 # 게시글 모두 조회
 async def read_posts():
     try:
+        print(1)
         posts = community.get_posts()
         return JSONResponse(
             {
@@ -100,20 +101,27 @@ async def create_reported_post(
     post_id: int = Path(...), 
     body: dict = Body(...)):
     try:
-        post_id = community.create_reported_post(
+        response = community.create_reported_post(
             post_id,
             user_id=body.get("comment_user_id"),
             comments=body.get("comment")
         )
-        return JSONResponse({"message": "게시글 신고 완료", "post_id": post_id}, status_code=status.HTTP_201_CREATED)
+        if response is None:
+            # 이미 신고한 경우
+            return JSONResponse(
+                {"message": "이미 신고한 게시글입니다."},
+                status_code=status.HTTP_409_CONFLICT
+            )
+        return JSONResponse({"message": "게시글 신고 완료", "post_id": response}, status_code=status.HTTP_201_CREATED)
     except Exception as e:
         return JSONResponse({"message": "게시글 신고 실패", "error":str(e)}, status_code=status.HTTP_400_BAD_REQUEST)
 
 
 # 신고 게시글 모두 조회
-async def read_posts():
+async def read_reported_posts():
     # TODO 관리자만 조회 가능하게 수정
     try:
+        print(2)
         posts = community.get_reported_posts()
         return JSONResponse(
             {
