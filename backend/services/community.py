@@ -41,4 +41,7 @@ def create_reported_post(post_id: str, user_id: str, comments: int):
 def get_reported_posts():
     post_data = reported_post.get_reported_posts()
     return post_data
-
+# 유저별 게시글 조회
+def get_posts_by_user_id(user_id: int):
+    posts = post.fetch_posts_by_user_id(user_id)
+    return posts

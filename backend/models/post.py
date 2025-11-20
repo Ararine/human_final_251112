@@ -48,3 +48,16 @@ def delete_post_by_id(post_id: int):
         conn.commit()
         deleted = result.rowcount > 0
     return deleted
+# 유저별 게시글 조회
+def fetch_posts_by_user_id(user_id: int):
+    query = text("SELECT * FROM post WHERE user_id = :user_id ORDER BY create_at DESC")
+    with engine.connect() as conn:
+        df = pd.read_sql(query, conn, params={"user_id": user_id})
+
+    # datetime → 문자열 변환
+    if "create_at" in df.columns:
+        df["create_at"] = df["create_at"].astype(str)
+    if "updated_at" in df.columns:
+        df["updated_at"] = df["updated_at"].astype(str)
+
+    return df.to_dict(orient="records")

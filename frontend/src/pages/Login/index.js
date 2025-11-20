@@ -69,7 +69,11 @@ const Login = ({ setUserInfo }) => {
     <div className="login-page">
       <h2 className="login-title">로그인</h2>
 
-      <LoginForm form={form} onchange={handleChange} onSubmit={handleLogin} />
+      <LoginForm
+        form={form}
+        handleChange={handleChange}
+        handleLogin={handleLogin}
+      />
 
       <div className="login-links">
         <p>

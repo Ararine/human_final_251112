@@ -1,24 +1,20 @@
-/* 
-TODO
-1. API 연결
-1.1. 개인정보 저장
-1.2. 회원 탈퇴
-*/
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import URL from "../../constants/url";
+
 import UserInfo from "./UserInfo";
 import UserPostList from "./UserPostList";
 import UserDelete from "./UserDelete";
 
-import { deletePost } from "../../api/Community";
+import { getPostsByUserId, deletePost } from "../../api/Community";
 
 const Profile = ({ userInfo }) => {
   const navigate = useNavigate();
 
-  // App에서 안 넘겨줘도 안터지게 방어
-  const safeUser = userInfo || {};
+  // 로그인 정보 안전 처리
+  const safeUser =
+    userInfo || JSON.parse(localStorage.getItem("userInfo")) || {};
 
   // 1) 개인정보 폼 상태
   const [form, setForm] = useState({
@@ -30,13 +26,28 @@ const Profile = ({ userInfo }) => {
     weight: safeUser.weight || "",
   });
 
-  // 2) 내가 작성한 게시글 – 지금은 가짜 데이터 + 수정/삭제 테스트용
-  const [myPosts, setMyPosts] = useState([
-    { id: 1, title: "첫 홈트 시작 후기", createdAt: "2025-11-10" },
-    { id: 2, title: "스쿼트 자세 교정 팁", createdAt: "2025-11-12" },
-  ]);
+  // 2) 내가 작성한 게시글 목록
+  const [myPosts, setMyPosts] = useState([]);
 
-  // ✅ 인풋 변경 핸들러 (한 번만!)
+  // 🔹 유저 게시글 목록 불러오기
+  useEffect(() => {
+    const loadPosts = async () => {
+      if (!safeUser.id) return;
+
+      try {
+        const posts = await getPostsByUserId(safeUser.id);
+
+        console.log("getPostsByUserId 결과:", posts);
+
+        setMyPosts(posts.data || []);
+      } catch (err) {
+        console.error("유저 게시글 불러오기 실패:", err);
+      }
+    };
+
+    loadPosts();
+  }, [safeUser.id]);
+  // 변경 핸들러
   const handleChange = (e) => {
     const { name, value } = e.target;
     setForm((prev) => ({
@@ -45,50 +56,51 @@ const Profile = ({ userInfo }) => {
     }));
   };
 
-  // ✅ 개인정보 저장 (지금은 알림만)
+  // 개인정보 저장 (아직 가짜)
   const handleSave = (e) => {
     e.preventDefault();
-    // 나중에 실제 API 붙일 때:
-    // await api.put("/users/me", form);
-
     console.log("수정된 개인정보:", form);
-    alert("개인정보 저장(가짜). 나중에 서버랑 연동하면 실제로 저장됩니다.");
+    alert("개인정보 저장(가짜). 나중에 서버 연결 예정.");
   };
 
-  // ✅ 게시글 “수정하기”
+  // 🔹 게시글 수정하기
   const handleEditPost = (postId) => {
     navigate(`${URL.COMMUNITY_URL}/write/${postId}`);
   };
 
-  // ✅ 게시글 “삭제하기”
-  const handleDeletePost = (postId) => {
-    const ok = window.confirm("정말 이 게시글을 삭제하시겠습니까?");
+  // 🔹 게시글 삭제하기
+  const handleDeletePost = async (postId) => {
+    const ok = window.confirm("이 게시글을 정말 삭제할까요?");
     if (!ok) return;
-    // 프론트에서만 목록에서 제거
-    setMyPosts((prev) => prev.filter((post) => post.id !== postId));
 
-    // 나중에:
-    // await deletePost(postId)
-    // 삭제 성공 후 setMyPosts로 다시 목록 반영
+    try {
+      await deletePost(postId); // API 호출
+      setMyPosts((prev) => prev.filter((p) => p.id !== postId)); // 화면에서 제거
+    } catch (err) {
+      console.error("삭제 실패:", err);
+      alert("삭제에 실패했습니다.");
+    }
   };
 
   return (
     <div className="profile-page">
       <h2 className="profile-title">마이페이지</h2>
 
-      {/* 1. 개인정보 관리 영역 */}
+      {/* 1. 개인정보 관리 */}
       <UserInfo
         form={form}
         handleChange={handleChange}
         handleSave={handleSave}
       />
-      {/* 2. 내 게시글 관리 영역 */}
+
+      {/* 2. 내가 쓴 게시글 */}
       <UserPostList
         myPosts={myPosts}
         handleEditPost={handleEditPost}
         handleDeletePost={handleDeletePost}
       />
-      {/* 3. 회원 탈퇴 영역 */}
+
+      {/* 3. 회원 탈퇴 */}
       <UserDelete />
     </div>
   );

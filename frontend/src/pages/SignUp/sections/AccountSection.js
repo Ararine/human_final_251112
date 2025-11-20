@@ -1,39 +1,33 @@
-import React from "react";
-
-const LoginForm = ({ form, handleChange, handleLogin }) => {
+const AccountSection = ({ form, handleChange }) => {
   return (
-    <form className="login-form" onSubmit={handleLogin}>
+    <section className="signup-section">
+      <h3 className="section-title">계정 정보</h3>
+
       <div className="form-row">
         <label className="form-label">이메일</label>
         <input
-          name="email"
           type="email"
-          placeholder="이메일"
+          name="email"
           value={form.email}
           onChange={handleChange}
-          required
           className="form-input"
+          required
         />
       </div>
 
       <div className="form-row">
         <label className="form-label">비밀번호</label>
         <input
-          name="password"
           type="password"
-          placeholder="비밀번호"
+          name="password"
           value={form.password}
           onChange={handleChange}
-          required
           className="form-input"
+          required
         />
       </div>
-
-      <button type="submit" className="btn-primary login-button">
-        로그인
-      </button>
-    </form>
+    </section>
   );
 };
 
-export default LoginForm;
+export default AccountSection;
