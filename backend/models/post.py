@@ -21,6 +21,17 @@ def fetch_all_posts():
     df["updated_at"] = df["updated_at"].astype(str)  
     return df.to_dict(orient="records")
 
+
+# 사용자 게시글 전체 조회
+def fetch_all_posts_by_user_id(user_id:int):
+    query = text("SELECT * FROM post WHERE user_id = :user_id")
+    with engine.connect() as conn:
+        df = pd.read_sql(query, conn, params={"user_id": user_id})
+    # datetime → 문자열 변환
+    df["create_at"] = df["create_at"].astype(str) 
+    df["updated_at"] = df["updated_at"].astype(str)  
+    return df.to_dict(orient="records")
+
 # 게시글 상세 조회
 def fetch_post_by_id(post_id: int):
     query = text("SELECT p.*, u.email FROM post as p JOIN user as u ON p.user_id = u.id WHERE p.id=:post_id")

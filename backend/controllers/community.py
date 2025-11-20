@@ -18,7 +18,6 @@ async def create_post(body: dict = Body(...)):
 # 게시글 모두 조회
 async def read_posts():
     try:
-        print(1)
         posts = community.get_posts()
         return JSONResponse(
             {
@@ -32,6 +31,21 @@ async def read_posts():
             status_code=status.HTTP_404_NOT_FOUND
             )
 
+async def read_posts_by_user_id(user_id: int = Path(...)):
+    try:
+        posts = community.get_posts_by_user_id(user_id)
+        return JSONResponse(
+            {
+                "message":"게시글 조회 성공",
+                "data": posts
+            }, 
+            status_code=status.HTTP_200_OK)
+    except Exception as e:
+        return JSONResponse(
+            {"message": "게시글 조회 실패", "error":str(e)}, 
+            status_code=status.HTTP_404_NOT_FOUND
+            )
+        
 # 게시글 상세 조회
 async def read_post(post_id: int = Path(...)):
     try:

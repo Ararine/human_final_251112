@@ -9,7 +9,6 @@ def insert_comment(post_id: str, user_id: str, comments: str):
     INSERT INTO comment (post_id, comment_user_id, comment)
     VALUES (:post_id, :user_id, :comments)
     """)
-    print(query)
     with engine.connect() as conn:
         result = conn.execute(query, {
             "post_id": post_id, "user_id": user_id, "comments": comments})
@@ -26,7 +25,6 @@ def get_comments_by_post_id(post_id: int):
 
 # 특정 댓글 수정
 def update_comment_by_id(comment_id: int, comments: str):
-    print(comment_id, comments)
     query = text("UPDATE comment SET comment = :comments  WHERE id = :comment_id")
     with engine.connect() as conn:
         result = conn.execute(query, {"comments": comments, "comment_id": comment_id})

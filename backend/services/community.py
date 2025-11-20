@@ -11,6 +11,11 @@ def get_posts():
     posts = post.fetch_all_posts()
     return posts
 
+# 게시글 전체 조회
+def get_posts_by_user_id(user_id:int):
+    posts = post.fetch_all_posts_by_user_id(user_id)
+    return posts
+
 # 게시글 상세 조회
 def get_post(post_id: int):
     post_data = post.fetch_post_by_id(post_id)

@@ -11,6 +11,7 @@ import "./css/index.css";
 import "./css/global.css";
 import "./css/signup.css";
 import "./css/login.css";
+import "./css/admin.css";
 import Exercise from "./pages/Exercise";
 import Community from "./pages/Community";
 import CommunityWrite from "./pages/Community/Write";
@@ -21,6 +22,7 @@ import Login from "./pages/Login";
 import SignUp from "./pages/SignUp";
 import ForgotPassword from "./pages/ForgotPassword";
 
+import Admin from "./pages/Admin";
 import { default as AdminExercise } from "./pages/Admin/Exercise";
 import { default as AdminMeal } from "./pages/Admin/Meal";
 import { default as AdminUser } from "./pages/Admin/User";
@@ -108,6 +110,14 @@ function App() {
               element={<Login setUserInfo={setUserInfo} />}
             />
 
+            <Route
+              path="/admin"
+              element={
+                <PrivateRoute userInfo={userInfo} requireAdmin={true}>
+                  <Admin userInfo={userInfo} />
+                </PrivateRoute>
+              }
+            />
             <Route
               path="/admin/ex"
               element={

@@ -26,7 +26,16 @@ export async function getPosts() {
   }
 }
 
-// 게시글 상세 조회
+export async function getPostsByUserId(user_id) {
+  try {
+    const res = await api.get(`/posts/user/${user_id}`);
+    return res.data;
+  } catch (err) {
+    console.error("특정 유저 게시글 목록 불러오기 실패:", err);
+    throw err;
+  }
+}
+
 export async function getPostDetail(postId) {
   try {
     const res = await api.get(`/posts/${postId}`);
@@ -83,17 +92,6 @@ export async function getPostReport() {
     return res.data;
   } catch (err) {
     console.error("게시글 목록 불러오기 실패:", err);
-    throw err;
-  }
-}
-
-// ⭐ 유저별 게시글 조회 (프로필에서 필요한 함수)
-export async function getPostsByUserId(userId) {
-  try {
-    const res = await api.get(`/posts/user/${userId}`);
-    return res.data;
-  } catch (err) {
-    console.error("유저 게시글 불러오기 실패:", err);
     throw err;
   }
 }
