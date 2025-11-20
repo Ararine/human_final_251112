@@ -9,6 +9,10 @@ import {
   deleteComment,
 } from "../../../api/Comment";
 import { createPostReport, getPostDetail } from "../../../api/Community";
+import {
+  getPostReactionById,
+  updatePostReactionById,
+} from "../../../api/Reaction";
 
 const CommunityRead = () => {
   const navigate = useNavigate();
@@ -19,6 +23,8 @@ const CommunityRead = () => {
   const [newComment, setNewComment] = useState("");
   const [reporting, setReporting] = useState(false); // 신고 입력창 표시 여부
   const [reportReason, setReportReason] = useState(""); // 신고 사유
+  const [likes, setLikes] = useState(0);
+  const [dislikes, setDislikes] = useState(0);
 
   const [post, setPost] = useState({
     id: "",
@@ -27,6 +33,37 @@ const CommunityRead = () => {
     create_at: "",
     is_public: "",
   });
+  const fetchReactions = async () => {
+    try {
+      const reactionRes = await getPostReactionById(id);
+      const reactions = reactionRes.data || [];
+      const likesCount = reactions.filter(
+        (r) => r.reaction_type === "like"
+      ).length;
+      const dislikesCount = reactions.filter(
+        (r) => r.reaction_type === "dislike"
+      ).length;
+
+      setLikes(likesCount);
+      setDislikes(dislikesCount);
+    } catch (error) {
+      console.error("게시글 반응 불러오기 실패:", error);
+      alert("게시글 반응을 불러오는 중 오류가 발생했습니다.");
+    }
+  };
+  useEffect(() => {
+    fetchReactions();
+  }, [id]);
+
+  const handleReaction = async (type) => {
+    try {
+      await updatePostReactionById(id, { user_id: 1, reaction_type: type });
+      fetchReactions();
+    } catch (error) {
+      console.error(error);
+      alert("반응 처리 실패");
+    }
+  };
 
   useEffect(() => {
     const fetchPost = async () => {
@@ -53,6 +90,7 @@ const CommunityRead = () => {
         navigate("/community");
       }
     };
+
     const fetchComments = async () => {
       try {
         const res = await getCommentsByPostId(id);
@@ -65,6 +103,7 @@ const CommunityRead = () => {
     fetchPost();
     fetchComments();
   }, [id, navigate]);
+
   const getPublicStatus = (value) => {
     switch (value) {
       case "1":
@@ -157,7 +196,11 @@ const CommunityRead = () => {
       setReporting(false);
     } catch (error) {
       console.error("신고 처리 중 오류:", error);
-      alert("신고 처리에 실패했습니다.");
+      if (error.status == 409) {
+        alert("이미 신고 접수중인 게시글입니다.");
+      } else {
+        alert("신고 처리에 실패했습니다.");
+      }
     }
   };
   return (
@@ -247,6 +290,36 @@ const CommunityRead = () => {
             </button>
           </div>
         )}
+        {/* 좋아요 / 싫어요 */}
+        <div style={{ marginTop: "12px" }}>
+          <button
+            onClick={() => handleReaction("like")}
+            style={{
+              padding: "6px 12px",
+              backgroundColor: "#28a745",
+              color: "#fff",
+              border: "none",
+              borderRadius: "4px",
+              cursor: "pointer",
+              marginRight: "8px",
+            }}
+          >
+            👍 좋아요 ({likes})
+          </button>
+          <button
+            onClick={() => handleReaction("dislike")}
+            style={{
+              padding: "6px 12px",
+              backgroundColor: "#6c757d",
+              color: "white",
+              border: "none",
+              borderRadius: "4px",
+              cursor: "pointer",
+            }}
+          >
+            👎 싫어요 ({dislikes})
+          </button>
+        </div>
       </div>
       <hr />
       <div style={{ marginTop: "16px" }}>
