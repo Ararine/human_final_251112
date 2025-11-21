@@ -3,7 +3,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
 from config import config
-from routes import auth, community, user, test, comment, reaction, attendance
+from routes import auth, community, user, test, comment, reaction, attendance, qna
 
 app = FastAPI()
 app.add_middleware(
@@ -16,6 +16,7 @@ app.include_router(community.router, prefix="/posts")
 app.include_router(comment.router, prefix="/comments")
 app.include_router(reaction.router, prefix="/reactions")
 app.include_router(attendance.router, prefix="/attendance")
+app.include_router(qna.router, prefix="/qna")
 app.include_router(auth.router, prefix="")
 app.include_router(user.router, prefix="")
 app.include_router(test.router, prefix="")
