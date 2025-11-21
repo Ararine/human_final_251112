@@ -1,15 +1,32 @@
 from sqlalchemy.orm import Session
-from models.user import user
-from utils import hash_password
-# SQL문 안쓰고 아래처럼 작성된 걸 ORM이라 합니다.
-# ORM 쓰지말아주셔요 ORM 은 JOIN 작업이 불가한 경우가 발생합니다.
-def create_user(db: Session, email: str, password: str):
-    hashed_pw = hash_password(password)
-    db_user = user(email=email, password=hashed_pw)
-    db.add(db_user)
-    db.commit()
-    db.refresh(db_user)
-    return db_user
+from fastapi import HTTPException
+from models.user import User
 
-def get_user_by_email(db: Session, email: str):
-    return db.query(user).filter(user.email == email).first()
+def create_user(db: Session, data: dict):
+    email = data.get("email")
+    password = data.get("password")
+    name = data.get("name")
+    gender = data.get("gender")
+    age = data.get("age")
+
+    if not email or not password:
+        raise HTTPException(status_code=400, detail="Email and password are required")
+
+    # 이메일 중복 확인
+    exists = db.query(User).filter(User.email == email).first()
+    if exists:
+        raise HTTPException(status_code=409, detail="Email already registered")
+
+    new_user = User(
+        email=email,
+        password=password,
+        name=name,
+        gender=gender,
+        age=int(age) if age else None
+    )
+
+    db.add(new_user)
+    db.commit()
+    db.refresh(new_user)
+
+    return new_user

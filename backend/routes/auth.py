@@ -1,7 +1,20 @@
-from fastapi import APIRouter
-
-from controllers import test
+from fastapi import APIRouter, Request, Response, Depends
+from controllers import auth
+from db.database import get_db
 
 router = APIRouter()
-router.add_api_route("/",test.say_hello, methods=["GET"])
-# test 대신에 컨트롤러 만들어서 수정해주시기 바랍니다.
+
+
+@router.post("/login")
+async def login(req: Request, res: Response, db=Depends(get_db)):
+    return auth.login_controller(req, res, db)
+
+
+@router.post("/logout")
+async def logout(res: Response):
+    return auth.logout_controller(res)
+
+
+@router.get("/verify")
+async def verify(req: Request):
+    return auth.verify_controller(req)
