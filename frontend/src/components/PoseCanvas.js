@@ -60,7 +60,7 @@ const PoseCanvas = ({ videoRef, poses }) => {
         ctx.beginPath();
         ctx.moveTo(kp1.x, kp1.y);
         ctx.lineTo(kp2.x, kp2.y);
-        ctx.lineWidth = 1;
+        ctx.lineWidth = 3;
         ctx.strokeStyle = "lime";
         ctx.stroke();
       }
