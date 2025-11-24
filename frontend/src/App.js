@@ -117,18 +117,11 @@ function App() {
           </Route>
 
           {/* 🔥 QNA ROUTES */}
-<<<<<<< HEAD
 
           <Route path={URL.QNA_URL}>
             <Route index element={<Qna />} />
             <Route path=":id" element={<QnaDetail />} />
-            <Route path="/edit/:id" element={<QnaEdit />} />
-=======
-          <Route path={URL.QNA_URL}>
-            <Route index element={<Qna />} />
-            <Route path=":id" element={<QnaDetail />} />
-
->>>>>>> 790287ed47971ed64a21be3a726bc7e5ad476ccb
+            <Route path="edit/:id" element={<QnaEdit />} />
             <Route element={<PrivateRoute userInfo={userInfo} />}>
               <Route path="write" element={<QnaWrite />} />
             </Route>
