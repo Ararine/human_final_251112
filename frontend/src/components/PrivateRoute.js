@@ -1,11 +1,7 @@
-import { Navigate, useLocation } from "react-router-dom";
+import { Navigate, useLocation, Outlet } from "react-router-dom";
 import URL from "../constants/url";
 
-export default function PrivateRoute({
-  userInfo,
-  children,
-  requireAdmin = false,
-}) {
+export default function PrivateRoute({ userInfo, requireAdmin = false }) {
   const location = useLocation();
 
   // 아직 유저 정보 로딩 중
@@ -31,5 +27,5 @@ export default function PrivateRoute({
     );
   }
   // 로그인 됐으면 접근 허용
-  return children;
+  return <Outlet />;
 }

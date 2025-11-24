@@ -4,7 +4,7 @@ import WebCamView from "./WebCamView";
 import useSTT from "../../hooks/useSTT";
 import useKoreanSpeaker from "../../hooks/useKoreanSpeaker";
 
-const Exercise = () => {
+const ROM = () => {
   const videoRef = useRef(null);
   const [measuring, setMeasuring] = useState(false);
   const [maxAngles, setMaxAngles] = useState({});
@@ -96,4 +96,4 @@ const Exercise = () => {
   );
 };
 
-export default Exercise;
+export default ROM;

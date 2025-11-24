@@ -12,8 +12,9 @@ const URL = {
   COMMUNITY_URL: "/community",
   LOGIN_URL: "/login",
   PROFILE_URL: "/profile",
-
+  QNA_URL: "/qna",
   OTHERS: "*",
   TEST_PATH: "/test",
+  ROM_URL: "/rom",
 };
 export default URL;

@@ -70,26 +70,13 @@ function App() {
           <Route path="/forgot-password" element={<ForgotPassword />} />
 
           {/* 커뮤니티 */}
-          <Route
-            path={`${URL.COMMUNITY_URL}/read/:id`}
-            element={<CommunityRead />}
-          />
-          <Route
-            path={`${URL.COMMUNITY_URL}/write`}
-            element={
-              <PrivateRoute userInfo={userInfo}>
-                <CommunityWrite />
-              </PrivateRoute>
-            }
-          />
-          <Route
-            path={`${URL.COMMUNITY_URL}/write/:id`}
-            element={
-              <PrivateRoute userInfo={userInfo}>
-                <CommunityWrite />
-              </PrivateRoute>
-            }
-          />
+          <Route path={URL.COMMUNITY_URL}>
+            <Route path="read/:id" element={<CommunityRead />} />
+            <Route element={<PrivateRoute userInfo={userInfo} />}>
+              <Route path="write" element={<CommunityWrite />} />
+              <Route path="write/:id" element={<CommunityWrite />} />
+            </Route>
+          </Route>
 
           {/* 프로필 */}
           <Route
@@ -108,59 +95,35 @@ function App() {
           />
           <Route path="/signup" element={<SignUp />} />
 
+          <Route
+            path={URL.ROM_URL}
+            element={
+              <PrivateRoute userInfo={userInfo}>
+                <Profile userInfo={userInfo} />
+              </PrivateRoute>
+            }
+          />
           {/* 관리자 */}
           <Route
             path="/admin"
-            element={
-              <PrivateRoute userInfo={userInfo} requireAdmin={true}>
-                <Admin userInfo={userInfo} />
-              </PrivateRoute>
-            }
-          />
-          <Route
-            path="/admin/ex"
-            element={
-              <PrivateRoute userInfo={userInfo} requireAdmin={true}>
-                <AdminExercise />
-              </PrivateRoute>
-            }
-          />
-          <Route
-            path="/admin/meal"
-            element={
-              <PrivateRoute userInfo={userInfo} requireAdmin={true}>
-                <AdminMeal />
-              </PrivateRoute>
-            }
-          />
-          <Route
-            path="/admin/user"
-            element={
-              <PrivateRoute userInfo={userInfo} requireAdmin={true}>
-                <AdminUser />
-              </PrivateRoute>
-            }
-          />
-          <Route
-            path="/admin/post"
-            element={
-              <PrivateRoute userInfo={userInfo} requireAdmin={true}>
-                <AdminPostList />
-              </PrivateRoute>
-            }
-          />
+            element={<PrivateRoute userInfo={userInfo} requireAdmin={true} />}
+          >
+            <Route index element={<Admin userInfo={userInfo} />} />
+            <Route path="ex" element={<AdminExercise />} />
+            <Route path="meal" element={<AdminMeal />} />
+            <Route path="user" element={<AdminUser />} />
+            <Route path="post" element={<AdminPostList />} />
+          </Route>
 
           {/* 🔥 QNA ROUTES */}
-          <Route path="/qna" element={<Qna />} />
-          <Route
-            path="/qna/write"
-            element={
-              <PrivateRoute userInfo={userInfo}>
-                <QnaWrite />
-              </PrivateRoute>
-            }
-          />
-          <Route path="/qna/:id" element={<QnaDetail />} />
+          <Route path={URL.QNA_URL}>
+            <Route index element={<Qna />} />
+            <Route path=":id" element={<QnaDetail />} />
+
+            <Route element={<PrivateRoute userInfo={userInfo} />}>
+              <Route path="write" element={<QnaWrite />} />
+            </Route>
+          </Route>
 
           {/* 기타 */}
           <Route path="/*" element={<Navigate to={URL.HOME} replace />} />
