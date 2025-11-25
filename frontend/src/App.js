@@ -102,7 +102,6 @@ function App() {
           >
             <Route index element={<ROM />} />
           </Route>
-          {/* <Route element={<PrivateRoute userInfo={userInfo} />}></Route> */}
           {/* 관리자 */}
           <Route
             path="/admin"
