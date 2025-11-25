@@ -1,8 +1,11 @@
 import { useRef, useEffect, useState } from "react";
-import { usePoseDetection3d } from "../../hooks/usePoseDetection3d";
+
+import { romData } from "../../constants/sample";
 import WebCamView from "./WebCamView";
 import useSTT from "../../hooks/useSTT";
 import useKoreanSpeaker from "../../hooks/useKoreanSpeaker";
+import { usePoseDetection3d } from "../../hooks/usePoseDetection3d";
+import RomTable from "./RomTable";
 
 const ROM = () => {
   const videoRef = useRef(null);
@@ -74,23 +77,26 @@ const ROM = () => {
   }, []);
 
   return (
-    <div style={{ marginTop: "30px", height: "70vh", display: "flex" }}>
-      <WebCamView
-        videoRef={videoRef}
-        poses={displayedPoses} // 🔥 measuring=false면 pose 표시 안됨
-        width="640px"
-        height="480px"
-      />
+    <div>
+      <RomTable romData={romData} />
+      <div style={{ margin: "30px 0px", display: "flex" }}>
+        <WebCamView
+          videoRef={videoRef}
+          poses={displayedPoses} // 🔥 measuring=false면 pose 표시 안됨
+          width="300px"
+          height="300px"
+        />
 
-      <div style={{ marginLeft: "20px" }}>
-        <p>인식된 말: {transcript}</p>
-        <p>측정 상태: {measuring ? "측정 중" : "대기"}</p>
+        <div style={{ marginLeft: "20px" }}>
+          <p>인식된 말: {transcript}</p>
+          <p>측정 상태: {measuring ? "측정 중" : "대기"}</p>
 
-        <h3>🔥 현재 기록된 최대 각도</h3>
-        <pre>{JSON.stringify(maxAngles, null, 2)}</pre>
+          <h3>🔥 현재 기록된 최대 각도</h3>
+          <pre>{JSON.stringify(maxAngles, null, 2)}</pre>
 
-        <button onClick={startMeasure}>측정 시작</button>
-        <button onClick={stopMeasure}>측정 종료</button>
+          <button onClick={startMeasure}>측정 시작</button>
+          <button onClick={stopMeasure}>측정 종료</button>
+        </div>
       </div>
     </div>
   );

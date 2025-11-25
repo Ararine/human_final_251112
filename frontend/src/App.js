@@ -23,6 +23,8 @@ import Login from "./pages/Login";
 import SignUp from "./pages/SignUp";
 import ForgotPassword from "./pages/ForgotPassword";
 
+import ROM from "./pages/ROM";
+
 import Admin from "./pages/Admin";
 import AdminExercise from "./pages/Admin/Exercise";
 import AdminMeal from "./pages/Admin/Meal";
@@ -80,14 +82,12 @@ function App() {
           </Route>
 
           {/* 프로필 */}
-          <Route
-            path={URL.PROFILE_URL}
-            element={
-              <PrivateRoute userInfo={userInfo}>
-                <Profile userInfo={userInfo} />
-              </PrivateRoute>
-            }
-          />
+          <Route element={<PrivateRoute userInfo={userInfo} />}>
+            <Route
+              path={URL.PROFILE_URL}
+              element={<Profile userInfo={userInfo} />}
+            />
+          </Route>
 
           {/* Auth */}
           <Route
@@ -98,12 +98,10 @@ function App() {
 
           <Route
             path={URL.ROM_URL}
-            element={
-              <PrivateRoute userInfo={userInfo}>
-                <Profile userInfo={userInfo} />
-              </PrivateRoute>
-            }
-          />
+            element={<PrivateRoute userInfo={userInfo} />}
+          >
+            <Route index element={<ROM />} />
+          </Route>
           {/* 관리자 */}
           <Route
             path="/admin"
