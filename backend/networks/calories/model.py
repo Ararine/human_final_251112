@@ -1,44 +1,4 @@
 
-import numpy as np 
-from PIL import Image
-import torch
-from torchvision import transforms
-
-class CaloriesModel:
-    def __init__(self, weight_path):
-        self.weight_path = weight_path
-        self.setup()        
-    def setup(self):
-        ckpt = torch.load(
-            self.weight_path, map_location=torch.device("cpu"))
-        self.model = ckpt["model_ft"]
-        self.model.load_state_dict(ckpt["state_dict"])
-        self.model.eval()
-        self.transforms = transforms.Compose([
-            transforms.Resize(256),
-            transforms.CenterCrop(224),
-            transforms.ToTensor(),
-            transforms.Normalize(
-                mean=[0.485, 0.456, 0.406],
-                std=[0.229, 0.224, 0.225])])
-    def predict(self, pil_img):
-        preprocess_data = self.transforms(pil_img)
-        input_tensor = np.expand_dims(preprocess_data, 0)
-        input_tensor = torch.from_numpy(input_tensor)
-        logits = self.model(input_tensor)
-        probs = logits.softmax(dim=-1)
-        return probs
-
-model_path = "./backend/networks/calories/Regression/new_opencv_ckpt_b84_e200.pth"
-sample = r"c:\Users\human\Downloads\New_sample\원천데이터\합본_양추정_이미지_TRAIN\image\김밥\Q3\side_주먹밥김밥류_접시_김밥_Q3_00007.JPG"
-calories_model = CaloriesModel(weight_path=model_path)
-calories_model
-pil_img = Image.open(sample)
-calories_model.predict(pil_img)
-
-# Q1, Q2, Q3, Q4, Q5로 25% 50% 75% 100% 125%로 분류하는 형태로 제공
-
-
 import torch
 import numpy as np
 from PIL import Image
@@ -49,40 +9,90 @@ sys.path.append("backend/networks/calories/ObjectDetection/yolov3")
 
 from utils import utils
 from models import Darknet
+
+class MealVolumeModel:
+    def __init__(self, weight_path):
+        self.weight_path = weight_path
+        self.setup()        
+    def setup(self):
+        ckpt = torch.load(
+            self.weight_path, map_location=torch.device("cpu"))
+        self.model = ckpt["model_ft"]
+        self.model.load_state_dict(ckpt["state_dict"])
+        self.model.eval()
+        self.transforms = T.Compose([
+            T.Resize(256),
+            T.CenterCrop(224),
+            T.ToTensor(),
+            T.Normalize(
+                mean=[0.485, 0.456, 0.406],
+                std=[0.229, 0.224, 0.225])])
+    def predict(self, pil_img):
+        preprocess_data = self.transforms(pil_img)
+        input_tensor = np.expand_dims(preprocess_data, 0)
+        input_tensor = torch.from_numpy(input_tensor)
+        logits = self.model(input_tensor)
+        probs = logits.softmax(dim=-1)
+        return probs
+
+"""
+model_path = "./backend/networks/calories/weights/new_opencv_ckpt_b84_e200.pth"
+sample = r"./backend/networks/calories/Regression/sample.JPG"
+calories_model = MealVolumeModel(weight_path=model_path)
+pil_img = Image.open(sample)
+calories_model.predict(pil_img)
+# Q1, Q2, Q3, Q4, Q5로 25% 50% 75% 100% 125%로 분류하는 형태로 제공
+"""
+
+class MealDetectionModel:
+    def __init__(self,config_path, weight_path, labels_list, img_size = (320,192)):
+        self.config_path = config_path
+        self.weight_path = weight_path
+        self.img_size = img_size
+        self.labels_list = labels_list
+        self.setup()
+        
+    def setup(self):
+        self.model = Darknet(self.config_path, self.img_size)
+        weight = torch.load(self.weight_path, map_location=torch.device("cpu"))
+        self.model.load_state_dict(weight["model"], strict = False)
+        self.model.fuse()
+        self.model.eval()
+        self.transform = T.Compose([
+            T.Resize(self.img_size),  # YOLOv3 input size
+            T.ToTensor()           # C,H,W로 변환
+        ])
+    
+    def predict(self, pil_img, conf_threshold=0.2, iou_threshold = 0.45):
+        img = self.transform(pil_img).unsqueeze(0)        
+        with torch.no_grad():
+            inf_out, _ = self.model(img, augment=False) 
+        output = utils.non_max_suppression(
+            inf_out, conf_threshold, iou_threshold ,multi_label=False ,classes=None, agnostic=None)
+        output = [i.detach().cpu().numpy() for i in output]
+        return output
+    
+
+"""
 imgsz = (320,192)
-yolo_util_path = "backend/networks/calories/ObjectDetection"
-model = Darknet(f"{yolo_util_path}/yolov3/cfg/yolov3-spp-403cls.cfg", imgsz)
-weight_path = f"{yolo_util_path}/best_403food_e200b150v2.pt"
-model.load_state_dict(torch.load(weight_path, map_location=torch.device("cpu"))['model'], strict=False)
-model.fuse()
-names = utils.load_classes(f"{yolo_util_path}/yolov3/data/403food.names")
+yolo_util_path = "backend/networks/calories"
+config_path = f"{yolo_util_path}/ObjectDetection/yolov3/cfg/yolov3-spp-403cls.cfg"
+weight_path = f"{yolo_util_path}/weights/best_403food_e200b150v2.pt"
+names = utils.load_classes(f"{yolo_util_path}/ObjectDetection/yolov3/data/403food.names")
 
-sample = r"c:\Users\human\Downloads\New_sample\원천데이터\합본_양추정_이미지_TRAIN\image\김밥\Q3\side_주먹밥김밥류_접시_김밥_Q3_00007.JPG"
-img = Image.open(sample).convert("RGB")
-transform = T.Compose([
-    T.Resize(imgsz),  # YOLOv3 input size
-    T.ToTensor()           # C,H,W로 변환
-])
-img = transform(img).unsqueeze(0)  # [1, 3, H, W]
-# img = img[:,::-1]
-img.min(),img.max()
-model.eval()
+meal_detection_model = MealDetectionModel(config_path, weight_path, names)
+sample = r"./backend/networks/calories/Regression/sample.JPG"
+pil_img = Image.open(sample)
+output = meal_detection_model.predict(pil_img)
 
-with torch.no_grad():
-    inf_out, train_out = model(img, augment=False) # 큰 객체[0], 중간객체[1], 작은객체[2]
-
-output = utils.non_max_suppression(
-    inf_out,0.2, 0.45 ,multi_label=False ,classes=None, agnostic=None)
-output = output[0].detach().cpu().numpy()
-import cv2
-img = Image.open(sample).convert("RGB")
+#  시각화
 transform = T.Compose([
     T.Resize(imgsz),  # YOLOv3 input size
 ])
-img = transform(img)
+img = transform(pil_img)
 view_img = np.array(img)
-
-for det in output:
+import cv2
+for det in output[0]:
     x1, y1, x2, y2, score, cls = det.tolist()
     cls = int(cls)
     cv2.rectangle(view_img,
@@ -94,7 +104,6 @@ for det in output:
                 cv2.FONT_HERSHEY_SIMPLEX, 0.6,
                 (0, 255, 0), 2)
 
-# Save result
-
 cv2.imwrite("test.png", view_img[...,::-1])
+"""
 
