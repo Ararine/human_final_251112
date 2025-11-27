@@ -1,4 +1,6 @@
-import { Link, useNavigate } from "react-router-dom";
+// Header.js
+import { Link, useNavigate, useLocation } from "react-router-dom";
+import "../../css/header.css";
 import URL from "../../constants/url";
 
 const Header = ({ userInfo, onLogout }) => {
@@ -6,18 +8,16 @@ const Header = ({ userInfo, onLogout }) => {
 
   const goHome = () => navigate(URL.HOME);
   const goLogin = () => navigate(URL.LOGIN_URL);
-  const goSignup = () => navigate(URL.SIGNUP_URL);
+  const goSignup = () => navigate("/signup");
   const goProfile = () => navigate(URL.PROFILE_URL);
 
   const handleLogoutClick = () => {
-    if (onLogout) {
-      onLogout(); // ✅ App.js의 handleLogout 함수 호출
-    }
+    onLogout?.();
     navigate(URL.HOME);
   };
 
   return (
-    <header>
+    <header className="header">
       <div className="header-left">
         <button className="logo" onClick={goHome}>
           HomeFit
@@ -26,8 +26,8 @@ const Header = ({ userInfo, onLogout }) => {
         <nav className="gnb">
           <Link to={URL.EXERCISE_URL}>운동</Link>
           <Link to={URL.MEAL_URL}>식단</Link>
-          <Link to={URL.ROM_URL}>ROM</Link>
-          <Link to={URL.COMMUNITY_URL}>커뮤니티</Link>
+          <Link to="/rom">ROM</Link>
+          <Link to={URL.COMMUNITY_URL}>운동커뮤니티</Link>
           <Link to="/qna">Q&A</Link>
         </nav>
       </div>
@@ -36,11 +36,13 @@ const Header = ({ userInfo, onLogout }) => {
         {userInfo ? (
           <>
             <span className="header-user">
-              {(userInfo.email || userInfo.username || "사용자") + " 님"}
+              {(userInfo.email || userInfo.username) + " 님"}
             </span>
+
             <button className="btn-ghost" onClick={goProfile}>
               마이페이지
             </button>
+
             <button className="btn-outline" onClick={handleLogoutClick}>
               로그아웃
             </button>
