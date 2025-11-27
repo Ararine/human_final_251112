@@ -123,3 +123,7 @@
 .btn-outline:hover {
   background: #f5f5f5;
 }
+
+.table-nowrap {
+  white-space: nowrap;
+}

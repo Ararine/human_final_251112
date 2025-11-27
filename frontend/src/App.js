@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import { jwtDecode } from "jwt-decode";
 
 import Home from "./pages/Home";
 import Header from "./components/Header";
@@ -39,97 +40,104 @@ import QnaEdit from "./pages/Qna/QnaEdit";
 function App() {
   const [userInfo, setUserInfo] = useState(undefined);
 
-  useEffect(() => {
-    const savedUser = localStorage.getItem("userInfo");
-    if (savedUser) {
-      setUserInfo(JSON.parse(savedUser));
-    } else {
-      // 테스트용
-      const sampleUser = {
-        id: 1,
-        username: "testuser",
-        email: "testuser@example.com",
-        role: "admin",
-      };
-      setUserInfo(sampleUser);
-      localStorage.setItem("userInfo", JSON.stringify(sampleUser));
-    }
-  }, []);
-
   const handleLogout = () => {
-    localStorage.removeItem("userInfo");
+    localStorage.removeItem("token");
     setUserInfo(undefined);
   };
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (!token) return;
+
+    const decoded = jwtDecode(token);
+    setUserInfo(decoded);
+
+    const expiryTime = decoded.exp * 1000;
+    const timeLeft = expiryTime - Date.now();
+    console.log("남은 시간 (ms):", timeLeft / 1000);
+    if (timeLeft <= 0) {
+      // 이미 만료됨
+      handleLogout();
+    } else {
+      // 만료까지 타이머 설정
+      const timer = setTimeout(() => {
+        handleLogout();
+      }, timeLeft);
+
+      return () => clearTimeout(timer);
+    }
+  }, []);
 
   return (
     <BrowserRouter>
       <Header userInfo={userInfo} onLogout={handleLogout} />
-      <main>
-        <Routes>
-          {/* 기본 페이지 */}
-          <Route path={URL.HOME} element={<Home />} />
-          <Route path={URL.EXERCISE_URL} element={<Exercise />} />
-          <Route path={URL.COMMUNITY_URL} element={<Community />} />
-          <Route path="/forgot-password" element={<ForgotPassword />} />
+      <div style={{ display: "flex", flexDirection: "column", flex: 1 }}>
+        <main>
+          <Routes>
+            {/* 기본 페이지 */}
+            <Route path={URL.HOME} element={<Home />} />
+            <Route path={URL.EXERCISE_URL} element={<Exercise />} />
+            <Route path={URL.COMMUNITY_URL} element={<Community />} />
+            <Route path="/forgot-password" element={<ForgotPassword />} />
 
-          {/* 커뮤니티 */}
-          <Route path={URL.COMMUNITY_URL}>
-            <Route path="read/:id" element={<CommunityRead />} />
-            <Route element={<PrivateRoute userInfo={userInfo} />}>
-              <Route path="write" element={<CommunityWrite />} />
-              <Route path="write/:id" element={<CommunityWrite />} />
+            {/* 커뮤니티 */}
+            <Route path={URL.COMMUNITY_URL}>
+              <Route path="read/:id" element={<CommunityRead />} />
+              <Route element={<PrivateRoute userInfo={userInfo} />}>
+                <Route path="write" element={<CommunityWrite />} />
+                <Route path="write/:id" element={<CommunityWrite />} />
+              </Route>
             </Route>
-          </Route>
 
-          {/* 프로필 */}
-          <Route element={<PrivateRoute userInfo={userInfo} />}>
+            {/* 프로필 */}
+            <Route element={<PrivateRoute userInfo={userInfo} />}>
+              <Route
+                path={URL.PROFILE_URL}
+                element={<Profile userInfo={userInfo} />}
+              />
+            </Route>
+
+            {/* Auth */}
             <Route
-              path={URL.PROFILE_URL}
-              element={<Profile userInfo={userInfo} />}
+              path={URL.LOGIN_URL}
+              element={<Login setUserInfo={setUserInfo} />}
             />
-          </Route>
+            <Route path="/signup" element={<SignUp />} />
 
-          {/* Auth */}
-          <Route
-            path={URL.LOGIN_URL}
-            element={<Login setUserInfo={setUserInfo} />}
-          />
-          <Route path="/signup" element={<SignUp />} />
-
-          <Route
-            path={URL.ROM_URL}
-            element={<PrivateRoute userInfo={userInfo} />}
-          >
-            <Route index element={<ROM />} />
-          </Route>
-          {/* 관리자 */}
-          <Route
-            path="/admin"
-            element={<PrivateRoute userInfo={userInfo} requireAdmin={true} />}
-          >
-            <Route index element={<Admin userInfo={userInfo} />} />
-            <Route path="ex" element={<AdminExercise />} />
-            <Route path="meal" element={<AdminMeal />} />
-            <Route path="user" element={<AdminUser />} />
-            <Route path="post" element={<AdminPostList />} />
-          </Route>
-
-          {/* 🔥 QNA ROUTES */}
-
-          <Route path={URL.QNA_URL}>
-            <Route index element={<Qna />} />
-            <Route path=":id" element={<QnaDetail />} />
-            <Route path="edit/:id" element={<QnaEdit />} />
-            <Route element={<PrivateRoute userInfo={userInfo} />}>
-              <Route path="write" element={<QnaWrite />} />
+            <Route
+              path={URL.ROM_URL}
+              element={<PrivateRoute userInfo={userInfo} />}
+            >
+              <Route index element={<ROM />} />
             </Route>
-          </Route>
+            {/* 관리자 */}
+            <Route
+              path="/admin"
+              element={<PrivateRoute userInfo={userInfo} requireAdmin={true} />}
+            >
+              <Route index element={<Admin userInfo={userInfo} />} />
+              <Route path="ex" element={<AdminExercise />} />
+              <Route path="meal" element={<AdminMeal />} />
+              <Route path="user" element={<AdminUser />} />
+              <Route path="post" element={<AdminPostList />} />
+            </Route>
 
-          {/* 기타 */}
-          <Route path="/*" element={<Navigate to={URL.HOME} replace />} />
-        </Routes>
-      </main>
-      <Footer />
+            {/* 🔥 QNA ROUTES */}
+            <Route path={URL.QNA_URL}>
+              <Route index element={<Qna />} />
+              <Route path=":id" element={<QnaDetail />} />
+              <Route path="edit/:id" element={<QnaEdit />} />
+              <Route element={<PrivateRoute userInfo={userInfo} />}>
+                <Route path="write" element={<QnaWrite />} />
+              </Route>
+            </Route>
+
+            {/* 기타 */}
+            <Route path="/*" element={<Navigate to={URL.HOME} replace />} />
+          </Routes>
+        </main>
+        <Footer />
+      </div>
     </BrowserRouter>
   );
 }
