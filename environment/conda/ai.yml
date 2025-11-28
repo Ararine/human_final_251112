@@ -13,3 +13,8 @@ dependencies:
       - torchaudio
       - openpyxl
       - pandas
+      - google-generativeai
+      - faiss-cpu==1.7.4
+      - sentence_transformers
+      - langchain==0.3
+      - langchain_google_genai

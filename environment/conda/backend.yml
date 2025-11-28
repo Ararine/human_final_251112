@@ -9,7 +9,7 @@ dependencies:
       - fastapi
       - uvicorn
       - opencv-python
-      - numpy==1.23
+      - numpy==1.26
       - python-multipart
       - sqlalchemy
       - pymysql
@@ -17,7 +17,7 @@ dependencies:
       - pandas
       - passlib
       - pillow
-      - torch
+      - torch>=2.6
       - torchvision==0.15.2
       - torchaudio
       - openpyxl
@@ -25,3 +25,8 @@ dependencies:
       - tqdm
       - bcrypt==3.2.0
       - PyJWT==2.8.0
+      - google-generativeai
+      - faiss-cpu==1.7.4
+      - sentence_transformers
+      - langchain==0.3
+      - langchain_google_genai
