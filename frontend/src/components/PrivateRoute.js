@@ -20,7 +20,7 @@ export default function PrivateRoute({ userInfo, requireAdmin = false }) {
     );
   }
   // 관리자 권한이 필요한 페이지인데, 일반 유저라면 접근 제한
-  if (requireAdmin && userInfo.role !== "admin") {
+  if (requireAdmin && userInfo.type !== "admin") {
     alert("접근 권한이 없습니다.");
     return (
       <Navigate to={URL.HOME} replace state={{ from: location.pathname }} />

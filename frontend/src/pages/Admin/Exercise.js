@@ -1,4 +1,10 @@
 import { useState, useEffect } from "react";
+import {
+  createExercise,
+  getExercises,
+  updateExercise,
+  deleteExercise,
+} from "../../api/exercise";
 
 const Exercise = () => {
   const [exercises, setExercises] = useState([]);
@@ -10,18 +16,18 @@ const Exercise = () => {
   const [form, setForm] = useState({
     name: "",
     category: "",
-    level: "",
+    link: "",
   });
-
+  const loadExercises = async () => {
+    try {
+      const data = await getExercises();
+      setExercises(data.data);
+    } catch (err) {
+      console.error("운동 불러오기 실패:", err);
+    }
+  };
   useEffect(() => {
-    // 🔥 실제 API 연결 시 여기를 호출
-    const sampleExercises = [
-      { id: 1, name: "스쿼트", category: "하체", level: "중급" },
-      { id: 2, name: "벤치프레스", category: "가슴", level: "고급" },
-      { id: 3, name: "풀업", category: "등", level: "고급" },
-      { id: 4, name: "플랭크", category: "코어", level: "초급" },
-    ];
-    setExercises(sampleExercises);
+    loadExercises();
   }, []);
 
   // 검색
@@ -35,52 +41,57 @@ const Exercise = () => {
       setEditTarget(exercise.id);
       setForm({
         name: exercise.name,
-        category: exercise.category,
-        level: exercise.level,
+        category: exercise.type,
+        link: exercise.link,
       });
     } else {
       setEditTarget(null);
-      setForm({ name: "", category: "", level: "" });
+      setForm({ name: "", category: "", link: "" });
     }
     setModalOpen(true);
   };
 
   // 모달 저장
-  const handleSave = () => {
-    if (!form.name || !form.category || !form.level) {
-      alert("모든 필드를 입력해주세요.");
+  const handleSave = async () => {
+    if (!form.name || !form.category) {
+      alert("운동명과 카테고리는 필수입니다.");
       return;
     }
 
-    if (editTarget) {
-      // 수정
-      setExercises((prev) =>
-        prev.map((ex) => (ex.id === editTarget ? { ...ex, ...form } : ex))
-      );
-    } else {
-      // 추가
-      const newItem = {
-        id: Date.now(),
-        ...form,
-      };
-      setExercises((prev) => [...prev, newItem]);
-    }
+    try {
+      if (editTarget) {
+        // 수정
+        console.log(form);
+        await updateExercise(editTarget, form.name, form.category, form.link);
+      } else {
+        // 추가
+        await createExercise(null, form.name, form.category, form.link);
+      }
 
-    setModalOpen(false);
+      await loadExercises();
+      setModalOpen(false);
+    } catch (err) {
+      console.error("저장 실패:", err);
+      alert("저장에 실패했습니다.");
+    }
   };
 
   // 삭제
-  const handleDelete = (id) => {
+  const handleDelete = async (id) => {
     if (!window.confirm("정말 삭제하시겠습니까?")) return;
 
-    setExercises((prev) => prev.filter((ex) => ex.id !== id));
+    try {
+      await deleteExercise(id);
+      await loadExercises();
+    } catch (err) {
+      console.error("삭제 실패:", err);
+    }
   };
 
   return (
     <div className="exercise-container">
       <h2 className="exercise-title">운동 관리</h2>
 
-      {/* 검색 + 추가 버튼 */}
       <div className="top-bar">
         <input
           type="text"
@@ -94,14 +105,13 @@ const Exercise = () => {
         </button>
       </div>
 
-      {/* 테이블 */}
       <table className="exercise-table">
         <thead>
           <tr>
             <th>ID</th>
             <th>운동명</th>
             <th>카테고리</th>
-            <th>난이도</th>
+            <th>링크</th>
             <th>관리</th>
           </tr>
         </thead>
@@ -110,9 +120,17 @@ const Exercise = () => {
           {filtered.map((ex) => (
             <tr key={ex.id}>
               <td>{ex.id}</td>
-              <td className="name">{ex.name}</td>
-              <td>{ex.category}</td>
-              <td>{ex.level}</td>
+              <td>{ex.name}</td>
+              <td>{ex.type}</td>
+              <td>
+                {ex.link ? (
+                  <a href={ex.link} target="_blank" rel="noopener noreferrer">
+                    보기
+                  </a>
+                ) : (
+                  "-"
+                )}
+              </td>
               <td>
                 <button className="btn-edit" onClick={() => openModal(ex)}>
                   수정
@@ -149,16 +167,13 @@ const Exercise = () => {
               onChange={(e) => setForm({ ...form, category: e.target.value })}
             />
 
-            <label>난이도</label>
-            <select
-              value={form.level}
-              onChange={(e) => setForm({ ...form, level: e.target.value })}
-            >
-              <option value="">선택</option>
-              <option value="초급">초급</option>
-              <option value="중급">중급</option>
-              <option value="고급">고급</option>
-            </select>
+            <label>링크</label>
+            <input
+              type="text"
+              value={form.link}
+              onChange={(e) => setForm({ ...form, link: e.target.value })}
+              placeholder="운동 영상이나 자료 링크"
+            />
 
             <div className="modal-actions">
               <button className="btn-save" onClick={handleSave}>

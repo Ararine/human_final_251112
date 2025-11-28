@@ -2,8 +2,9 @@
 import numpy as np 
 
 from networks.calories.model import calories_model
+from models import meal
 
-# 게시글 생성
+# 칼로리 추정
 def get_calories(pil_img):
     det_res, vol_res = calories_model.predict(
         pil_img, conf_threshold=0.015)
@@ -23,3 +24,27 @@ def get_calories(pil_img):
     else:
         result = {"x1": [], "y1": [], "x2": [], "y2": [], "confidence": []}
     return result, selected_rows.to_dict(orient="records")
+
+# 기본 식단 생성
+def create_base_meal(name:str, calories:float, link:str):
+    post_id = meal.insert_base_meal(name, calories, link)
+    return post_id
+
+# 기본 식단 조회
+def get_base_meals():
+    post_data = meal.get_base_meals()
+    return post_data
+
+def get_base_meal_by_id(meal_id: int):
+    post_data = meal.get_base_meal_by_id(meal_id)
+    return post_data
+
+# 기본 식단 수정
+def update_base_meal_by_id(meal_id: int, name: str, calories:float, link:str):
+    updated = meal.update_base_meal_by_id(meal_id, name, calories, link)
+    return updated
+
+# 기본 식단 삭제
+def delete_base_meal_by_id(meal_id: int):
+    deleted = meal.delete_base_meal_by_id(meal_id)
+    return deleted

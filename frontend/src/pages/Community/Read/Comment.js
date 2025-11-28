@@ -1,4 +1,5 @@
 import { useNavigate } from "react-router-dom";
+
 const Comment = ({
   comments = [],
   newComment,

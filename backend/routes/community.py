@@ -1,7 +1,6 @@
 from fastapi import APIRouter
 
 from controllers import community
-
 router = APIRouter()
 router.add_api_route("/report",community.read_reported_posts, methods=["GET"])
 router.add_api_route("/report/{post_id}",community.create_reported_post, methods=["POST"])

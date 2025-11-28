@@ -1,20 +1,16 @@
-import { useState, useEffect } from "react";
+// App.js
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { jwtDecode } from "jwt-decode";
+import { useState, useEffect } from "react";
 
-import Home from "./pages/Home";
+import URL from "./constants/url";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 import PrivateRoute from "./components/PrivateRoute";
-import URL from "./constants/url";
 
-import "./css/index.css";
-import "./css/global.css";
-import "./css/signup.css";
-import "./css/login.css";
-import "./css/admin.css";
-
+import Home from "./pages/Home";
 import Exercise from "./pages/Exercise";
+import Meal from "./pages/Meal";
 import Community from "./pages/Community";
 import CommunityWrite from "./pages/Community/Write";
 import CommunityRead from "./pages/Community/Read";
@@ -23,7 +19,6 @@ import Profile from "./pages/Profile";
 import Login from "./pages/Login";
 import SignUp from "./pages/SignUp";
 import ForgotPassword from "./pages/ForgotPassword";
-
 import ROM from "./pages/ROM";
 
 import Admin from "./pages/Admin";
@@ -36,6 +31,11 @@ import Qna from "./pages/Qna";
 import QnaWrite from "./pages/Qna/QnaWrite";
 import QnaDetail from "./pages/Qna/QnaDetail";
 import QnaEdit from "./pages/Qna/QnaEdit";
+
+import "./css/index.css";
+import "./css/signup.css";
+import "./css/login.css";
+import "./css/admin.css";
 
 function App() {
   const [userInfo, setUserInfo] = useState(undefined);
@@ -77,8 +77,8 @@ function App() {
             {/* 기본 페이지 */}
             <Route path={URL.HOME} element={<Home />} />
             <Route path={URL.EXERCISE_URL} element={<Exercise />} />
+            <Route path={URL.MEAL_URL} element={<Meal />} />
             <Route path={URL.COMMUNITY_URL} element={<Community />} />
-            <Route path="/forgot-password" element={<ForgotPassword />} />
 
             {/* 커뮤니티 */}
             <Route path={URL.COMMUNITY_URL}>
@@ -103,13 +103,11 @@ function App() {
               element={<Login setUserInfo={setUserInfo} />}
             />
             <Route path="/signup" element={<SignUp />} />
+            <Route path="/forgot-password" element={<ForgotPassword />} />
 
-            <Route
-              path={URL.ROM_URL}
-              element={<PrivateRoute userInfo={userInfo} />}
-            >
-              <Route index element={<ROM />} />
-            </Route>
+            {/* ROM */}
+            <Route path={URL.ROM_URL} element={<ROM />} />
+
             {/* 관리자 */}
             <Route
               path="/admin"

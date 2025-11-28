@@ -1,15 +1,17 @@
-from fastapi import status, Body, Path
+from fastapi import status, Body, Path, Depends
 from fastapi.responses import JSONResponse
 
 from services import comment
+from utils import verify_token
 
 # 댓글 생성
-async def create_comment(body: dict = Body(...)):
+async def create_comment(body: dict = Body(...), user=Depends(verify_token)):
     try:
+        post_id=body.get("post_id")
+        user_id=user["user_id"]
+        comments=body.get("contents")
         post_id = comment.create_comment(
-            post_id=body.get("post_id"),
-            user_id=body.get("user_id"),
-            comments=body.get("contents"),
+            post_id, user_id, comments
         )
         return JSONResponse(
             {"message": "댓글 생성 완료", 

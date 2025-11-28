@@ -1,16 +1,24 @@
-import { api, apiWithCookie } from "./axios";
+import { api } from "./axios";
 
-export async function createComment(postId, contents, authorId) {
+export async function createComment(postId, contents) {
   try {
-    const res = await apiWithCookie.post("/comments", {
-      post_id: postId,
-      user_id: authorId,
-      contents,
-    });
+    const token = localStorage.getItem("token");
+    const res = await api.post(
+      "/comments",
+      {
+        post_id: postId,
+        contents,
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
 
     return res.data;
   } catch (err) {
-    console.error("게시글 작성 실패:", err);
+    console.error("댓글 작성 실패:", err);
     throw err;
   }
 }
@@ -27,7 +35,7 @@ export async function getCommentsByPostId(postId) {
 
 export async function updateComment(postId, contents) {
   try {
-    const res = await apiWithCookie.put(`/comments/${postId}`, {
+    const res = await api.put(`/comments/${postId}`, {
       contents,
     });
     return res.data;
@@ -39,7 +47,7 @@ export async function updateComment(postId, contents) {
 export async function deleteComment(postId) {
   console.log(postId);
   try {
-    const res = await apiWithCookie.delete(`/comments/${postId}`);
+    const res = await api.delete(`/comments/${postId}`);
     return res.data;
   } catch (err) {
     console.error("게시글 삭제 실패:", err);

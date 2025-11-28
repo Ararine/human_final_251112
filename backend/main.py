@@ -3,7 +3,10 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
 from config import config
-from routes import auth, community, user, test, comment, reaction, attendance, qna, ai, file, exercise
+from routes import (
+    auth, community, user, test, comment, reaction,
+    attendance, qna, ai, file, exercise, meal
+)
 
 app = FastAPI()
 
@@ -25,6 +28,7 @@ app.include_router(user.router, prefix="/user")
 app.include_router(ai.router, prefix="/ai")
 app.include_router(file.router, prefix="/file")
 app.include_router(exercise.router, prefix="/exercise")
+app.include_router(meal.router, prefix="/meal")
 
 if __name__ == "__main__":
     try:
