@@ -1,3 +1,7 @@
+// =============================
+// 🔥 기존 코드 (보존용)
+// =============================
+/*
 import { api } from "./axios";
 
 export async function loginRequest(email, password) {
@@ -12,7 +16,7 @@ export async function loginRequest(email, password) {
     throw error;
   }
 }
-// 🔹 비밀번호 재설정 메일 요청 (나중에 실제로 쓸 함수)
+
 export async function requestPasswordReset(email) {
   try {
     const response = await api.post("/auth/forgot-password", { email });
@@ -22,19 +26,59 @@ export async function requestPasswordReset(email) {
     throw error;
   }
 }
-// ForgotPassword.js에서 나중에 이렇게 바꾸면 됨:
+*/
 
-// // 지금은 console.log + alert 쓰는 부분을
-// import { requestPasswordReset } from "../api/Auth";
+// =============================
+// 🔥 수정된 실제 동작 코드
+// =============================
+import { api } from "./axios";
 
-// // ...
-// const handleSubmit = async (e) => {
-//     e.preventDefault();
-//     try {
-//         await requestPasswordReset(email);
-//         setSent(true);
-//         alert("비밀번호 재설정 메일을 보냈습니다.");
-//     } catch (err) {
-//         alert("요청에 실패했습니다. 다시 시도해주세요.");
-//     }
-// };
+// 🔹 로그인 (POST /user/login)
+export async function loginRequest(email, password) {
+  try {
+    const response = await api.post("/user/login", { email, password });
+    return response.data; // { message, token }
+  } catch (error) {
+    console.error("로그인 실패:", error);
+    throw error;
+  }
+}
+
+// 🔹 회원가입 (POST /user/create)
+export async function signupRequest(form) {
+  console.log(form);
+  try {
+    const response = await api.post("/user", form);
+    return response.data; // { message, results }
+  } catch (error) {
+    console.error("회원가입 실패:", error);
+    throw error;
+  }
+}
+
+// 🔹 로그인된 사용자 정보 조회 (GET /user)
+//   → App.js에서 자동 로그인 유지에 사용
+export async function getUserInfoRequest() {
+  try {
+    const response = await api.get("/user", {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+    });
+    return response.data.data; // 유저 정보만 반환
+  } catch (error) {
+    console.error("사용자 정보 조회 실패:", error);
+    throw error;
+  }
+}
+
+// 🔹 비밀번호 재설정 요청 (미사용 상태지만 정상 구현)
+export async function requestPasswordReset(email) {
+  try {
+    const response = await api.post("/auth/forgot-password", { email });
+    return response.data;
+  } catch (error) {
+    console.error("비밀번호 재설정 요청 실패:", error);
+    throw error;
+  }
+}

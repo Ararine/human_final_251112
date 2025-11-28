@@ -1,9 +1,10 @@
-// App.js
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { jwtDecode } from "jwt-decode";
 import { useState, useEffect } from "react";
 
 import URL from "./constants/url";
+import { getUserInfoRequest } from "./api/Auth";
+
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 import PrivateRoute from "./components/PrivateRoute";
@@ -41,37 +42,57 @@ import "./css/admin.css";
 function App() {
   const [userInfo, setUserInfo] = useState(undefined);
 
+  // 로그아웃
   const handleLogout = () => {
     localStorage.removeItem("token");
     setUserInfo(undefined);
   };
 
+  // 자동 로그인 유지 + 토큰 만료 체크
   useEffect(() => {
     const token = localStorage.getItem("token");
     if (!token) return;
 
-    const decoded = jwtDecode(token);
-    setUserInfo(decoded);
+    try {
+      const decoded = jwtDecode(token);
+      const expiryTime = decoded.exp * 1000;
 
-    const expiryTime = decoded.exp * 1000;
-    const timeLeft = expiryTime - Date.now();
-    console.log("남은 시간 (ms):", timeLeft / 1000);
-    if (timeLeft <= 0) {
-      // 이미 만료됨
-      handleLogout();
-    } else {
-      // 만료까지 타이머 설정
+      // 이미 만료
+      if (Date.now() >= expiryTime) {
+        console.log("토큰 만료됨 → 자동 로그아웃");
+        handleLogout();
+        return;
+      }
+
+      // 백엔드에서 사용자 정보 가져오기
+      getUserInfoRequest()
+        .then((info) => {
+          setUserInfo(info);
+        })
+        .catch(() => {
+          console.log("토큰 인증 실패 → 로그아웃");
+          handleLogout();
+        });
+
+      // 만료 시점에 로그아웃
+      const timeLeft = expiryTime - Date.now();
       const timer = setTimeout(() => {
+        console.log("토큰 만료 → 자동 로그아웃");
         handleLogout();
       }, timeLeft);
 
       return () => clearTimeout(timer);
+    } catch (err) {
+      console.error("토큰 해석 오류:", err);
+      handleLogout();
     }
   }, []);
 
   return (
     <BrowserRouter>
       <Header userInfo={userInfo} onLogout={handleLogout} />
+
+      {/* 페이지 전체 레이아웃 */}
       <div style={{ display: "flex", flexDirection: "column", flex: 1 }}>
         <main>
           <Routes>
@@ -121,7 +142,7 @@ function App() {
               <Route path="post" element={<AdminPostList />} />
             </Route>
 
-            {/* 🔥 QNA ROUTES */}
+            {/* QNA */}
             <Route path={URL.QNA_URL}>
               <Route index element={<Qna />} />
               <Route path=":id" element={<QnaDetail />} />
@@ -135,6 +156,7 @@ function App() {
             <Route path="/*" element={<Navigate to={URL.HOME} replace />} />
           </Routes>
         </main>
+
         <Footer />
       </div>
     </BrowserRouter>

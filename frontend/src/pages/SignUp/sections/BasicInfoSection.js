@@ -1,4 +1,4 @@
-const BasicInfoSection = ({ form, handleChange }) => {
+const BasicInfoSection = ({ form, onChange }) => {
   return (
     <section className="signup-section">
       <h3 className="section-title">기본 정보</h3>
@@ -8,8 +8,8 @@ const BasicInfoSection = ({ form, handleChange }) => {
         <input
           type="text"
           name="name"
-          value={form.name}
-          onChange={handleChange}
+          value={form.name ?? ""}
+          onChange={(e) => onChange("name", e.target.value)}
           className="form-input"
           required
         />
@@ -19,8 +19,8 @@ const BasicInfoSection = ({ form, handleChange }) => {
         <label className="form-label">성별</label>
         <select
           name="gender"
-          value={form.gender}
-          onChange={handleChange}
+          value={form.gender ?? ""}
+          onChange={(e) => onChange("gender", e.target.value)}
           className="form-input"
           required
         >
@@ -34,13 +34,13 @@ const BasicInfoSection = ({ form, handleChange }) => {
         <label className="form-label">나이</label>
         <select
           name="age"
-          value={form.age}
-          onChange={handleChange}
+          value={form.age ?? ""}
+          onChange={(e) => onChange("age", e.target.value)}
           className="form-input"
           required
         >
           <option value="">선택하세요</option>
-          {Array.from({ length: 100 }, (_, i) => i + 1).map((num) => (
+          {Array.from({ length: 100 }, (_, i) => String(i + 1)).map((num) => (
             <option key={num} value={num}>
               {num}
             </option>
@@ -52,13 +52,13 @@ const BasicInfoSection = ({ form, handleChange }) => {
         <label className="form-label">키 (cm)</label>
         <select
           name="height"
-          value={form.height}
-          onChange={handleChange}
+          value={form.height ?? ""}
+          onChange={(e) => onChange("height", e.target.value)}
           className="form-input"
           required
         >
           <option value="">선택하세요</option>
-          {Array.from({ length: 131 }, (_, i) => i + 100).map((num) => (
+          {Array.from({ length: 131 }, (_, i) => String(i + 100)).map((num) => (
             <option key={num} value={num}>
               {num} cm
             </option>
@@ -70,13 +70,13 @@ const BasicInfoSection = ({ form, handleChange }) => {
         <label className="form-label">몸무게 (kg)</label>
         <select
           name="weight"
-          value={form.weight}
-          onChange={handleChange}
+          value={form.weight ?? ""}
+          onChange={(e) => onChange("weight", e.target.value)}
           className="form-input"
           required
         >
           <option value="">선택하세요</option>
-          {Array.from({ length: 181 }, (_, i) => i + 20).map((num) => (
+          {Array.from({ length: 181 }, (_, i) => String(i + 20)).map((num) => (
             <option key={num} value={num}>
               {num} kg
             </option>

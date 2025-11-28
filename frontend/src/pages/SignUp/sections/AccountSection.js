@@ -1,4 +1,4 @@
-const AccountSection = ({ form, handleChange }) => {
+const AccountSection = ({ form, onChange }) => {
   return (
     <section className="signup-section">
       <h3 className="section-title">계정 정보</h3>
@@ -9,7 +9,7 @@ const AccountSection = ({ form, handleChange }) => {
           type="email"
           name="email"
           value={form.email}
-          onChange={handleChange}
+          onChange={(e) => onChange("email", e.target.value)}
           className="form-input"
           required
         />
@@ -21,7 +21,7 @@ const AccountSection = ({ form, handleChange }) => {
           type="password"
           name="password"
           value={form.password}
-          onChange={handleChange}
+          onChange={(e) => onChange("password", e.target.value)}
           className="form-input"
           required
         />

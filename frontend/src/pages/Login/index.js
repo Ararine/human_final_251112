@@ -5,20 +5,19 @@ import { jwtDecode } from "jwt-decode";
 import URL from "../../constants/url";
 import LoginForm from "./LoginForm";
 
-// 백엔드 연결할 때 주석 풀 예정
+// 백엔드 연결
 import { loginRequest } from "../../api/Auth";
 
 const Login = ({ setUserInfo }) => {
   const navigate = useNavigate();
   const location = useLocation();
 
-  // 로그인 폼 상태 (이메일 / 비밀번호)
+  // 이메일/비밀번호 상태
   const [form, setForm] = useState({
     email: "",
     password: "",
   });
 
-  // input 값이 바뀔 때마다 상태 업데이트
   const handleChange = (e) => {
     const { name, value } = e.target;
     setForm((prev) => ({
@@ -27,39 +26,43 @@ const Login = ({ setUserInfo }) => {
     }));
   };
 
-  // 로그인 버튼 클릭 시
   const handleLogin = async (e) => {
     e.preventDefault();
-    // 로컬스토리지에 로그인 정보 저장
-    // localStorage.setItem("userInfo", JSON.stringify(fakeUser));
-    // App.js의 userInfo 상태 업데이트
-    // setUserInfo(fakeUser);
 
-    // 원래 가려던 페이지가 있으면 거기로, 없으면 홈으로
-    const redirectPath = location.state?.from || URL.HOME;
-    navigate(redirectPath, { replace: true });
-
-    // ② 백엔드 로그인 API 연결 후에는 아래처럼 변경
     try {
-      // 서버에 로그인 요청 (이메일, 비밀번호 전달)
-      const message = await loginRequest(form.email, form.password);
-      console.log(message);
-      if (message?.token) {
-        // 서버에서 받은 유저 정보를 저장
-        const token = message.token;
+      // 1) 서버에 로그인 요청
+      const response = await loginRequest(form.email, form.password);
+
+      console.log("로그인 응답:", response);
+
+      // 2) token 존재 시 저장
+      if (response?.token) {
+        const token = response.token;
         localStorage.setItem("token", token);
+
+        // 3) 토큰 decode → 유저 상태에 저장
         const decoded = jwtDecode(token);
+        console.log("디코드 정보:", decoded);
         setUserInfo(decoded);
+
+        // 4) 원래 가던 페이지 or 홈으로 이동
+        const redirectPath = location.state?.from || URL.HOME;
+        navigate(redirectPath, { replace: true });
+        return;
       }
 
-      const redirectPath = location.state?.from || URL.HOME;
-      navigate(redirectPath, { replace: true });
+      alert("서버에서 올바른 응답을 받지 못했습니다.");
     } catch (error) {
       console.error("로그인 실패:", error);
-      if (error?.status == 403) {
+
+      const status = error?.response?.status;
+
+      if (status === 403) {
         alert("계정이 비활성화되었습니다.");
+      } else if (status === 401) {
+        alert("아이디 또는 비밀번호가 틀렸습니다.");
       } else {
-        alert("로그인에 실패했습니다. 다시 시도해 주세요.");
+        alert("로그인에 실패했습니다. 다시 시도해주세요.");
       }
     }
   };
@@ -91,4 +94,5 @@ const Login = ({ setUserInfo }) => {
     </div>
   );
 };
+
 export default Login;
