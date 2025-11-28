@@ -76,12 +76,11 @@ function App() {
         <main>
           <Routes>
             {/* 기본 페이지 */}
-            <Route path={URL.HOME} element={<Home />} />
+            <Route path={URL.HOME} element={<Home userInfo={userInfo} />} />
             <Route path={URL.EXERCISE_URL} element={<Exercise />} />
             <Route path={URL.MEAL_URL} element={<Meal />} />
             <Route path={URL.COMMUNITY_URL} element={<Community />} />
 
-<<<<<<< HEAD
             {/* 커뮤니티 */}
             <Route path={URL.COMMUNITY_URL}>
               <Route path="read/:id" element={<CommunityRead />} />
@@ -90,15 +89,6 @@ function App() {
                 <Route path="write/:id" element={<CommunityWrite />} />
               </Route>
             </Route>
-=======
-      <main>
-        <Routes>
-          <Route path={URL.HOME} element={<Home userInfo={userInfo} />} />
-
-          <Route path={URL.EXERCISE_URL} element={<Exercise />} />
-          <Route path={URL.MEAL_URL} element={<Meal />} />
-          <Route path={URL.COMMUNITY_URL} element={<Community />} />
->>>>>>> 094afd66c433d1e11dc26c45d1035154d5631507
 
             {/* 프로필 */}
             <Route element={<PrivateRoute userInfo={userInfo} />}>
@@ -131,7 +121,6 @@ function App() {
               <Route path="post" element={<AdminPostList />} />
             </Route>
 
-<<<<<<< HEAD
             {/* 🔥 QNA ROUTES */}
             <Route path={URL.QNA_URL}>
               <Route index element={<Qna />} />
@@ -141,22 +130,6 @@ function App() {
                 <Route path="write" element={<QnaWrite />} />
               </Route>
             </Route>
-=======
-          {/* 출석 체크 모달 페이지 */}
-          {/* <Route
-            path="/attendance-check"
-            element={<AttendanceCheckPage userInfo={userInfo} />}
-          /> */}
-
-          {/* 관리자 */}
-          <Route path="/admin">
-            <Route index element={<Admin userInfo={userInfo} />} />
-            <Route path="ex" element={<AdminExercise />} />
-            <Route path="meal" element={<AdminMeal />} />
-            <Route path="user" element={<AdminUser />} />
-            <Route path="post" element={<AdminPostList />} />
-          </Route>
->>>>>>> 094afd66c433d1e11dc26c45d1035154d5631507
 
             {/* 기타 */}
             <Route path="/*" element={<Navigate to={URL.HOME} replace />} />
