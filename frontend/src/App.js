@@ -18,6 +18,7 @@ import Login from "./pages/Login";
 import SignUp from "./pages/SignUp";
 import ForgotPassword from "./pages/ForgotPassword";
 import ROM from "./pages/ROM";
+import AttendanceCheckPage from "./pages/AttendanceCheckPage";
 
 import Admin from "./pages/Admin";
 import AdminExercise from "./pages/Admin/Exercise";
@@ -66,7 +67,8 @@ function App() {
 
       <main>
         <Routes>
-          <Route path={URL.HOME} element={<Home />} />
+          <Route path={URL.HOME} element={<Home userInfo={userInfo} />} />
+
           <Route path={URL.EXERCISE_URL} element={<Exercise />} />
           <Route path={URL.MEAL_URL} element={<Meal />} />
           <Route path={URL.COMMUNITY_URL} element={<Community />} />
@@ -94,6 +96,12 @@ function App() {
 
           {/* ROM */}
           <Route path={URL.ROM_URL} element={<ROM />} />
+
+          {/* 출석 체크 모달 페이지 */}
+          {/* <Route
+            path="/attendance-check"
+            element={<AttendanceCheckPage userInfo={userInfo} />}
+          /> */}
 
           {/* 관리자 */}
           <Route path="/admin">
