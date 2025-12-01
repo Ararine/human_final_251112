@@ -158,8 +158,9 @@ CREATE TABLE IF NOT EXISTS `curriculum` (
 CREATE TABLE IF NOT EXISTS `base_meals` (
     `id` INT NOT NULL AUTO_INCREMENT,
     `name` VARCHAR(255) NOT NULL COMMENT '식사 이름',
+    `weight` VARCHAR(255) NOT NULL COMMENT '1회 제공량 기준 중량(g)',
     `calories` INT NOT NULL COMMENT '1회 제공량 기준 kcal',
-    `link` VARCHAR(255) DEFAULT NULL COMMENT '레시피나 음식 정보 링크',
+    `link` TEXT DEFAULT NULL COMMENT '음식 정보 링크',
     PRIMARY KEY (`id`)
 );
 
@@ -184,3 +185,26 @@ CREATE TABLE IF NOT EXISTS `qna` (
     PRIMARY KEY (`id`),
     CONSTRAINT `FK_qna_user` FOREIGN KEY (`user_id`) REFERENCES `user`(`id`)
 );
+
+CREATE TABLE IF NOT EXISTS `food_nutrition` (
+  `id` BIGINT NOT NULL COMMENT 'base_meals.id와 동일한 값 사용',
+  `food_name` VARCHAR(255) NOT NULL COMMENT '음식 이름',
+  `weight_g` DOUBLE DEFAULT NULL COMMENT '1회 제공량 중량(g)',
+  `energy_kcal` DOUBLE DEFAULT NULL COMMENT '에너지(kcal)',
+  `carbs_g` DOUBLE DEFAULT NULL COMMENT '탄수화물(g)',
+  `sugars_g` DOUBLE DEFAULT NULL COMMENT '당류(g)',
+  `fat_g` DOUBLE DEFAULT NULL COMMENT '지방(g)',
+  `protein_g` DOUBLE DEFAULT NULL COMMENT '단백질(g)',
+  `calcium_mg` DOUBLE DEFAULT NULL COMMENT '칼슘(mg)',
+  `phosphorus_mg` DOUBLE DEFAULT NULL COMMENT '인(mg)',
+  `sodium_mg` DOUBLE DEFAULT NULL COMMENT '나트륨(mg)',
+  `potassium_mg` DOUBLE DEFAULT NULL COMMENT '칼륨(mg)',
+  `magnesium_mg` DOUBLE DEFAULT NULL COMMENT '마그네슘(mg)',
+  `iron_mg` DOUBLE DEFAULT NULL COMMENT '철(mg)',
+  `zinc_mg` DOUBLE DEFAULT NULL COMMENT '아연(mg)',
+  `cholesterol_mg` DOUBLE DEFAULT NULL COMMENT '콜레스테롤(mg)',
+  `trans_fat_g` DOUBLE DEFAULT NULL COMMENT '트랜스지방(g)',
+  PRIMARY KEY (`id`)
+);
+
+
