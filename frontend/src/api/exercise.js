@@ -1,5 +1,28 @@
 import { api } from "./axios";
 
+export async function recommendedCurriculum(user_id, n_days, available_time) {
+  try {
+    const token = localStorage.getItem("token");
+    const res = await api.post(
+      "/ai/curriculum",
+      {
+        n_days,
+        available_time,
+      },
+      {
+        headers: {
+          timeout: 120000,
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+    return res.data;
+  } catch (err) {
+    console.error("기본 커리큘럼 생성 실패:", err);
+    throw err;
+  }
+}
+
 export async function createExercise(exId, name, type, link) {
   try {
     const token = localStorage.getItem("token");

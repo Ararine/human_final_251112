@@ -4,9 +4,10 @@ from fastapi.responses import JSONResponse
 from services import exercise
 from utils import verify_token
 
-async def create_curriculum(body: dict = Body(...)):
+async def create_curriculum(
+    body: dict = Body(...), user=Depends(verify_token)):
     try:
-        user_id=body.get("user_id")
+        user_id=user["user_id"]
         n_days=body.get("n_days")
         available_time = body.get("available_time")
         

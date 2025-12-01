@@ -4,11 +4,12 @@ from fastapi import status, UploadFile, File, Body, Path, Depends
 from fastapi.responses import JSONResponse
 
 from services import meal
+from utils import verify_token
 
-
-async def recommended_meal_list(body: dict = Body(...)):
+async def recommended_meal_list(
+    body: dict = Body(...), user=Depends(verify_token)):
     try:
-        user_id=body.get("user_id")
+        user_id=user["user_id"]
         n_days=body.get("n_days")
         n_times=body.get("n_times")
         

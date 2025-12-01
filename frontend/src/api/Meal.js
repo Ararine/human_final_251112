@@ -1,5 +1,28 @@
 import { api } from "./axios";
 
+export async function recommendedMealLists(n_days, n_times) {
+  try {
+    const token = localStorage.getItem("token");
+    const res = await api.post(
+      "/ai/meal_list",
+      {
+        n_days,
+        n_times,
+      },
+      {
+        timeout: 120000,
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+    return res.data;
+  } catch (err) {
+    console.error("기본 식단 목록 작성 실패:", err);
+    throw err;
+  }
+}
+
 export async function createBaseMeal(name, calories, link) {
   try {
     const res = await api.post("/meal", {
