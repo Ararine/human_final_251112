@@ -35,9 +35,11 @@ import QnaDetail from "./pages/Qna/QnaDetail";
 import QnaEdit from "./pages/Qna/QnaEdit";
 
 import "./css/index.css";
+import "./css/global.css";
 import "./css/signup.css";
 import "./css/login.css";
 import "./css/admin.css";
+import "./css/header.css";
 
 function App() {
   const [userInfo, setUserInfo] = useState(undefined);

@@ -1,6 +1,5 @@
 // Header.js
 import { Link, useNavigate, useLocation } from "react-router-dom";
-import "../../css/header.css";
 import URL from "../../constants/url";
 
 const Header = ({ userInfo, onLogout }) => {
@@ -17,7 +16,7 @@ const Header = ({ userInfo, onLogout }) => {
   };
 
   return (
-    <header className="header">
+    <header>
       <div className="header-left">
         <button className="logo" onClick={goHome}>
           HomeFit
