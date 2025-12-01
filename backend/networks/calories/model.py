@@ -17,7 +17,7 @@ class MealVolumeModel:
         self.setup()        
     def setup(self):
         ckpt = torch.load(
-            self.weight_path, map_location=torch.device("cpu"))
+            self.weight_path, map_location=torch.device("cpu"), weights_only=False)
         self.model = ckpt["model_ft"]
         self.model.load_state_dict(ckpt["state_dict"])
         self.model.eval()
@@ -54,7 +54,7 @@ class MealDetectionModel:
         
     def setup(self):
         self.model = Darknet(self.config_path, self.img_size)
-        weight = torch.load(self.weight_path, map_location=torch.device("cpu"))
+        weight = torch.load(self.weight_path, map_location=torch.device("cpu"), weights_only=False)
         self.model.load_state_dict(weight["model"], strict = False)
         self.model.fuse()
         self.model.eval()

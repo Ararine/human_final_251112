@@ -4,6 +4,21 @@ from fastapi.responses import JSONResponse
 from services import exercise
 from utils import verify_token
 
+async def create_curriculum(body: dict = Body(...)):
+    try:
+        user_id=body.get("user_id")
+        n_days=body.get("n_days")
+        available_time = body.get("available_time")
+        
+        results = exercise.create_curriculum(user_id, n_days, available_time)
+        return JSONResponse(
+            {"message": "기본 커리큘럼 생성 완료", 
+             "results": results}, status_code=status.HTTP_201_CREATED)
+    except Exception as e:
+        return JSONResponse(
+            {"message": "기본 커리큘럼 생성 실패", "error":str(e)}, 
+            status_code=status.HTTP_400_BAD_REQUEST)
+
 # 기본 운동 생성
 # , user=Depends(verify_token)
 async def create_exercise(body: dict = Body(...)):

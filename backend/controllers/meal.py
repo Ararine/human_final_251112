@@ -5,6 +5,22 @@ from fastapi.responses import JSONResponse
 
 from services import meal
 
+
+async def recommended_meal_list(body: dict = Body(...)):
+    try:
+        user_id=body.get("user_id")
+        n_days=body.get("n_days")
+        n_times=body.get("n_times")
+        
+        results = meal.create_meal_list(user_id, n_days, n_times)
+        return JSONResponse(
+            {"message": "기본 식단 생성 완료", 
+             "results": results}, status_code=status.HTTP_201_CREATED)
+    except Exception as e:
+        return JSONResponse(
+            {"message": "기본 식단 생성 실패", "error":str(e)}, 
+            status_code=status.HTTP_400_BAD_REQUEST)
+
 # 칼로리 모델 가중치 필요
 async def get_calories(file: UploadFile = File(...)):
     try:

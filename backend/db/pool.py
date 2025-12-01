@@ -1,4 +1,3 @@
-# db/pool.py
 from sqlalchemy import create_engine, text
 from sqlalchemy.exc import SQLAlchemyError
 from config import config
