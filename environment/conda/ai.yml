@@ -9,7 +9,7 @@ dependencies:
       - opencv-python
       - numpy==1.23
       - torch
-      - torchvision==0.15.2
+      - torchvision==0.21.0
       - torchaudio
       - openpyxl
       - pandas

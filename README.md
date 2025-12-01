@@ -127,6 +127,9 @@ conda activate final_backend
 # 환경 삭제
 conda env remove -n final_backend
 
+# 환경 업데이트
+conda env update -f environment/conda/backend.yml --prune
+
 ```
 
 5. AI 환경 구축
