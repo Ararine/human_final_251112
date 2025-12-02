@@ -25,7 +25,7 @@ const Header = ({ userInfo, onLogout }) => {
           <Link to={URL.EXERCISE_URL}>운동</Link>
           <Link to={URL.MEAL_URL}>식단</Link>
           <Link to="/rom">ROM</Link>
-          <Link to={URL.COMMUNITY_URL}>운동커뮤니티</Link>
+          <Link to={URL.COMMUNITY_URL}>커뮤니티</Link>
           <Link to="/qna">Q&A</Link>
         </nav>
       </div>

@@ -20,3 +20,15 @@
 2025/11/27 10:30:27 [notice] 27876#14864: signal process started
 2025/11/27 10:30:51 [notice] 25080#18936: signal process started
 2025/11/27 10:30:51 [error] 25080#18936: CreateFile() "E:\프로젝트진행\02_FINAL\Repo\nginx/logs/nginx.pid" failed (2: The system cannot find the file specified)
+2025/12/02 14:07:09 [alert] 16876#34944: worker process 21460 exited with code C0000142
+2025/12/02 14:07:09 [alert] 16876#34944: could not respawn worker
+2025/12/02 14:07:09 [alert] 16876#34944: worker process 3440 exited with code C0000142
+2025/12/02 14:07:09 [alert] 16876#34944: could not respawn worker
+2025/12/02 14:07:09 [alert] 16876#34944: worker process 20436 exited with code C0000142
+2025/12/02 14:07:09 [alert] 16876#34944: could not respawn worker
+2025/12/02 14:07:09 [alert] 16876#34944: worker process 24032 exited with code C0000142
+2025/12/02 14:07:09 [alert] 16876#34944: could not respawn worker
+2025/12/02 14:07:09 [alert] 16876#34944: worker process 31124 exited with code C0000142
+2025/12/02 14:07:09 [alert] 16876#34944: could not respawn worker
+2025/12/02 14:07:09 [alert] 16876#34944: worker process 23668 exited with code C0000142
+2025/12/02 14:07:09 [alert] 16876#34944: could not respawn worker

@@ -20,15 +20,17 @@ function calculateAngle3D(A, B, C) {
 
   if (magAB === 0 || magCB === 0) return null;
 
-  const angleRad = Math.acos(Math.min(Math.max(dot / (magAB * magCB), -1), 1)); // 안전하게 clamp
+  const angleRad = Math.acos(Math.min(Math.max(dot / (magAB * magCB), -1), 1));
   return (angleRad * 180) / Math.PI;
 }
 
-const getPoint = (keypoints, name) => {
-  const point = keypoints.find((k) => k.name === name);
-  if (!point) console.warn("Keypoint missing:", name);
-  return point;
+// Keypoint getter
+const kp = (keypoints, name) => {
+  const p = keypoints.find((k) => k.name === name);
+  if (!p) console.warn("Missing keypoint:", name);
+  return p;
 };
+
 export function usePoseDetection3d(videoRef) {
   const detectorRef = useRef(null);
   const rafRef = useRef(null);
@@ -85,45 +87,136 @@ export function usePoseDetection3d(videoRef) {
           const estimatedPoses = await detector.estimatePoses(video, {
             flipHorizontal: false,
           });
+
           if (!estimatedPoses || estimatedPoses.length === 0) {
             rafRef.current = requestAnimationFrame(detectPose);
             return;
           }
+
           const pose = estimatedPoses[0];
 
-          // keypoints3D가 있으면 사용, 없으면 keypoints
           const keypoints = pose.keypoints3D?.length
             ? pose.keypoints3D
             : pose.keypoints;
-          //   const scaledKeypoints = scaleKeypoints(video, keypoints);
 
           if (!keypoints) {
-            console.warn("No keypoints found");
             rafRef.current = requestAnimationFrame(detectPose);
             return;
           }
 
-          // 좌우 팔꿈치 각도 계산
+          /* ---------------------------
+           *   ★ 관절 각도 계산 부분 ★
+           * ---------------------------
+           */
+
+          // Elbow
           const leftElbow = calculateAngle3D(
-            getPoint(keypoints, "left_shoulder"),
-            getPoint(keypoints, "left_elbow"),
-            getPoint(keypoints, "left_wrist")
+            kp(keypoints, "left_shoulder"),
+            kp(keypoints, "left_elbow"),
+            kp(keypoints, "left_wrist")
           );
-
           const rightElbow = calculateAngle3D(
-            getPoint(keypoints, "right_shoulder"),
-            getPoint(keypoints, "right_elbow"),
-            getPoint(keypoints, "right_wrist")
+            kp(keypoints, "right_shoulder"),
+            kp(keypoints, "right_elbow"),
+            kp(keypoints, "right_wrist")
           );
 
-          //   setPoses(estimatedPoses);
-          setPoses([
-            {
-              ...pose,
-            },
-          ]);
+          // Shoulder Flexion & Abduction
+          const leftShoulderFlex = calculateAngle3D(
+            kp(keypoints, "left_elbow"),
+            kp(keypoints, "left_shoulder"),
+            kp(keypoints, "left_hip")
+          );
+          const rightShoulderFlex = calculateAngle3D(
+            kp(keypoints, "right_elbow"),
+            kp(keypoints, "right_shoulder"),
+            kp(keypoints, "right_hip")
+          );
 
-          setAngles({ leftElbow, rightElbow });
+          const leftShoulderAbd = leftShoulderFlex;
+          const rightShoulderAbd = rightShoulderFlex;
+
+          // Wrist Flexion
+          const leftWristFlex = calculateAngle3D(
+            kp(keypoints, "left_elbow"),
+            kp(keypoints, "left_wrist"),
+            kp(keypoints, "left_index")
+          );
+          const rightWristFlex = calculateAngle3D(
+            kp(keypoints, "right_elbow"),
+            kp(keypoints, "right_wrist"),
+            kp(keypoints, "right_index")
+          );
+
+          // Hip Flexion
+          const leftHipFlex = calculateAngle3D(
+            kp(keypoints, "left_knee"),
+            kp(keypoints, "left_hip"),
+            kp(keypoints, "left_shoulder")
+          );
+          const rightHipFlex = calculateAngle3D(
+            kp(keypoints, "right_knee"),
+            kp(keypoints, "right_hip"),
+            kp(keypoints, "right_shoulder")
+          );
+
+          // Knee Flexion
+          const leftKnee = calculateAngle3D(
+            kp(keypoints, "left_hip"),
+            kp(keypoints, "left_knee"),
+            kp(keypoints, "left_ankle")
+          );
+          const rightKnee = calculateAngle3D(
+            kp(keypoints, "right_hip"),
+            kp(keypoints, "right_knee"),
+            kp(keypoints, "right_ankle")
+          );
+
+          // Ankle Dorsiflexion
+          const leftAnkle = calculateAngle3D(
+            kp(keypoints, "left_knee"),
+            kp(keypoints, "left_ankle"),
+            kp(keypoints, "left_foot_index")
+          );
+          const rightAnkle = calculateAngle3D(
+            kp(keypoints, "right_knee"),
+            kp(keypoints, "right_ankle"),
+            kp(keypoints, "right_foot_index")
+          );
+
+          /* ---------------------------
+           *   저장
+           * ---------------------------
+           */
+          setPoses([pose]);
+
+          setAngles({
+            // Shoulders
+            leftShoulderFlex,
+            rightShoulderFlex,
+            leftShoulderAbd,
+            rightShoulderAbd,
+
+            // Elbows
+            leftElbow,
+            rightElbow,
+
+            // Wrists
+            leftWristFlex,
+            rightWristFlex,
+
+            // Hips
+            leftHipFlex,
+            rightHipFlex,
+
+            // Knees
+            leftKnee,
+            rightKnee,
+
+            // Ankles
+            leftAnkle,
+            rightAnkle,
+          });
         } catch (err) {
           console.error("Pose estimation error:", err);
         }

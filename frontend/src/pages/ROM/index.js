@@ -6,17 +6,50 @@ import useSTT from "../../hooks/useSTT";
 import useKoreanSpeaker from "../../hooks/useKoreanSpeaker";
 import { usePoseDetection3d } from "../../hooks/usePoseDetection3d";
 import RomTable from "./RomTable";
+import ROMImageSlider from "./RomImageSlider";
+
+// 🔥 배열에서 quantile 계산 함수
+function quantile(arr, q) {
+  if (!arr || arr.length === 0) return null;
+  const sorted = [...arr].sort((a, b) => a - b);
+  const pos = (sorted.length - 1) * q;
+  const base = Math.floor(pos);
+  const rest = pos - base;
+
+  if (sorted[base + 1] !== undefined) {
+    return sorted[base] + rest * (sorted[base + 1] - sorted[base]);
+  }
+  return sorted[base];
+}
+function formatAngles(obj) {
+  if (!obj) return obj;
+  const out = {};
+  Object.keys(obj).forEach((key) => {
+    const v = obj[key];
+    out[key] = v != null ? Number(v.toFixed(1)) : null;
+  });
+  return out;
+}
+const romImages = {
+  어깨정면: "어깨정면.png",
+  팔꿈치: "팔꿈치.png",
+  손목: "손목.png",
+  엉덩이: "엉덩이.png",
+  무릎: "무릎.png",
+  발목: "발목.png",
+};
 
 const ROM = () => {
   const videoRef = useRef(null);
   const [measuring, setMeasuring] = useState(false);
-  const [maxAngles, setMaxAngles] = useState({});
+  const [resultAngles, setResultAngles] = useState({});
 
+  const angleHistoryRef = useRef({}); // 🔥 각 관절별 angle 히스토리
   const { poses, angles } = usePoseDetection3d(videoRef);
-  const { transcript, listening, setListening } = useSTT();
+
+  const { transcript, setListening } = useSTT();
   const speak = useKoreanSpeaker();
 
-  console.log(transcript);
   // 사이트 들어오면 자동 STT on
   useEffect(() => {
     setListening(true);
@@ -33,36 +66,51 @@ const ROM = () => {
   const startMeasure = () => {
     console.log("측정 시작!");
     setMeasuring(true);
-    setMaxAngles({});
+    angleHistoryRef.current = {}; // 초기화
+    setResultAngles({});
     speak("측정이 시작되었습니다.");
   };
 
   const stopMeasure = () => {
     console.log("측정 종료!");
     setMeasuring(false);
+
+    const finalResults = {};
+    const history = angleHistoryRef.current;
+
+    Object.keys(history).forEach((key) => {
+      const arr = history[key];
+      if (!arr || arr.length === 0) return;
+
+      // 🔥 98% quantile 로 ROM 산출
+      finalResults[key] = quantile(arr, 0.98);
+    });
+
+    setResultAngles(finalResults);
     speak("측정 종료되었습니다.");
   };
 
-  // measuring = true일 때만 angles 최대값 갱신
+  // 🔥 measuring = true일 때만 각도 history 저장
   useEffect(() => {
     if (!measuring || !angles) return;
 
-    setMaxAngles((prev) => {
-      const updated = { ...prev };
+    Object.keys(angles).forEach((key) => {
+      if (!angleHistoryRef.current[key]) {
+        angleHistoryRef.current[key] = [];
+      }
 
-      Object.keys(angles).forEach((key) => {
-        const current = angles[key];
-        const prevMax = prev[key] ?? -Infinity;
+      const arr = angleHistoryRef.current[key];
+      arr.push(angles[key]);
 
-        if (current > prevMax) updated[key] = current;
-      });
-
-      return updated;
+      // 🔥 최근 150 프레임만 저장 (메모리 안전)
+      if (arr.length > 150) arr.shift();
     });
   }, [angles, measuring]);
 
-  // 측정 종료면 관절 데이터도 화면에서 숨기기
+  // 측정 중일 때만 pose 표시
   const displayedPoses = measuring ? poses : null;
+
+  // 브라우저 voice 목록 출력 (디버그)
   useEffect(() => {
     const voicesChanged = () => {
       const voices = window.speechSynthesis.getVoices();
@@ -71,18 +119,28 @@ const ROM = () => {
     };
 
     window.speechSynthesis.onvoiceschanged = voicesChanged;
-
-    // 초기 호출
     voicesChanged();
   }, []);
 
   return (
     <div>
-      <RomTable romData={romData} />
+      <div style={{ display: "flex" }}>
+        <RomTable romData={romData} />
+        <div
+          style={{
+            display: "flex",
+            gap: "10px",
+            flexWrap: "wrap",
+            background: "white",
+          }}
+        >
+          <ROMImageSlider romImages={romImages} />
+        </div>
+      </div>
       <div style={{ margin: "30px 0px", display: "flex" }}>
         <WebCamView
           videoRef={videoRef}
-          poses={displayedPoses} // 🔥 measuring=false면 pose 표시 안됨
+          poses={displayedPoses}
           width="300px"
           height="300px"
         />
@@ -90,9 +148,17 @@ const ROM = () => {
         <div style={{ marginLeft: "20px" }}>
           <p>인식된 말: {transcript}</p>
           <p>측정 상태: {measuring ? "측정 중" : "대기"}</p>
-
-          <h3>🔥 현재 기록된 최대 각도</h3>
-          <pre>{JSON.stringify(maxAngles, null, 2)}</pre>
+          {measuring ? (
+            <>
+              <h3>🔥 실시간 각도</h3>
+              <pre>{JSON.stringify(formatAngles(angles), null, 2)}</pre>
+            </>
+          ) : (
+            <>
+              <h3>🔥 측정 결과 (98% Quantile 기반)</h3>
+              <pre>{JSON.stringify(formatAngles(resultAngles), null, 2)}</pre>
+            </>
+          )}
 
           <button onClick={startMeasure}>측정 시작</button>
           <button onClick={stopMeasure}>측정 종료</button>

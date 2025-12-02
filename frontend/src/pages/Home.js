@@ -49,38 +49,39 @@ export default function Home({ userInfo }) {
 
   return (
     <div className="home-container">
-      {/* 🔥 히어로 배너 */}
-      <div className="hero-section">
-        <img
-          src={images[current]}
-          key={current}
-          alt="banner"
-          className="hero-image fade"
-        />
+      <section>
+        {/* 🔥 히어로 배너 */}
+        <div className="hero-section">
+          <img
+            src={images[current]}
+            key={current}
+            alt="banner"
+            className="hero-image fade"
+          />
 
-        <div className="hero-center-box">
-          <button className="start-btn" onClick={handleStart}>
-            바로 시작하기
+          <div className="hero-center-box">
+            <button className="start-btn" onClick={handleStart}>
+              바로 시작하기
+            </button>
+          </div>
+
+          <button className="arrow left" onClick={prevSlide}>
+            &#10094;
+          </button>
+          <button className="arrow right" onClick={nextSlide}>
+            &#10095;
           </button>
         </div>
+        {/* 기존 섹션들 유지 */}
+        <div className="hero-text-box">
+          <h1 className="hero-title">당신만을 위한 최적의 운동 루틴</h1>
+          <p className="hero-desc">
+            운동 추천부터 식단 분석, ROM까지—홈트의 모든 것을 한곳에서.
+          </p>
+        </div>
+      </section>
 
-        <button className="arrow left" onClick={prevSlide}>
-          &#10094;
-        </button>
-        <button className="arrow right" onClick={nextSlide}>
-          &#10095;
-        </button>
-      </div>
-
-      {/* 기존 섹션들 유지 */}
-      <div className="hero-text-box">
-        <h1 className="hero-title">당신만을 위한 최적의 운동 루틴</h1>
-        <p className="hero-desc">
-          운동 추천부터 식단 분석, ROM까지—홈트의 모든 것을 한곳에서.
-        </p>
-      </div>
-
-      <section className="card-section">
+      <section>
         <div className="feature-card" onClick={() => navigate("/exercise")}>
           <div className="card-image"></div>
           <h2 className="card-title">운동</h2>

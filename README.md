@@ -164,8 +164,14 @@ conda env remove -n final_ai
    ```bash
    # Conda 환경 활성화
    conda activate final_backend
+
+   # backend/.env 생성(허깅페이스, 제미나이 API 토큰 기재)
+   HF_TOKEN = hf_s***
+   GEMINI_API = AIz***
+
    # final 경로에서 실행
    python backend/main.py
+
    ```
 
 3. 데이터베이스 서버 실행
