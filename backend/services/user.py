@@ -8,6 +8,8 @@ def create_user(
     hashed_password = utils.hash_password(password)
     response = user.create_user_with_base_info(
         email, hashed_password, gender, age, height, weight)
+    # bmi table 행 추가 기능 구현 필요
+    
     return response
 
 # 유저 조회
@@ -59,3 +61,4 @@ def delete_user_by_id(user_id: int):
     # 관리자거나 본인이거나
     deleted = user.delete_user_by_id(user_id)
     return deleted
+

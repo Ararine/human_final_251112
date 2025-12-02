@@ -36,10 +36,12 @@ CREATE TABLE IF NOT EXISTS `body_history` (
     `weight` FLOAT NULL,
     `bmi` FLOAT NULL,
     `bmr` FLOAT NULL,
-    `recorded_at` DATETIME DEFAULT CURRENT_TIMESTAMP,COMMENT '수정일시',
+    `recorded_at` DATETIME DEFAULT CURRENT_TIMESTAMP COMMENT '수정일시',
     PRIMARY KEY (`id`),
-    CONSTRAINT `FK_body_history_user` FOREIGN KEY (`user_id`) REFERENCES `user`(`id`) ON DELETE CASCADE
-)
+    CONSTRAINT `FK_body_history_user`
+        FOREIGN KEY (`user_id`) REFERENCES `user`(`id`) ON DELETE CASCADE
+);
+
 
 -- 유저 상세 정보
 CREATE TABLE IF NOT EXISTS `user_detail_info` (

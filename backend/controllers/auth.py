@@ -10,6 +10,6 @@ def register(
     gender: str = Body(None),
     age: int = Body(None),
     height: float = Body(None),
-    weight: float = Body(None)
+    weight: float = Body(None)    
 ):
     return register_user(email, password, gender, age, height, weight)

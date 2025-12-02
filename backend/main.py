@@ -29,6 +29,7 @@ app.include_router(ai.router, prefix="/ai")
 app.include_router(file.router, prefix="/file")
 app.include_router(exercise.router, prefix="/exercise")
 app.include_router(meal.router, prefix="/meal")
+app.include_router(bmi.router, prefix="/body")
 
 if __name__ == "__main__":
     try:
