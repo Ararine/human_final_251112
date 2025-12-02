@@ -7,11 +7,11 @@ body {
   font-family: "Pretendard", sans-serif;
 }
 
-main {
+/* main {
   padding: 0 !important;
   margin: 0;
   width: 100%;
-}
+} */
 
 .home-container {
   width: 100%;
@@ -31,7 +31,7 @@ main {
 
 .hero-image {
   width: 100%;
-  height: 100%;
+  height: auto;
   object-fit: cover;
   filter: brightness(70%); /* 다크 UI에 맞게 살짝 어둡게 */
 }

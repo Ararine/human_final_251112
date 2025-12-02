@@ -1,84 +1,113 @@
-import React from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import "../../css/exercise.css"; // ✅ CSS 경로 수정됨!!!
-
+import RandomVideo from "./RandomVideo";
+import { recommendedCurriculum } from "../../api/exercise";
+import URL from "../../constants/url";
 export default function Exercise() {
   const navigate = useNavigate();
 
-  const timeOptions = [
-    { time: "10분", path: "/exercise/10min" },
-    { time: "20분", path: "/exercise/20min" },
-    { time: "30분", path: "/exercise/30min" },
-    { time: "45분", path: "/exercise/45min" },
+  // 선택값
+  const [days, setDays] = useState("");
+  const [time, setTime] = useState("");
+  const [loading, setLoading] = useState(false);
+
+  // 5분 ~ 180분까지 10분 간격 리스트 생성
+  const timeOptions = [];
+  for (let t = 5; t <= 180; t += 10) {
+    timeOptions.push(t);
+  }
+
+  // 예시 운동 리스트
+  const exercises = [
+    {
+      name: "스트레칭_상체",
+      video: "http://localhost/data/스트레칭_상체.mp4",
+    },
+    { name: "스트레칭_하체", video: "http://localhost/data/스트레칭_하체.mp4" },
+    {
+      name: "스트레칭_하체",
+      video: "http://localhost/data/스트레칭_하체2.mp4",
+    },
   ];
 
-  const programs = [
-    {
-      title: "1주 체형교정 프로그램",
-      desc: "유연성 + ROM 개선",
-      path: "/exercise/program/1week",
-    },
-    {
-      title: "2주 전신 다이어트 챌린지",
-      desc: "초보자용 · 매일 20분",
-      path: "/exercise/program/2week",
-    },
-    {
-      title: "4주 근력 강화 프로젝트",
-      desc: "중급자용 · 주 4회",
-      path: "/exercise/program/4week",
-    },
-  ];
+  const handleRecommend = async () => {
+    if (!days || !time) return;
+    setLoading(true);
+
+    try {
+      // API 호출
+      const token = localStorage.getItem("token"); // 필요시
+      const response = await recommendedCurriculum(days, time);
+      console.log(response);
+      const recommendedData = response.results;
+
+      // 다음 페이지로 이동하면서 데이터 전달
+      navigate(`${URL.EXERCISE_URL}/recommend`, { state: { recommendedData } });
+    } catch (err) {
+      console.error("추천 운동 호출 실패:", err);
+      alert("추천 운동을 가져오는데 실패했습니다.");
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
-    <div className="exercise-container">
-      <section className="exercise-section">
-        <h2 className="section-title">오늘의 추천 운동</h2>
-        <div className="recommend-box">
-          <p className="recommend-text">
-            당신의 목표에 기반한 맞춤 추천 운동입니다.
-          </p>
-          <button
-            className="recommend-btn"
-            onClick={() => navigate("/exercise/recommend")}
-          >
-            추천 운동 시작
-          </button>
-        </div>
-      </section>
+    <div className="flex flex-col items-center gap-8">
+      <RandomVideo data={exercises} />
 
-      <section className="exercise-section">
-        <h2 className="section-title">시간으로 빠르게 선택</h2>
+      <div className="exercise-container w-full max-w-xl px-4">
+        {/* ---- 기간 입력 ---- */}
+        <section className="exercise-section mb-6">
+          <h2 className="section-title">운동 가능 기간 선택</h2>
+          <div className="input-wrap mt-2">
+            <input
+              type="number"
+              min="1"
+              max="31"
+              value={days}
+              onChange={(e) => setDays(e.target.value)}
+              placeholder="며칠 동안 운동하나요? (1~31일)"
+              className="day-input border rounded px-2 py-1 w-full"
+            />
+          </div>
+        </section>
 
-        <div className="time-card-wrap">
-          {timeOptions.map((item, idx) => (
-            <div
-              key={idx}
-              className="time-card"
-              onClick={() => navigate(item.path)}
+        {/* ---- 운동 시간 선택 ---- */}
+        <section className="exercise-section mb-6">
+          <h2 className="section-title">하루 운동 가능 시간 선택</h2>
+          <div className="input-wrap mt-2">
+            <select
+              value={time}
+              onChange={(e) => setTime(e.target.value)}
+              className="time-select border rounded px-2 py-1 w-full"
             >
-              <span>{item.time}</span>
-            </div>
-          ))}
-        </div>
-      </section>
+              <option value="">운동 시간 선택</option>
+              {timeOptions.map((t) => (
+                <option key={t} value={t}>
+                  {t}분
+                </option>
+              ))}
+            </select>
+          </div>
+        </section>
 
-      <section className="exercise-section">
-        <h2 className="section-title">프로그램 · 챌린지</h2>
-
-        <div className="program-card-wrap">
-          {programs.map((item, idx) => (
-            <div
-              key={idx}
-              className="program-card"
-              onClick={() => navigate(item.path)}
+        {/* ---- 추천 운동 생성 ---- */}
+        <section className="exercise-section mb-6">
+          <h2 className="section-title">맞춤 운동 생성</h2>
+          <div className="recommend-box mt-2 flex flex-col items-center gap-2">
+            <p className="recommend-text text-center">
+              운동 기간과 운동 시간을 입력하여 맞춤 운동을 생성하세요.
+            </p>
+            <button
+              className="recommend-btn bg-blue-500 text-white px-4 py-2 rounded disabled:bg-gray-400"
+              disabled={!days || !time || loading}
+              onClick={handleRecommend}
             >
-              <h3>{item.title}</h3>
-              <p>{item.desc}</p>
-            </div>
-          ))}
-        </div>
-      </section>
+              {loading ? "추천 운동 생성중..." : "맞춤 운동 생성하기"}
+            </button>
+          </div>
+        </section>
+      </div>
     </div>
   );
 }

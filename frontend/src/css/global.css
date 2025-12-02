@@ -49,19 +49,6 @@
   border-radius: 5px;
 }
 
-/* header → 전체 상단바
-   header > div → 헤더 안의 왼쪽 / 오른쪽 두 박스 */
-
-/* 왼쪽 영역 */
-.header-left {
-  gap: 24px;
-}
-/* 오른쪽 영역 */
-.header-right {
-  gap: 8px;
-  font-size: 14px;
-}
-
 .logo {
   border: none;
   background: none;
@@ -69,61 +56,5 @@
   font-size: 20px;
   font-weight: 700;
   cursor: pointer;
-}
-
-/* 상단 메뉴 */
-.gnb {
-  display: flex;
-  align-items: center;
-  gap: 16px;
-  font-size: 14px;
-}
-.gnb {
-  display: flex;
-  align-items: center;
-  gap: 16px;
-  font-size: 14px;
-}
-
-.gnb a {
-  text-decoration: none;
-  color: #444;
-}
-
-.gnb a:hover {
-  color: #4a74ff;
-}
-
-/* .header-user {
-  margin-right: 4px;
-  color: #555;
-} */
-
-/* 마이페이지 투명 버튼 */
-.btn-ghost {
-  border: none;
-  background: transparent;
-}
-/* 로그아웃 테두리 버튼 */
-.btn-outline {
-  border: 1px solid #d0d0d0;
-  background: #fff;
-}
-/* 회원가입 파란 버튼 (작은) */
-.btn-primary.small {
-  border: none;
-  background: #4a74ff;
-  color: #fff;
-}
-.btn-primary.small:hover {
-  background: #395de0;
-}
-
-/* 버튼 호버 공통 */
-.btn-outline:hover {
-  background: #f5f5f5;
-}
-
-.table-nowrap {
-  white-space: nowrap;
+  color: inherit;
 }

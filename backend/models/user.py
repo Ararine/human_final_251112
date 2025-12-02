@@ -78,3 +78,16 @@ def create_user_with_base_info(
             "age": age, "height": height, "weight": weight
         })
     return result.lastrowid
+
+def get_user_info(user_id: int):
+    query = """
+    SELECT * 
+    FROM user_base_info ub 
+    JOIN user_detail_info ud
+        ON ub.user_id = ud.user_id
+    WHERE  ub.user_id = :user_id
+    """
+    query = text(query)
+    with engine.connect() as conn:
+        df = pd.read_sql(query, conn, params={"user_id": user_id})
+    return df

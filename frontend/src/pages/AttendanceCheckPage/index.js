@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import "../../css/attendanceCheck.css";
 
 export default function AttendanceCheckPage({ userInfo }) {
   const [attendedDates, setAttendedDates] = useState([]);
