@@ -1,12 +1,13 @@
 import { useRef, useEffect, useState } from "react";
 
 import { romData } from "../../constants/sample";
-import WebCamView from "./WebCamView";
 import useSTT from "../../hooks/useSTT";
 import useKoreanSpeaker from "../../hooks/useKoreanSpeaker";
 import { usePoseDetection3d } from "../../hooks/usePoseDetection3d";
 import RomTable from "./RomTable";
 import ROMImageSlider from "./RomImageSlider";
+import CalcROM from "./CalcROM";
+import Object3D from "./Object3D";
 
 // 🔥 배열에서 quantile 계산 함수
 function quantile(arr, q) {
@@ -21,16 +22,7 @@ function quantile(arr, q) {
   }
   return sorted[base];
 }
-function formatAnglesWithLabels(angles) {
-  if (!angles) return {};
-  const formatted = {};
-  Object.keys(angles).forEach((key) => {
-    const label = jointMap[key] || key;
-    const value = angles[key];
-    formatted[label] = value != null ? Number(value.toFixed(1)) : null;
-  });
-  return formatted;
-}
+
 const romImages = {
   어깨정면: "어깨정면.png",
   팔꿈치: "팔꿈치.png",
@@ -39,6 +31,7 @@ const romImages = {
   무릎: "무릎.png",
   발목: "발목.png",
 };
+
 const jointMap = {
   leftShoulderFlex: "왼쪽 어깨 굴곡",
   rightShoulderFlex: "오른쪽 어깨 굴곡",
@@ -172,37 +165,18 @@ const ROM = () => {
           </option>
         ))}
       </select>
-      <div style={{ margin: "30px 0px", display: "flex" }}>
-        <WebCamView
-          videoRef={videoRef}
-          poses={displayedPoses}
-          width="300px"
-          height="300px"
-        />
-
-        <div style={{ marginLeft: "20px" }}>
-          <p>인식된 말: {transcript}</p>
-          <p>측정 상태: {measuring ? "측정 중" : "대기"}</p>
-          {measuring ? (
-            <>
-              <h3>🔥 실시간 각도</h3>
-              <pre>
-                {JSON.stringify(formatAnglesWithLabels(angles), null, 2)}
-              </pre>
-            </>
-          ) : (
-            <>
-              <h3>🔥 측정 결과 (98% Quantile 기반)</h3>
-              <pre>
-                {JSON.stringify(formatAnglesWithLabels(resultAngles), null, 2)}
-              </pre>
-            </>
-          )}
-
-          <button onClick={startMeasure}>측정 시작</button>
-          <button onClick={stopMeasure}>측정 종료</button>
-        </div>
-      </div>
+      <CalcROM
+        videoRef={videoRef}
+        displayedPoses={displayedPoses}
+        transcript={transcript}
+        measuring={measuring}
+        angles={angles}
+        jointMap={jointMap}
+        resultAngles={resultAngles}
+        startMeasure={startMeasure}
+        stopMeasure={stopMeasure}
+      />
+      <Object3D poses={poses} />
     </div>
   );
 };

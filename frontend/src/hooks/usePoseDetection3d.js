@@ -194,8 +194,8 @@ export function usePoseDetection3d(videoRef) {
             // Shoulders
             leftShoulderFlex,
             rightShoulderFlex,
-            leftShoulderAbd,
-            rightShoulderAbd,
+            // leftShoulderAbd,
+            // rightShoulderAbd,
 
             // Elbows
             leftElbow,
