@@ -4,7 +4,7 @@ from fastapi.middleware.cors import CORSMiddleware
 
 from config import config
 from routes import (
-    auth, community, user, test, comment, reaction,
+    community, user, test, comment, reaction,
     attendance, qna, ai, file, exercise, meal
 )
 
@@ -23,7 +23,6 @@ app.include_router(comment.router, prefix="/comments")
 app.include_router(reaction.router, prefix="/reactions")
 app.include_router(attendance.router, prefix="/attendance")
 app.include_router(qna.router, prefix="/qna")
-app.include_router(auth.router, prefix="/auth")
 app.include_router(user.router, prefix="/user")
 app.include_router(ai.router, prefix="/ai")
 app.include_router(file.router, prefix="/file")
