@@ -10,10 +10,10 @@ export async function recommendedMealLists(n_days, n_times) {
         n_times,
       },
       {
-        timeout: 120000,
         headers: {
           Authorization: `Bearer ${token}`,
         },
+        timeout: 120000,
       }
     );
     return res.data;

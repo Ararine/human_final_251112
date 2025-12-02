@@ -1,6 +1,6 @@
 import { api } from "./axios";
 
-export async function recommendedCurriculum(user_id, n_days, available_time) {
+export async function recommendedCurriculum(n_days, available_time) {
   try {
     const token = localStorage.getItem("token");
     const res = await api.post(
@@ -11,9 +11,9 @@ export async function recommendedCurriculum(user_id, n_days, available_time) {
       },
       {
         headers: {
-          timeout: 120000,
           Authorization: `Bearer ${token}`,
         },
+        timeout: 120000,
       }
     );
     return res.data;

@@ -3,7 +3,7 @@ import URL from "../constants/url";
 
 export default function PrivateRoute({ userInfo, requireAdmin = false }) {
   const location = useLocation();
-
+  console.log(userInfo);
   // 아직 유저 정보 로딩 중
   if (userInfo === undefined) {
     return <div>Loading...</div>;
@@ -20,6 +20,7 @@ export default function PrivateRoute({ userInfo, requireAdmin = false }) {
     );
   }
   // 관리자 권한이 필요한 페이지인데, 일반 유저라면 접근 제한
+  // backend 에서 처리하게 수정 필요
   if (requireAdmin && userInfo.type !== "admin") {
     alert("접근 권한이 없습니다.");
     return (

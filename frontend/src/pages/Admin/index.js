@@ -1,17 +1,18 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import AttendanceCalendar from "../../components/AttendanceCalendar";
-import { Attendance } from "../../api/Attendance";
+// import AttendanceCalendar from "../../components/AttendanceCalendar";
+// import { Attendance } from "../../api/Attendance";
 
 const Admin = ({ userInfo }) => {
+  console.log(userInfo);
   const [attendedDates, setAttendedDates] = useState([]);
 
   useEffect(() => {
     const fetchAttendance = async () => {
       try {
-        const res = await Attendance(userInfo.user_id);
-        const dates = res.data.map((item) => new Date(item.attended_at));
-        setAttendedDates(dates);
+        // const res = await Attendance(userInfo.user_id);
+        // const dates = res.data.map((item) => new Date(item.attended_at));
+        // setAttendedDates(dates);
         alert("출석처리되었습니다.");
       } catch (error) {
         if (error.status == 409) {
@@ -54,7 +55,7 @@ const Admin = ({ userInfo }) => {
           <p>커뮤니티 게시글 검토 및 관리</p>
         </Link>
       </div>
-      <AttendanceCalendar attendedDates={attendedDates} />
+      {/* <AttendanceCalendar attendedDates={attendedDates} /> */}
     </div>
   );
 };
