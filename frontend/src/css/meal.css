@@ -1,23 +1,17 @@
 /* 전체 그리드 */
 .meal-grid {
-  max-width: 1200px;
-  margin: 40px auto;
-  padding: 0 20px;
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 35px;
+  display: flex; /* 가로 배열 */
+  gap: 20px; /* 카드 사이 간격 */
+  justify-content: space-between; /* 양 끝 정렬 */
+  flex-wrap: wrap; /* 화면 작아지면 줄바꿈 */
 }
 
-/* 공통 카드 */
 .meal-card {
-  border-radius: 20px;
-  padding: 10px 25px;
-  min-height: 330px;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.09);
-  transition: 0.25s ease;
+  flex: 1 1 30%; /* 카드 너비 30%, 유동적 크기 */
+  padding: 20px;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
 .meal-card:hover {

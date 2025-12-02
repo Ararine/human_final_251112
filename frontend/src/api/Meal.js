@@ -23,6 +23,48 @@ export async function recommendedMealLists(n_days, n_times) {
   }
 }
 
+export async function getCalories(file) {
+  try {
+    const formData = new FormData();
+    formData.append("file", file);
+
+    const res = await api.post("/ai/calories", formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
+    console.log(res);
+    return res.data;
+  } catch (err) {
+    console.error("칼로리 추정 실패:", err);
+    throw err;
+  }
+}
+
+// todo 인증 성공 시 보상 주게 수정 필요
+export async function uploadMealAuth(file) {
+  console.log(file);
+  try {
+    const originalName = file.name;
+    const newFileName = `imgs/${originalName}`; // 서버에서 imgs 폴더에 저장하도록 이름 지정
+    const renamedFile = new File([file], newFileName, { type: file.type });
+
+    const formData = new FormData();
+    formData.append("file", renamedFile);
+
+    const res = await api.post("/file/upload", formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
+    console.log("식단 인증 업로드 성공:", res);
+    return res.data;
+  } catch (err) {
+    console.error("식단 인증 업로드 실패:", err);
+    throw err;
+  }
+}
+
 export async function createBaseMeal(name, calories, link) {
   try {
     const res = await api.post("/meal", {

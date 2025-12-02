@@ -15,6 +15,7 @@ def get_calories(pil_img):
         det_res = det_res[det_res[:,-1]!=0]
 
     idx = [int(i) for i in det_res[:,-1]]
+    idx = [i for i in idx if i<402] # 예외처리
     selected_rows = calories_model.meta_data.loc[idx]
     
     factor = calories_model.qvalues[np.argmax(vol_res)]

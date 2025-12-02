@@ -12,6 +12,7 @@ import Home from "./pages/Home";
 import Exercise from "./pages/Exercise";
 import ExRecommend from "./pages/Exercise/Recommend";
 import Meal from "./pages/Meal";
+import MealRecommend from "./pages/Meal/Recommend";
 import Community from "./pages/Community";
 import CommunityWrite from "./pages/Community/Write";
 import CommunityRead from "./pages/Community/Read";
@@ -94,6 +95,12 @@ function App() {
               <Route path="recommend" element={<ExRecommend />} />
             </Route>
             <Route path={URL.MEAL_URL} element={<Meal />} />
+
+            <Route path={URL.MEAL_URL}>
+              <Route index element={<Meal />} />
+              <Route path="recommend" element={<MealRecommend />} />
+            </Route>
+
             <Route path={URL.COMMUNITY_URL} element={<Community />} />
 
             {/* 커뮤니티 */}

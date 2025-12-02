@@ -33,6 +33,7 @@ async def get_calories(file: UploadFile = File(...)):
         # np_array = np.frombuffer(content, np.uint8)
         # img = cv2.imdecode(np_array, cv2.IMREAD_COLOR)
         det_res, response = meal.get_calories(pil_img)
+        
         return JSONResponse(
             {"message": "칼로리 추정 완료", 
              "location":det_res,

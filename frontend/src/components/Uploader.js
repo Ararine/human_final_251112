@@ -1,6 +1,11 @@
 import { useRef } from "react";
 
-const Uploader = ({ files, setFiles, handleUpload }) => {
+const Uploader = ({
+  files,
+  setFiles,
+  handleUpload,
+  upload_button_name = "업로드",
+}) => {
   const fileInputRef = useRef();
   const handleDragOver = (e) => {
     // 파일 열기 방지
@@ -15,7 +20,6 @@ const Uploader = ({ files, setFiles, handleUpload }) => {
     }
     setFiles(newFiles);
   };
-  console.log(files);
 
   const handleFileChange = (e) => {
     const selectedFiles = e.target.files;
@@ -50,7 +54,7 @@ const Uploader = ({ files, setFiles, handleUpload }) => {
         />
       </div>
       <button className="btn" onClick={handleUpload}>
-        업로드
+        {upload_button_name}
       </button>
     </div>
   );
