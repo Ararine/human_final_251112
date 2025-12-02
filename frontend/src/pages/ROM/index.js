@@ -21,14 +21,15 @@ function quantile(arr, q) {
   }
   return sorted[base];
 }
-function formatAngles(obj) {
-  if (!obj) return obj;
-  const out = {};
-  Object.keys(obj).forEach((key) => {
-    const v = obj[key];
-    out[key] = v != null ? Number(v.toFixed(1)) : null;
+function formatAnglesWithLabels(angles) {
+  if (!angles) return {};
+  const formatted = {};
+  Object.keys(angles).forEach((key) => {
+    const label = jointMap[key] || key;
+    const value = angles[key];
+    formatted[label] = value != null ? Number(value.toFixed(1)) : null;
   });
-  return out;
+  return formatted;
 }
 const romImages = {
   어깨정면: "어깨정면.png",
@@ -38,6 +39,22 @@ const romImages = {
   무릎: "무릎.png",
   발목: "발목.png",
 };
+const jointMap = {
+  leftShoulderFlex: "왼쪽 어깨 굴곡",
+  rightShoulderFlex: "오른쪽 어깨 굴곡",
+  // leftShoulderAbd: "왼쪽 어깨 외전",
+  // rightShoulderAbd: "오른쪽 어깨 외전",
+  leftElbow: "왼쪽 팔꿈치",
+  rightElbow: "오른쪽 팔꿈치",
+  leftWristFlex: "왼쪽 손목 굴곡",
+  rightWristFlex: "오른쪽 손목 굴곡",
+  leftHipFlex: "왼쪽 엉덩이 굴곡",
+  rightHipFlex: "오른쪽 엉덩이 굴곡",
+  leftKnee: "왼쪽 무릎",
+  rightKnee: "오른쪽 무릎",
+  leftAnkle: "왼쪽 발목",
+  rightAnkle: "오른쪽 발목",
+};
 
 const ROM = () => {
   const videoRef = useRef(null);
@@ -46,6 +63,7 @@ const ROM = () => {
 
   const angleHistoryRef = useRef({}); // 🔥 각 관절별 angle 히스토리
   const { poses, angles } = usePoseDetection3d(videoRef);
+  const [selectedJoint, setSelectedJoint] = useState(Object.keys(jointMap)[0]);
 
   const { transcript, setListening } = useSTT();
   const speak = useKoreanSpeaker();
@@ -66,8 +84,7 @@ const ROM = () => {
   const startMeasure = () => {
     console.log("측정 시작!");
     setMeasuring(true);
-    angleHistoryRef.current = {}; // 초기화
-    setResultAngles({});
+    angleHistoryRef.current = {}; // 각도 히스토리 초기화
     speak("측정이 시작되었습니다.");
   };
 
@@ -85,8 +102,11 @@ const ROM = () => {
       // 🔥 98% quantile 로 ROM 산출
       finalResults[key] = quantile(arr, 0.98);
     });
+    setResultAngles((prev) => ({
+      ...prev, // 기존 resultAngles 유지
+      [selectedJoint]: finalResults[selectedJoint], // 선택한 관절 값만 업데이트
+    }));
 
-    setResultAngles(finalResults);
     speak("측정 종료되었습니다.");
   };
 
@@ -137,6 +157,21 @@ const ROM = () => {
           <ROMImageSlider romImages={romImages} />
         </div>
       </div>
+      <label htmlFor="joint-select" style={{ marginRight: "10px" }}>
+        관절 선택:
+      </label>
+      <select
+        id="joint-select"
+        value={selectedJoint}
+        onChange={(e) => setSelectedJoint(e.target.value)}
+        style={{ padding: "5px 10px", borderRadius: "5px" }}
+      >
+        {Object.entries(jointMap).map(([key, label]) => (
+          <option key={key} value={key}>
+            {label}
+          </option>
+        ))}
+      </select>
       <div style={{ margin: "30px 0px", display: "flex" }}>
         <WebCamView
           videoRef={videoRef}
@@ -151,12 +186,16 @@ const ROM = () => {
           {measuring ? (
             <>
               <h3>🔥 실시간 각도</h3>
-              <pre>{JSON.stringify(formatAngles(angles), null, 2)}</pre>
+              <pre>
+                {JSON.stringify(formatAnglesWithLabels(angles), null, 2)}
+              </pre>
             </>
           ) : (
             <>
               <h3>🔥 측정 결과 (98% Quantile 기반)</h3>
-              <pre>{JSON.stringify(formatAngles(resultAngles), null, 2)}</pre>
+              <pre>
+                {JSON.stringify(formatAnglesWithLabels(resultAngles), null, 2)}
+              </pre>
             </>
           )}
 
