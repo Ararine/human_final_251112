@@ -31,7 +31,7 @@ main {
   flex: 1;
   display: flex;
   overflow-y: auto; /* 휠 생성(auto)/생략(hidden) 등 가능 */
-  padding: 30px 100px 0px 100px;
+  /* padding: 30px 100px 0px 100px; */
   justify-content: center;
 }
 

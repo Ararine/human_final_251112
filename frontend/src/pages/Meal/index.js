@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import Uploader from "../../components/Uploader";
-import "../../css/meal.css";
 
 const Meal = () => {
   const [files, setFiles] = useState([]);

@@ -40,6 +40,11 @@ import "./css/signup.css";
 import "./css/login.css";
 import "./css/admin.css";
 import "./css/header.css";
+import "./css/home.css";
+import "./css/attendanceCheck.css";
+import "./css/exercise.css";
+import "./css/meal.css";
+import "./css/profile.css";
 
 function App() {
   const [userInfo, setUserInfo] = useState(undefined);

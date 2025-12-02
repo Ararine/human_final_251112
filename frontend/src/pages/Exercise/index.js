@@ -1,6 +1,5 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import "../../css/exercise.css"; // ✅ CSS 경로 수정됨!!!
 
 export default function Exercise() {
   const navigate = useNavigate();

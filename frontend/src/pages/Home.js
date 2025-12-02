@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import AttendanceCheckPage from "./AttendanceCheckPage";
-import "../css/home.css";
 
 export default function Home({ userInfo }) {
   const images = ["/3.jpg", "/4.jpg", "/5.jpg"];
