@@ -18,16 +18,24 @@ def create_user_base_info(user_id: str, gender: str, age:int, height:float, weig
 
 # 사용자 기본정보 조회
 def get_user_base_info_by_id(user_id: int):
+<<<<<<< HEAD
     print(user_id)
     query = text("SELECT * FROM user_base_info where user_id = :user_id")
     with engine.connect() as conn:
         df = pd.read_sql(query, conn, params={"user_id": user_id})
         df["created_at"] = df["created_at"].astype(str)  
+=======
+    query = text("SELECT * FROM user_base_info where user_id = :user_id")
+    with engine.connect() as conn:
+        df = pd.read_sql(query, conn, params = {"user_id": user_id})
+        if "created_at" in df.columns:
+            df["created_at"] = df["created_at"].apply(lambda x: x.strftime("%Y-%m-%d %H:%M:%S") if not pd.isna(x) else None)
+>>>>>>> ea77a6445c240acc99bd267f59c8926c3e8bf8ff
     return df.to_dict(orient="records")
 
 # 사용자 기본정보 수정
 def update_user_base_info_by_id(user_id: int, gender:str, age:str, height:float, weight:float):
-    query = text("UPDATE user_base_info SET gender = :gender, age = :age, height = :height, weight = :weight WHERE id = :user_id")
+    query = text("UPDATE user_base_info SET gender = :gender, age = :age, height = :height, weight = :weight WHERE user_id = :user_id")
     with engine.connect() as conn:
         params = {
             "user_id": user_id,

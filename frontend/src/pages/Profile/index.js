@@ -9,6 +9,7 @@ import UserDelete from "./UserDelete";
 
 import { getPostsByUserId, deletePost } from "../../api/Community";
 import { getMyQna } from "../../api/Qna";
+import { getUserByUserId, updateUserByUserId } from "../../api/UserBase";
 
 const Profile = ({ userInfo }) => {
   const navigate = useNavigate();
@@ -29,6 +30,23 @@ const Profile = ({ userInfo }) => {
 
   // 2) 내가 작성한 게시글 목록
   const [myPosts, setMyPosts] = useState([]);
+
+  useEffect(() => {
+    const loadUserBaseInfo = async () => {
+      if (!safeUser.user_id) return;
+
+      try {
+        const response = await getUserByUserId(safeUser.user_id);
+        const user = response.data[0];
+        const { age, gender, height, weight } = user;
+        setForm({ age, gender, height, weight });
+        // setMyPosts(posts.data || []);
+      } catch (err) {
+        console.error("유저 게시글 불러오기 실패:", err);
+      }
+    };
+    loadUserBaseInfo();
+  }, []);
 
   // 🔹 유저 게시글 목록 불러오기
   useEffect(() => {
@@ -58,10 +76,20 @@ const Profile = ({ userInfo }) => {
   };
 
   // 개인정보 저장 (아직 가짜)
-  const handleSave = (e) => {
+  const handleSave = async (e) => {
     e.preventDefault();
-    console.log("수정된 개인정보:", form);
-    alert("개인정보 저장(가짜). 나중에 서버 연결 예정.");
+    const { user_id } = safeUser;
+    const { age, gender, height, weight } = form;
+
+    const response = await updateUserByUserId(
+      user_id,
+      gender,
+      age,
+      height,
+      weight
+    );
+    console.log("수정된 개인정보:", response);
+    // alert("개인정보 저장(가짜). 나중에 서버 연결 예정.");
   };
 
   // 🔹 게시글 수정하기
