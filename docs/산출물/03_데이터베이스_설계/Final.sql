@@ -210,3 +210,27 @@ CREATE TABLE IF NOT EXISTS `food_nutrition` (
 );
 
 
+CREATE TABLE IF NOT EXISTS `curriculum_hist` (
+    `id` INT NOT NULL AUTO_INCREMENT,
+    `user_id` INT NOT NULL COMMENT '파일 소유자',
+    `file_url` VARCHAR(255) NOT NULL COMMENT '파일 경로 또는 URL',
+    `start_date` DATE NOT NULL COMMENT '시작일',
+    `end_date` DATE NOT NULL COMMENT '종료일',
+    `created_at` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '레코드 생성일',
+    `updated_at` DATETIME NULL ON UPDATE CURRENT_TIMESTAMP COMMENT '레코드 수정일',
+    PRIMARY KEY (`id`),
+    CONSTRAINT `FK_file_user` FOREIGN KEY (`user_id`) REFERENCES `user`(`id`)
+);
+
+
+CREATE TABLE IF NOT EXISTS `meals_hist` (
+    `id` INT NOT NULL AUTO_INCREMENT,
+    `user_id` INT NOT NULL COMMENT '파일 소유자',
+    `file_url` VARCHAR(255) NOT NULL COMMENT '파일 경로 또는 URL',
+    `start_date` DATE NOT NULL COMMENT '시작일',
+    `end_date` DATE NOT NULL COMMENT '종료일',
+    `created_at` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '레코드 생성일',
+    `updated_at` DATETIME NULL ON UPDATE CURRENT_TIMESTAMP COMMENT '레코드 수정일',
+    PRIMARY KEY (`id`),
+    CONSTRAINT `FK_meals_user` FOREIGN KEY (`user_id`) REFERENCES `user`(`id`)
+);

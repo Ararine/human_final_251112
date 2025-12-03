@@ -22,6 +22,36 @@ export async function recommendedCurriculum(n_days, available_time) {
     throw err;
   }
 }
+export async function getRecommendedCurriculum() {
+  try {
+    const token = localStorage.getItem("token");
+    const res = await api.get("/ai/curriculum", {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+      timeout: 120000,
+    });
+    return res.data;
+  } catch (err) {
+    console.error("기본 커리큘럼 조회 실패:", err);
+    throw err;
+  }
+}
+export async function deleteRecommendedCurriculum() {
+  try {
+    const token = localStorage.getItem("token");
+    const res = await api.delete("/ai/curriculum", {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+      timeout: 120000,
+    });
+    return res.data;
+  } catch (err) {
+    console.error("기본 커리큘럼 삭제 실패:", err);
+    throw err;
+  }
+}
 
 export async function createExercise(exId, name, type, link) {
   try {

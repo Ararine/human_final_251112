@@ -20,6 +20,36 @@ async def create_curriculum(
             {"message": "기본 커리큘럼 생성 실패", "error":str(e)}, 
             status_code=status.HTTP_400_BAD_REQUEST)
 
+async def get_curriculum(
+    user=Depends(verify_token)):
+    try:
+        user_id=user["user_id"]
+        results = exercise.get_curriculum_by_id(user_id)
+        print(results)
+        return JSONResponse(
+            {"message": "기본 커리큘럼 조회 완료", 
+             "results": results}, status_code=status.HTTP_201_CREATED)
+    except Exception as e:
+        return JSONResponse(
+            {"message": "기본 커리큘럼 조회 실패", "error":str(e)}, 
+            status_code=status.HTTP_400_BAD_REQUEST)
+
+
+async def delete_curriculum(
+    user=Depends(verify_token)):
+    try:
+        user_id=user["user_id"]
+        results = exercise.delete_curriculum_by_id(user_id)
+        print(results)
+        return JSONResponse(
+            {"message": "기본 커리큘럼 조회 완료", 
+             "results": results}, status_code=status.HTTP_201_CREATED)
+    except Exception as e:
+        return JSONResponse(
+            {"message": "기본 커리큘럼 조회 실패", "error":str(e)}, 
+            status_code=status.HTTP_400_BAD_REQUEST)
+
+
 # 기본 운동 생성
 # , user=Depends(verify_token)
 async def create_exercise(body: dict = Body(...)):
