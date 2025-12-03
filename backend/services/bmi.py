@@ -10,9 +10,9 @@ def calculate_bmi(weight: float, height: float):
 def calculate_bmr(weight: float, height: float, age: int, gender: str):
     gender = gender.lower()
     
-    if gender in ["male", "남", "남자"]:
+    if gender in ["male"]:
         bmr = 66.47 + (13.75 * weight) + (5 * height) - (6.76 * age)
-    elif gender in ["female", "여", "여자"]:
+    elif gender in ["female"]:
         bmr = 655.1 + (9.56 * weight) + (1.85 * height) - (4.68 * age)
     else:
         bmr = 0
@@ -23,7 +23,9 @@ def calculate_bmr(weight: float, height: float, age: int, gender: str):
 # CREATE
 # -----------------------------------
 def service_create_body_history(user_id, weight, height, age, gender):
-
+    
+    user_info = user_base.get_user_info(user_id)
+    
     # service 계층에서 계산 수행
     bmi_value = calculate_bmi(weight, height)
     bmr_value = calculate_bmr(weight, height, age, gender)
@@ -32,9 +34,7 @@ def service_create_body_history(user_id, weight, height, age, gender):
     return bmi.create_body_history(
         user_id=user_id,
         weight=weight,
-        height=height,
-        age=age,
-        gender=gender,
+        height=height,     
         bmi=bmi_value,
         bmr=bmr_value
     )
@@ -56,9 +56,7 @@ def service_update_body_history(record_id, weight, height, age, gender):
     return bmi.update_body_history(
         record_id=record_id,
         weight=weight,
-        height=height,
-        age=age,
-        gender=gender,
+        height=height,        
         bmi=bmi_value,
         bmr=bmr_value
     )

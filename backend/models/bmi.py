@@ -1,17 +1,15 @@
 import pandas as pd
 from sqlalchemy import text
 from db.pool import engine
+from services import bmi, user_base
 
 
 # -----------------------------
 # Insert
 # -----------------------------
 def create_body_history(
-    user_id: int, weight: float, height: float, 
-    age: int, gender: str, bmi:float, bmr:float):
-
-    # bmi = calculate_bmi(weight, height)
-    # bmr = calculate_bmr(weight, height, age, gender)
+    user_id: int, weight: float, height: float,
+    age: int, gender: str, bmi: float, bmr: float):
 
     query = text("""
         INSERT INTO body_history (
@@ -20,7 +18,7 @@ def create_body_history(
             :user_id, :weight, :height, :age, :gender, :bmi, :bmr
         )
     """)
-
+# age gender 삭제 필요
     params = {
         "user_id": user_id,
         "weight": weight,
@@ -33,8 +31,9 @@ def create_body_history(
 
     with engine.begin() as conn:
         result = conn.execute(query, params)
+        new_id = result.lastrowid   # 안전하게 저장
 
-    return result.lastrowid
+    return new_id
 
 
 # -----------------------------
@@ -56,14 +55,15 @@ def get_body_history_by_id(record_id: int):
 # -----------------------------
 # Update
 # -----------------------------
-def update_body_history(record_id: int, weight: float, height: float, age: int, gender: str):
+def update_body_history(
+    record_id: int, weight: float, height: float, 
+    age: int, gender: str, bmi: float, bmr: float):
 
-    # bmi = calculate_bmi(weight, height)
-    # bmr = calculate_bmr(weight, height, age, gender)
-
+    # age gender 삭제 필요
     query = text("""
         UPDATE body_history
-        SET weight = :weight,
+        SET 
+            weight = :weight,
             height = :height,
             age = :age,
             gender = :gender,
