@@ -6,7 +6,7 @@ from networks.recommends.model import recommend_model
 from models import exercise, user
 
 def create_curriculum(user_id, n_days, available_time):
-    UPLOAD_DIR = Path(f"./uploaded_data/json")
+    UPLOAD_DIR = Path(f"./uploaded_data/json/curriculum")
     UPLOAD_DIR.mkdir(parents=True, exist_ok=True)
     start_date = pd.Timestamp.today().strftime('%Y-%m-%d')
     end_date = (pd.Timestamp.today() + pd.Timedelta(days=int(n_days))).strftime('%Y-%m-%d')

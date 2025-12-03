@@ -11,25 +11,6 @@ const Recommend = () => {
   const [selectedDayIdx, setSelectedDayIdx] = useState(0);
   const [loading, setLoading] = useState(false);
 
-  // 추천 식단 리프레시 함수
-  const handleRefresh = async () => {
-    try {
-      setLoading(true);
-      const response = await recommendedMealLists(nDays, nTimes);
-      console.log("추천 식단:", response.results);
-
-      // 페이지 상태 업데이트
-      navigate("/meal/recommend", {
-        state: { recommendedMeals: response.results },
-      });
-    } catch (err) {
-      console.error(err);
-      alert("식단 인증 등록 또는 추천 식단 불러오기 실패!");
-    } finally {
-      setLoading(false);
-    }
-  };
-
   if (recommendedMeals.length === 0) {
     return (
       <div className="text-center mt-10 text-gray-500">
@@ -44,17 +25,6 @@ const Recommend = () => {
     <div className="p-6 space-y-6">
       <div className="flex justify-between items-center mb-6">
         <h2 className="text-3xl font-bold text-center flex-1">추천 식단</h2>
-        <button
-          onClick={handleRefresh}
-          disabled={loading}
-          className={`ml-4 px-4 py-2 rounded-lg font-medium text-white transition-colors duration-200 ${
-            loading
-              ? "bg-gray-400 cursor-not-allowed"
-              : "bg-green-600 hover:bg-green-700"
-          }`}
-        >
-          {loading ? "불러오는 중..." : "식단 리프레시"}
-        </button>
       </div>
 
       {/* 날짜 선택 버튼 */}

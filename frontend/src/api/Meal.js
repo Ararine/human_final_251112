@@ -23,6 +23,38 @@ export async function recommendedMealLists(n_days, n_times) {
   }
 }
 
+export async function getRecommendedMealLists() {
+  try {
+    const token = localStorage.getItem("token");
+    const res = await api.get("/ai/meal_list", {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+      timeout: 120000,
+    });
+    return res.data;
+  } catch (err) {
+    console.error("기본 식단 목록 작성 실패:", err);
+    throw err;
+  }
+}
+
+export async function deleteRecommendedMealLists() {
+  try {
+    const token = localStorage.getItem("token");
+    const res = await api.delete("/ai/meal_list", {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+      timeout: 120000,
+    });
+    return res.data;
+  } catch (err) {
+    console.error("기본 식단 목록 작성 실패:", err);
+    throw err;
+  }
+}
+
 export async function getCalories(file) {
   try {
     const formData = new FormData();

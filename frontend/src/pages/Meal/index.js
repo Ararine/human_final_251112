@@ -2,11 +2,13 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom"; // 페이지 이동용
 import Uploader from "../../components/Uploader";
 import {
+  deleteRecommendedMealLists,
   getCalories,
+  getRecommendedMealLists,
   recommendedMealLists,
   uploadMealAuth,
 } from "../../api/Meal";
-
+import URL from "../../constants/url";
 const Meal = () => {
   const navigate = useNavigate();
 
@@ -105,6 +107,53 @@ const Meal = () => {
       alert("식단 인증 등록 또는 추천 식단 불러오기 실패!");
     }
   };
+
+  const handleDelete = async () => {
+    try {
+      await deleteRecommendedMealLists();
+      alert("식단 추천 목록이 삭제되었습니다.");
+    } catch (err) {
+      console.error("식단 추천 목록이 삭제 실패:", err);
+      alert("삭제에 실패했습니다.");
+    }
+  };
+
+  const fetchRecommendedMealLists = async () => {
+    try {
+      const res = await getRecommendedMealLists();
+      console.log(res);
+      let recommendedData = res?.results;
+
+      // 객체가 들어올 수도 있으니 항상 배열로 변환
+      const dataArray = recommendedData
+        ? Array.isArray(recommendedData)
+          ? recommendedData
+          : [recommendedData]
+        : [];
+      if (dataArray.length > 0) {
+        recommendedData = dataArray[0];
+        console.log(recommendedData);
+        // 알림창 띄우기
+        const goToRecommend = window.confirm(
+          "기본 식단 목록이 있습니다. 다시 추천 받으시겠습니까? \n취소를 누르고 삭제하시겠습니까?"
+        );
+
+        if (goToRecommend) {
+          navigate(`${URL.MEAL_URL}/recommend`, {
+            state: { recommendedMeals: recommendedData, nDays, nTimes },
+          });
+        } else {
+          handleDelete();
+        }
+      }
+    } catch (err) {
+      console.error("추천 커리큘럼 조회 실패:", err);
+    }
+  };
+
+  useEffect(() => {
+    fetchRecommendedMealLists();
+  }, []);
 
   return (
     <div className="meal-grid">
