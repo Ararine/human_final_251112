@@ -3,17 +3,19 @@ from fastapi.responses import JSONResponse
 from services import bmi
 
 #create
-async def controllers_create_body_history(   
+async def service_create_body_history(
     body: dict = Body(...)
 ):
     try:
+        user_id = body.get("user_id")
         weight = body.get("weight")
         height = body.get("height")
         print(weight,height)
         # 호출하는 함수는 서비스에 존재하는 함수명으로 수정 필요
-        create = bmi.controllers_create_body_history(weight, height)
+        create = bmi.service_create_body_history(
+            user_id, weight, height)
 
-        if not controllers_update_body_history:
+        if not service_create_body_history:
             return JSONResponse(
                 {"message": "정보 없음"}, 
                 status_code=status.HTTP_404_NOT_FOUND
@@ -30,8 +32,8 @@ async def controllers_create_body_history(
         )
 
 # get
-async def controllers_get_body_history(
-    recode_id: int = Path(...), 
+async def service_get_body_history(
+    record_id: int = Path(...), 
     
 ):
     try:
@@ -40,7 +42,8 @@ async def controllers_get_body_history(
         # print(weight,height)
         # 호출하는 함수는 서비스에 존재하는 함수명으로 수정 필요
         # 키 몸무게 삭제 필요
-        get = bmi.controllers_get_body_history(recode_id, weight, height)
+        print(1)
+        get = bmi.service_get_body_history(record_id)
 
         if not get:
             return JSONResponse(
@@ -59,16 +62,21 @@ async def controllers_get_body_history(
         )
 
 # update
-async def controllers_update_body_history(
-    recode_id: int = Path(...), 
+async def service_update_body_history(
+    record_id: int = Path(...), 
     body: dict = Body(...)
 ):
     try:
+        user_id = body.get("user_id")
         weight = body.get("weight")
         height = body.get("height")
-        print(weight,height)
+        # age = body.get("age")
+        # gender = body.get("gender")
+        
         # 호출하는 함수는 서비스에 존재하는 함수명으로 수정 필요
-        update = bmi.controllers_update_body_history(recode_id, weight, height)
+        # update = bmi.service_update_body_history(record_id, weight, height, age, gender)
+        update = bmi.service_update_body_history(
+            record_id, user_id, weight, height)
 
         if not update:
             return JSONResponse(
@@ -87,10 +95,10 @@ async def controllers_update_body_history(
         )
 
 # delete
-async def controllers_delete_body_history(recode_id: int = Path(...)):
+async def service_delete_body_history(record_id: int = Path(...)):
     try:
         # 호출하는 함수는 서비스에 존재하는 함수명으로 수정 필요
-        delete = bmi.controllers_delete_body_history(recode_id)
+        delete = bmi.service_delete_body_history(record_id)
         if not delete:
             return JSONResponse(
                 {"message": "정보 없음"}, 

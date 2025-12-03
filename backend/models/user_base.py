@@ -18,9 +18,11 @@ def create_user_base_info(user_id: str, gender: str, age:int, height:float, weig
 
 # 사용자 기본정보 조회
 def get_user_base_info_by_id(user_id: int):
-    query = text("SELECT * FROM user_base_info where id = :user_id")
+    print(user_id)
+    query = text("SELECT * FROM user_base_info where user_id = :user_id")
     with engine.connect() as conn:
-        df = pd.read_sql(query, conn, {"user_id": user_id})
+        df = pd.read_sql(query, conn, params={"user_id": user_id})
+        df["created_at"] = df["created_at"].astype(str)  
     return df.to_dict(orient="records")
 
 # 사용자 기본정보 수정
