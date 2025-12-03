@@ -22,7 +22,10 @@ class recommendModel:
             중량_g: int = Field(description="음식의 중량(g)")
 
         class DayMeal(BaseModel):
-            날짜: str = Field(description="1일차, 2일차 등")
+            self.today = pd.Timestamp.today()
+            self.dates = [(self.today + pd.Timedelta(days=i)).strftime('%Y-%m-%d') for i in range(3)]
+            
+            날짜: str = Field(description=f"{', '.join(self.dates)}날부터 연속적으로 YYYY-MM-DD 형태로 생성된 날짜 문자열")
             끼니별_식단: list[list[MealItem]] = Field(
                 description="각 끼니별 음식 리스트. 예: [[아침_음식1, 아침_음식2], [점심_음식1, 점심_음식2], ...]"
             )
@@ -44,7 +47,10 @@ class recommendModel:
             휴식_초: int = Field(description="세트 사이 휴식 시간(초)")
 
         class DayPlan(BaseModel):
-            날짜: str = Field(description="운동 날짜 (예: 1일차, 2일차 …)")
+            self.today = pd.Timestamp.today()
+            self.dates = [(self.today + pd.Timedelta(days=i)).strftime('%Y-%m-%d') for i in range(3)]
+            
+            날짜: str = Field(description=f"{', '.join(self.dates)}날부터 연속적으로 YYYY-MM-DD 형태로 생성된 날짜 문자열")
             운동목록: list[ExerciseItem] = Field(description=f"{target}을 위한 해당 날짜의 운동 목록")
 
         class WorkoutCurriculum(BaseModel):
