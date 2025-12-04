@@ -99,9 +99,10 @@ table thead tr {
 
 table th,
 table td {
-  padding: 14px 18px;
+  padding: 7px 9px;
   font-size: 15px;
   border-bottom: 1px solid #2b2b2b;
+  text-align: center;
 }
 
 table tbody tr {

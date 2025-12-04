@@ -137,14 +137,13 @@ const ROM = () => {
 
   return (
     <div>
-      <div style={{ display: "flex" }}>
+      <div style={{ display: "flex", gap: "20px" }}>
         <RomTable romData={romData} />
         <div
           style={{
             display: "flex",
             gap: "10px",
             flexWrap: "wrap",
-            background: "white",
           }}
         >
           <ROMImageSlider romImages={romImages} />
