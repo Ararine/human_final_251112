@@ -33,12 +33,12 @@ const Header = ({ userInfo, onLogout }) => {
       <div>
         {userInfo ? (
           <>
-            <button onClick={goSubscribe}>
+            <button className="bg-darkgray btn-ghost" onClick={goSubscribe}>
               {userInfo.type === "normal" ? "구독" : "구독중"}
             </button>
             <span>{(userInfo.email || userInfo.username) + " 님"}</span>
 
-            <button className="btn-ghost" onClick={goProfile}>
+            <button className="btn-ghost zero-padding" onClick={goProfile}>
               마이페이지
             </button>
 

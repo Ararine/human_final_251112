@@ -16,7 +16,7 @@ body {
 header {
   position: sticky;
   top: 0;
-  z-index: 10;
+  z-index: 100;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -29,6 +29,7 @@ header {
 header > div {
   display: flex;
   align-items: center;
+  gap: 8px;
 }
 header nav {
   color: rgba(255, 255, 255, 0.85);
@@ -49,13 +50,18 @@ main {
 }
 
 footer {
-  margin-top: auto;
+  background: #0d0d0d;
+  color: #888;
+  width: 100%;
+  font-size: 14px;
+  margin-top: 40px;
   text-align: center;
   border-top: 1px solid rgba(255, 255, 255, 0.1);
-  padding: 10px 0;
+  padding: 16px 0;
 }
 
 button {
+  font-size: 13px;
   border: 1px solid rgba(255, 255, 255, 0.6);
   border-radius: 6px;
   padding: 6px 14px;
@@ -63,6 +69,10 @@ button {
   transition: background-color 0.2s ease;
   color: white;
   background: transparent;
+}
+
+span {
+  font-size: 13px;
 }
 
 a {
@@ -78,7 +88,6 @@ table {
   background: #1d1f21;
   border-radius: 12px;
   overflow: hidden;
-  font-family: "Pretendard", sans-serif;
 }
 
 table thead tr {

@@ -62,20 +62,81 @@
 .btn-ghost {
   border: none;
 }
-
+.zero-padding {
+  padding: 0px;
+}
 .bg-red {
   background-color: red;
 }
+.bg-darkgray {
+  background-color: rgb(60, 60, 60); /* 또는 #646464 */
+}
+.bg-midgray {
+  background: #1f1f1f;
+}
+.bg-lightgray {
+  background-color: #333333;
+}
+.bg-darkgray:hover {
+  background-color: rgb(120, 120, 120); /* hover 조금 밝게 */
+}
 
+.bg-blue {
+  background-color: #3b82f6;
+}
+.bg-green {
+  background-color: #22c55e;
+}
+.bg-green:hover {
+  background-color: #16a34a;
+}
 .start-btn {
   padding: 16px 36px;
   font-size: 16px;
   font-weight: 700;
   border-radius: 50px;
-
-  background: rgba(255, 255, 255, 0.25);
-  color: #fff;
+  background: rgba(255, 255, 255, 0.15);
   backdrop-filter: blur(10px);
-  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.25);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
   transition: 0.25s ease;
+}
+
+.card {
+  border-radius: 16px;
+  padding: 20px;
+  cursor: pointer;
+  transition: 0.25s ease;
+}
+.card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.35);
+  background: rgba(255, 255, 255, 0.12);
+}
+
+.card p {
+  font-size: 14px;
+  color: #bbbbbb;
+}
+
+.zero-margin > h2,
+h3,
+h4,
+p {
+  margin: 0;
+}
+
+.gap-5 {
+  gap: 5px;
+}
+
+.gap-10 {
+  gap: 10px;
+}
+
+.gap-20 {
+  gap: 20px;
+}
+
+.gap-40 {
+  gap: 40px;
 }
