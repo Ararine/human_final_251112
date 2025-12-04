@@ -45,8 +45,6 @@ const Login = ({ setUserInfo }) => {
         console.log("디코드 정보:", decoded);
         setUserInfo(decoded);
 
-        localStorage.setItem("userInfo", JSON.stringify(decoded)); //추가한거
-
         // 4) 원래 가던 페이지 or 홈으로 이동
         const redirectPath = location.state?.from || URL.HOME;
         navigate(redirectPath, { replace: true });
