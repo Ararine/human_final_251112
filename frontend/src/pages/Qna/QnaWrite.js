@@ -2,10 +2,8 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { createQna } from "../../api/Qna";
 
-export default function QnaWrite() {
+export default function QnaWrite({ userInfo }) {
   const navigate = useNavigate();
-  const user = JSON.parse(localStorage.getItem("userInfo"));
-
   const [form, setForm] = useState({
     title: "",
     contents: "",
@@ -17,7 +15,7 @@ export default function QnaWrite() {
   };
 
   const handleSubmit = async () => {
-    if (!user?.id) {
+    if (!userInfo?.user_id) {
       alert("로그인이 필요합니다.");
       return;
     }
@@ -27,7 +25,7 @@ export default function QnaWrite() {
     }
 
     try {
-      await createQna(user.id, form);
+      await createQna(userInfo?.user_id, form);
       alert("Q&A 등록 완료");
       navigate("/qna");
     } catch (err) {

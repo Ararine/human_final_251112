@@ -134,8 +134,12 @@ export default function Home({ userInfo }) {
       {/* 3️⃣ 성공 사례 */}
       <section className="success-section">
         <h2 className="section-title">실제 사용자 변화</h2>
-
-        <div className="success-grid">
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "column",
+          }}
+        >
           <div className="success-card">
             <h3>-4.2kg 감량</h3>
             <p>식단 분석 + 운동 루틴으로 한달 변화</p>
