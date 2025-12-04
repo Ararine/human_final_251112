@@ -109,8 +109,14 @@ function App() {
             <Route path={URL.COMMUNITY_URL}>
               <Route path="read/:id" element={<CommunityRead />} />
               <Route element={<PrivateRoute userInfo={userInfo} />}>
-                <Route path="write" element={<CommunityWrite />} />
-                <Route path="write/:id" element={<CommunityWrite />} />
+                <Route
+                  path="write"
+                  element={<CommunityWrite userInfo={userInfo} />}
+                />
+                <Route
+                  path="write/:id"
+                  element={<CommunityWrite userInfo={userInfo} />}
+                />
               </Route>
             </Route>
 

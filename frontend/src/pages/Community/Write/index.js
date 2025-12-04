@@ -14,7 +14,7 @@ import {
   deletePost,
 } from "../../../api/Community";
 
-const CommunityWrite = () => {
+const CommunityWrite = ({ userInfo }) => {
   const navigate = useNavigate();
   const { id } = useParams();
   const location = useLocation();
@@ -73,9 +73,8 @@ const CommunityWrite = () => {
         alert("게시글 수정 완료!");
       } else {
         // 🔹 작성
-        const userInfo = JSON.parse(localStorage.getItem("userInfo"));
         const userId = userInfo?.user_id;
-        await createPost(title, content, 1);
+        await createPost(title, content, userId);
         alert("게시글 작성 완료!");
       }
 
