@@ -1,0 +1,71 @@
+/* BMI 페이지 전체 레이아웃 */
+.bmi-page {
+  max-width: 640px;
+  margin: 40px auto;
+  padding: 0 16px;
+}
+
+/* 페이지 제목 */
+.bmi-title {
+  font-size: 24px;
+  font-weight: 700;
+  margin-bottom: 24px;
+}
+
+/* BMI/BMR 정보 섹션 */
+.bmi-section {
+  border: 1px solid #e5e5e5;
+  border-radius: 8px;
+  padding: 16px 20px;
+  margin-bottom: 20px;
+  background-color: #fff;
+}
+
+/* 에러/위험 상태일 때 */
+.bmi-section.danger {
+  border-color: #ff6b6b;
+  background-color: #fff5f5;
+}
+
+/* 섹션 소제목 */
+.bmi-section-title {
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 12px;
+}
+
+/* BMI/BMR form layout */
+.bmi-form .form-row {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 12px;
+}
+
+/* 라벨 */
+.form-label {
+  font-size: 13px;
+  margin-bottom: 4px;
+  color: #555;
+}
+
+/* Readonly input */
+.form-input {
+  padding: 8px 10px;
+  border-radius: 4px;
+  border: 1px solid #d0d0d0;
+  font-size: 14px;
+  background-color: #fafafa;
+}
+
+/* 버튼 영역 */
+.bmi-actions {
+  margin-top: 16px;
+  text-align: right;
+}
+
+/* 에러 텍스트 */
+.bmi-error-text {
+  font-size: 13px;
+  color: #d32f2f;
+  margin-bottom: 12px;
+}

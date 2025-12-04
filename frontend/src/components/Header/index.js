@@ -4,7 +4,6 @@ import URL from "../../constants/url";
 const Header = ({ userInfo, onLogout }) => {
   const navigate = useNavigate();
   const goHome = () => navigate(URL.HOME);
-  console.log(userInfo.type);
   const goLogin = () => navigate(URL.LOGIN_URL);
   const goSignup = () => navigate("/signup");
   const goProfile = () => navigate(URL.SUBSCRIBE_URL);

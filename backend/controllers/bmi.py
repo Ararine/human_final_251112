@@ -33,7 +33,7 @@ async def service_create_body_history(
 
 # get
 async def service_get_body_history(
-    record_id: int = Path(...), 
+    user_id: int = Path(...), 
     
 ):
     try:
@@ -43,7 +43,7 @@ async def service_get_body_history(
         # 호출하는 함수는 서비스에 존재하는 함수명으로 수정 필요
         # 키 몸무게 삭제 필요
         print(1)
-        get = bmi.service_get_body_history(record_id)
+        get = bmi.service_get_body_history(user_id)
 
         if not get:
             return JSONResponse(
@@ -52,7 +52,7 @@ async def service_get_body_history(
             )
 
         return JSONResponse(
-            {"message": "조회 성공"},
+            {"message": "조회 성공", "data":get},
             status_code=status.HTTP_200_OK
         )
     except Exception as e:

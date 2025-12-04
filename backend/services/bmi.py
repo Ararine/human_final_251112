@@ -46,8 +46,8 @@ def service_create_body_history(
 # -----------------------------------
 # READ
 # -----------------------------------
-def service_get_body_history(record_id):
-    return bmi.get_body_history_by_id(record_id)
+def service_get_body_history(user_id):
+    return bmi.get_body_history_by_id(user_id)
 
 # -----------------------------------
 # UPDATE

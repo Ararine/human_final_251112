@@ -35,6 +35,8 @@ import QnaWrite from "./pages/Qna/QnaWrite";
 import QnaDetail from "./pages/Qna/QnaDetail";
 import QnaEdit from "./pages/Qna/QnaEdit";
 
+import Bmi from "./pages/Bmi";
+
 import "./css/index.css";
 import "./css/global.css";
 import "./css/signup.css";
@@ -156,6 +158,7 @@ function App() {
               </Route>
             </Route>
 
+            <Route path="/bmi" element={<Bmi userInfo={userInfo} />} />
             {/* 기타 */}
             <Route path="/*" element={<Navigate to={URL.HOME} replace />} />
           </Routes>

@@ -37,16 +37,17 @@ def create_body_history(
 # -----------------------------
 # Select
 # -----------------------------
-def get_body_history_by_id(record_id: int):
+def get_body_history_by_id(user_id: int):
     query = text("""
         SELECT *
         FROM body_history
-        WHERE id = :record_id
+        WHERE user_id = :user_id
+        ORDER BY recorded_at DESC
+        LIMIT 1
     """)
-
     with engine.connect() as conn:
-        df = pd.read_sql(query, conn, params={"record_id": record_id})
-
+        df = pd.read_sql(query, conn, params={"user_id": user_id})
+    df["recorded_at"] = df["recorded_at"].astype(str) 
     return df.to_dict(orient="records")
 
 
