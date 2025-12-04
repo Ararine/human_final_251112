@@ -69,3 +69,33 @@
   color: #d32f2f;
   margin-bottom: 12px;
 }
+/* ----------------------------------------- */
+/* ⭐ BMI 기준표 스타일 (추가된 부분!) */
+/* ----------------------------------------- */
+
+/* 테이블 기본 스타일 */
+.bmi-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 15px;
+  text-align: center;
+}
+
+/* 셀 스타일 (텍스트 컬러 = 블루) */
+.bmi-table th,
+.bmi-table td {
+  border: 1px solid #ddd;
+  padding: 10px;
+  color: #0059b2; /* 🔵 블루 텍스트 */
+}
+
+/* 헤더 셀 배경 */
+.bmi-table th {
+  background: #b7d7f2; /* 연하늘색 */
+  font-weight: 600;
+}
+
+/* 일반 셀 배경 */
+.bmi-table td {
+  background: #e4f1fb; /* 연하늘색 */
+}

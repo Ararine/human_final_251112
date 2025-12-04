@@ -4,7 +4,6 @@ import { useNavigate } from "react-router-dom";
 import { getLatestBodyIndex } from "../../api/Bmi";
 
 export default function Bmi({ userInfo }) {
-  console.log(userInfo?.user_id);
   const navigate = useNavigate();
 
   const [bmi, setBmi] = useState("");
@@ -13,15 +12,15 @@ export default function Bmi({ userInfo }) {
   const [error, setError] = useState("");
 
   // 최신 BMI/BMR 불러오기
-  // 최신 BMI/BMR 불러오기
   const fetchBodyIndex = async () => {
-    if (!userInfo?.user_id) return; // 🔥 userInfo 없으면 실행 안 함
+    if (!userInfo?.user_id) return;
 
     setLoading(true);
     setError("");
     try {
       const res = await getLatestBodyIndex(userInfo.user_id);
       const data = res?.data[0];
+
       if (!data) {
         setError("데이터가 존재하지 않습니다.");
         setBmi("");
@@ -43,12 +42,10 @@ export default function Bmi({ userInfo }) {
 
   useEffect(() => {
     if (userInfo?.user_id) {
-      // 🔥 userInfo 있을 때만 실행
       fetchBodyIndex();
     }
   }, [userInfo]);
 
-  // 로딩 상태
   if (loading) return <p>불러오는 중...</p>;
 
   return (
@@ -64,7 +61,52 @@ export default function Bmi({ userInfo }) {
         </>
       )}
 
-      {/* 예시: 다른 페이지로 이동 버튼 */}
+      <h3
+        style={{
+          marginTop: "30px",
+          fontSize: "0.8rem", // 30% 축소
+          fontWeight: "600",
+        }}
+      >
+        BMI 기준표 (대한비만학회)
+      </h3>
+
+      <table
+        className="bmi-table"
+        style={{
+          width: "100%",
+          borderCollapse: "collapse",
+          marginTop: "10px",
+          textAlign: "center",
+        }}
+      >
+        <thead>
+          <tr>
+            <th style={thStyle}>저체중</th>
+            <th style={thStyle}>정상</th>
+            <th style={thStyle}>비만전단계</th>
+            <th style={thStyle}>1단계 비만</th>
+            <th style={thStyle}>2단계 비만</th>
+            <th style={thStyle}>3단계 비만</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td style={tdStyle}>18.5kg/m² 미만</td>
+            <td style={tdStyle}>18.5 ~ 22.9kg/m²</td>
+            <td style={tdStyle}>23 ~ 24.9kg/m²</td>
+            <td style={tdStyle}>25 ~ 29.9kg/m²</td>
+            <td style={tdStyle}>30 ~ 34.9kg/m²</td>
+            <td style={tdStyle}>35kg/m² 이상</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <p style={{ marginTop: "8px", fontSize: "12px", color: "#555" }}>
+        (출처: 2020 대한비만학회 진료지침)
+      </p>
+
+      {/* 페이지 이동 버튼 */}
       <button
         onClick={() => navigate("/")}
         style={{ marginTop: "20px", padding: "8px 16px" }}
@@ -74,3 +116,17 @@ export default function Bmi({ userInfo }) {
     </div>
   );
 }
+
+// 스타일 분리
+const thStyle = {
+  border: "1px solid #ddd",
+  padding: "10px",
+  background: "#f3f6fa",
+  fontWeight: "600",
+};
+
+const tdStyle = {
+  border: "1px solid #ddd",
+  padding: "10px",
+  background: "#fff",
+};
