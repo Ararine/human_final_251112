@@ -3,11 +3,11 @@ import URL from "../../constants/url";
 
 const Header = ({ userInfo, onLogout }) => {
   const navigate = useNavigate();
-
   const goHome = () => navigate(URL.HOME);
+  console.log(userInfo.type);
   const goLogin = () => navigate(URL.LOGIN_URL);
   const goSignup = () => navigate("/signup");
-  const goProfile = () => navigate(URL.PROFILE_URL);
+  const goProfile = () => navigate(URL.SUBSCRIBE_URL);
 
   const handleLogoutClick = () => {
     onLogout?.();
@@ -33,6 +33,9 @@ const Header = ({ userInfo, onLogout }) => {
       <div className="header-right">
         {userInfo ? (
           <>
+            <button onClick={goProfile}>
+              {userInfo.type === "normal" ? "구독" : "구독중"}
+            </button>
             <span className="header-user">
               {(userInfo.email || userInfo.username) + " 님"}
             </span>

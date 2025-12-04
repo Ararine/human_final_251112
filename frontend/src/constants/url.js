@@ -35,6 +35,7 @@ const URL = {
   OTHERS: "*",
   TEST_PATH: "/test",
   ROM_URL: "/rom",
+  SUBSCRIBE_URL: "/subscribe",
 };
 
 export default URL;
