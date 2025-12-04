@@ -30,28 +30,6 @@ const UserInfo = ({ form, handleChange, handleSave }) => {
       <h3 className="section-title">개인정보 관리</h3>
 
       <form className="profile-form" onSubmit={handleSave}>
-        {/* 이메일 */}
-        {/* <div className="profile-field">
-          <label>이메일</label>
-          <input
-            name="email"
-            type="email"
-            value={form.email}
-            onChange={handleChange}
-          />
-        </div> */}
-
-        {/* 이름 */}
-        {/* <div className="profile-field">
-          <label>이름</label>
-          <input
-            name="name"
-            type="text"
-            value={form.name}
-            onChange={handleChange}
-          />
-        </div> */}
-
         {/* 성별 */}
         <div className="profile-field">
           <label>성별</label>
@@ -111,7 +89,7 @@ const UserInfo = ({ form, handleChange, handleSave }) => {
         </div>
 
         <button type="submit" className="btn-primary">
-          저장하기
+          수정하기
         </button>
       </form>
     </section>

@@ -47,7 +47,7 @@ import "./css/home.css";
 // import "./css/attendanceCheck.css";
 // import "./css/exercise.css";
 // import "./css/meal.css";
-// import "./css/profile.css";
+import "./css/profile.css";
 
 function App() {
   const [userInfo, setUserInfo] = useState(undefined);

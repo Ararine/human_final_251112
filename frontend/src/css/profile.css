@@ -1,134 +1,85 @@
-/* 전체 컨테이너 */
+/* 전체 레이아웃 */
 .profile-page {
-  max-width: 620px;
+  max-width: 680px;
   margin: 40px auto;
-  padding: 0 16px;
+  padding: 0 20px;
+  box-sizing: border-box;
+  color: rgba(255, 255, 255, 0.92);
 }
 
-/* 공통 카드형 섹션 */
+/* 카드 */
 .profile-section {
-  background: #ffffff;
-  border: 1px solid #e5e5e5;
-  border-radius: 12px;
-  padding: 28px;
-  margin-bottom: 28px;
-  box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.04);
+  background: rgba(255, 255, 255, 0.07);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 16px;
+  padding: 32px;
+  margin-bottom: 32px;
+  backdrop-filter: blur(14px);
 }
 
-/* 섹션 타이틀 */
+/* 제목 */
 .section-title {
-  font-size: 20px;
+  font-size: 22px;
   font-weight: 700;
-  /* margin-bottom: 24px; */
   text-align: center;
-  color: #333;
+  margin-bottom: 28px;
 }
 
-/* 공통 input/select wrapper */
+/* 필드 그룹 */
 .profile-field {
-  margin-bottom: 18px;
+  margin-bottom: 24px;
   display: flex;
   flex-direction: column;
 }
 
-/* Label */
 .profile-field label {
   font-size: 14px;
   font-weight: 600;
-  color: #555;
-  margin-bottom: 6px;
+  margin-bottom: 8px;
+  color: rgba(255, 255, 255, 0.85);
 }
 
-/* === 핵심: 모든 인풋/셀렉트 통일 === */
+/* input + select */
 .profile-field input,
 .profile-field select {
   width: 100%;
-  padding: 12px;
+  padding: 14px;
   font-size: 15px;
-  border-radius: 8px;
-  box-sizing: border-box !important;
-  border: 1px solid #d0d0d0;
-  background: #fafafa;
-  transition: 0.15s ease-in-out;
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  background: rgba(255, 255, 255, 0.12);
+  color: #fff;
+  box-sizing: border-box;
+  appearance: none;
 }
 
-.profile-field input:hover,
-.profile-field select:hover {
-  background: #f3f3f3;
+.profile-field input::placeholder {
+  color: rgba(255, 255, 255, 0.55);
 }
+
+/* focus */
 .profile-field input:focus,
 .profile-field select:focus {
   border-color: #3a8bfd;
-  background: #fff;
   outline: none;
-  box-shadow: 0 0 3px rgba(58, 139, 253, 0.35);
 }
 
-/* 저장 버튼 */
+/* 에러 메시지 */
+.error-text {
+  margin-top: 6px;
+  font-size: 13px;
+  color: #ff6b6b;
+}
+
+/* 기본 버튼 */
 .btn-primary {
   width: 100%;
   padding: 14px;
   font-size: 15px;
-  border-radius: 8px;
+  border-radius: 10px;
   background: #3a8bfd;
   border: none;
-  color: white;
+  color: #fff;
   font-weight: 600;
   cursor: pointer;
-  margin-top: 10px;
-}
-.btn-primary:hover {
-  background: #2c73e8;
-}
-
-/* 멀티 선택 버튼 */
-.multi-select {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-}
-
-.multi-btn {
-  padding: 10px 16px;
-  font-size: 14px;
-  border-radius: 20px;
-  border: 1px solid #ccc;
-  background: #fafafa;
-  cursor: pointer;
-  transition: 0.15s;
-}
-.multi-btn:hover {
-  background: #eaeaea;
-}
-.multi-btn.active {
-  background: #3a8bfd;
-  border-color: #3a8bfd;
-  color: white;
-}
-
-/* 모바일 */
-@media (max-width: 600px) {
-  .profile-page {
-    padding: 0 12px;
-  }
-}
-/* 모든 폼 input/select 완전 통일 */
-.profile-section input,
-.profile-section select,
-.profile-section textarea {
-  width: 100% !important;
-  height: 44px !important;
-  padding: 12px !important;
-  font-size: 15px !important;
-  border-radius: 8px !important;
-  border: 1px solid #d0d0d0 !important;
-  background: #fafafa !important;
-  box-sizing: border-box !important;
-}
-
-.profile-section input:focus,
-.profile-section select:focus {
-  border-color: #3a8bfd !important;
-  background: #ffffff !important;
-  outline: none !important;
 }
