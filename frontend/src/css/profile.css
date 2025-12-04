@@ -1,100 +1,134 @@
-.profile-page,
-.forgot-page {
-  max-width: 640px;
+/* 전체 컨테이너 */
+.profile-page {
+  max-width: 620px;
   margin: 40px auto;
   padding: 0 16px;
 }
 
-.profile-title,
-.forgot-title {
-  font-size: 24px;
-  font-weight: 700;
-  margin-bottom: 24px;
-}
-
+/* 공통 카드형 섹션 */
 .profile-section {
+  background: #ffffff;
   border: 1px solid #e5e5e5;
-  border-radius: 8px;
-  padding: 16px 20px;
-  margin-bottom: 20px;
-  background-color: #fff;
+  border-radius: 12px;
+  padding: 28px;
+  margin-bottom: 28px;
+  box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.04);
 }
 
-.profile-section.danger {
-  border-color: #ff6b6b;
-  background-color: #fff5f5;
-}
-
+/* 섹션 타이틀 */
 .section-title {
-  font-size: 18px;
-  font-weight: 600;
-  margin-bottom: 12px;
+  font-size: 20px;
+  font-weight: 700;
+  /* margin-bottom: 24px; */
+  text-align: center;
+  color: #333;
 }
 
-.profile-form .form-row,
-.forgot-form .form-row {
+/* 공통 input/select wrapper */
+.profile-field {
+  margin-bottom: 18px;
   display: flex;
   flex-direction: column;
-  margin-bottom: 12px;
 }
 
-.form-label {
-  font-size: 13px;
-  margin-bottom: 4px;
-  color: #555;
-}
-
-.form-input {
-  padding: 8px 10px;
-  border-radius: 4px;
-  border: 1px solid #d0d0d0;
+/* Label */
+.profile-field label {
   font-size: 14px;
+  font-weight: 600;
+  color: #555;
+  margin-bottom: 6px;
 }
 
-.profile-actions {
-  margin-top: 8px;
+/* === 핵심: 모든 인풋/셀렉트 통일 === */
+.profile-field input,
+.profile-field select {
+  width: 100%;
+  padding: 12px;
+  font-size: 15px;
+  border-radius: 8px;
+  box-sizing: border-box !important;
+  border: 1px solid #d0d0d0;
+  background: #fafafa;
+  transition: 0.15s ease-in-out;
 }
 
-.post-list {
-  list-style: none;
-  padding: 0;
-  margin: 0;
+.profile-field input:hover,
+.profile-field select:hover {
+  background: #f3f3f3;
+}
+.profile-field input:focus,
+.profile-field select:focus {
+  border-color: #3a8bfd;
+  background: #fff;
+  outline: none;
+  box-shadow: 0 0 3px rgba(58, 139, 253, 0.35);
 }
 
-.post-item {
+/* 저장 버튼 */
+.btn-primary {
+  width: 100%;
+  padding: 14px;
+  font-size: 15px;
+  border-radius: 8px;
+  background: #3a8bfd;
+  border: none;
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+  margin-top: 10px;
+}
+.btn-primary:hover {
+  background: #2c73e8;
+}
+
+/* 멀티 선택 버튼 */
+.multi-select {
   display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 8px 0;
-  border-bottom: 1px solid #eee;
+  flex-wrap: wrap;
+  gap: 10px;
 }
 
-/* padding: 8px 0;
-  border-bottom: 1px solid #f0f0f0;
-} */
-.post-actions button {
-  margin-left: 8px;
+.multi-btn {
+  padding: 10px 16px;
+  font-size: 14px;
+  border-radius: 20px;
+  border: 1px solid #ccc;
+  background: #fafafa;
+  cursor: pointer;
+  transition: 0.15s;
 }
-.post-item:last-child {
-  border-bottom: none;
+.multi-btn:hover {
+  background: #eaeaea;
 }
-
-.post-title {
-  font-weight: 500;
-}
-
-.post-meta {
-  font-size: 12px;
-  color: #888;
-}
-
-.danger-text {
-  font-size: 13px;
-  color: #d32f2f;
-  margin-bottom: 8px;
+.multi-btn.active {
+  background: #3a8bfd;
+  border-color: #3a8bfd;
+  color: white;
 }
 
-.danger-btn {
-  border-color: #ff6b6b;
-  color: #d32f2f;
+/* 모바일 */
+@media (max-width: 600px) {
+  .profile-page {
+    padding: 0 12px;
+  }
+}
+/* 모든 폼 input/select 완전 통일 */
+.profile-section input,
+.profile-section select,
+.profile-section textarea {
+  width: 100% !important;
+  height: 44px !important;
+  padding: 12px !important;
+  font-size: 15px !important;
+  border-radius: 8px !important;
+  border: 1px solid #d0d0d0 !important;
+  background: #fafafa !important;
+  box-sizing: border-box !important;
+}
+
+.profile-section input:focus,
+.profile-section select:focus {
+  border-color: #3a8bfd !important;
+  background: #ffffff !important;
+  outline: none !important;
 }

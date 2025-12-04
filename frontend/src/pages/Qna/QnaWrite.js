@@ -5,6 +5,7 @@ import { createQna } from "../../api/Qna";
 export default function QnaWrite() {
   const navigate = useNavigate();
   const user = JSON.parse(localStorage.getItem("userInfo"));
+  console.log("🔍 QnaWrite userInfo:", user);
 
   const [form, setForm] = useState({
     title: "",
