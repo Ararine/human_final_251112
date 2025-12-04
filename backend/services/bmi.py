@@ -22,19 +22,23 @@ def calculate_bmr(weight: float, height: float, age: int, gender: str):
 # -----------------------------------
 # CREATE
 # -----------------------------------
-def service_create_body_history(user_id, weight, height, age, gender):
+def service_create_body_history(
+    user_id, weight, height):
+    user_info = user_base.get_user_base_info_by_id(user_id)
+    # 확인 필요
     
-    user_info = user_base.get_user_info(user_id)
-    
+    age = user_info[0]["age"]
+    gender = user_info[0]["gender"]
+    print(age, gender)
     # service 계층에서 계산 수행
     bmi_value = calculate_bmi(weight, height)
     bmr_value = calculate_bmr(weight, height, age, gender)
-
+    print(bmi_value, bmr_value)
     # models에 계산된 값 전달
     return bmi.create_body_history(
         user_id=user_id,
-        weight=weight,
         height=height,     
+        weight=weight,
         bmi=bmi_value,
         bmr=bmr_value
     )
@@ -48,15 +52,28 @@ def service_get_body_history(record_id):
 # -----------------------------------
 # UPDATE
 # -----------------------------------
-def service_update_body_history(record_id, weight, height, age, gender):
+# def service_update_body_history(record_id, weight, height, age, gender):
+#     bmi_value = calculate_bmi(weight, height)
+#     bmr_value = calculate_bmr(weight, height, age, gender)
+#     return bmi.update_body_history(
+#         record_id=record_id,
+#         weight=weight,
+#         height=height,
+#         bmi=bmi_value,
+#         bmr=bmr_value
+#     )
+def service_update_body_history(
+    record_id, user_id, height, weight):
+    user_info = user_base.get_user_base_info_by_id(user_id)
+    age = user_info[0]["age"]
+    gender = user_info[0]["gender"]
 
     bmi_value = calculate_bmi(weight, height)
     bmr_value = calculate_bmr(weight, height, age, gender)
-
     return bmi.update_body_history(
         record_id=record_id,
         weight=weight,
-        height=height,        
+        height=height,
         bmi=bmi_value,
         bmr=bmr_value
     )

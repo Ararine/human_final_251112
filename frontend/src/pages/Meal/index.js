@@ -2,11 +2,13 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom"; // 페이지 이동용
 import Uploader from "../../components/Uploader";
 import {
+  deleteRecommendedMealLists,
   getCalories,
+  getRecommendedMealLists,
   recommendedMealLists,
   uploadMealAuth,
 } from "../../api/Meal";
-
+import CONST_URL from "../../constants/url";
 const Meal = () => {
   const navigate = useNavigate();
 
@@ -22,6 +24,7 @@ const Meal = () => {
   // 목적별 추천 입력값
   const [nDays, setNDays] = useState(3);
   const [nTimes, setNTimes] = useState(3);
+  const [loading, setLoading] = useState(false);
 
   // AI 분석 이미지 프리뷰
   useEffect(() => {
@@ -34,6 +37,7 @@ const Meal = () => {
   // 식단 인증 이미지 프리뷰
   useEffect(() => {
     const imgs = authFiles.filter((f) => f.type.startsWith("image/"));
+    console.log(imgs);
     const urls = imgs.map((f) => URL.createObjectURL(f));
     setAuthPreviews(urls);
     return () => urls.forEach((u) => URL.revokeObjectURL(u));
@@ -89,22 +93,68 @@ const Meal = () => {
     }
   };
 
-  // 메인 카드 식단 인증 등록 핸들러
-  const handleMainAuthUpload = async () => {
+  const handleDelete = async () => {
     try {
-      // 추천 식단 가져오기
-      const response = await recommendedMealLists(nDays, nTimes);
-      console.log(response);
-
-      // 완료 후 다른 페이지 이동 (예: /meal/recommend)
-      navigate("/meal/recommend", {
-        state: { recommendedMeals: response.results, nDays, nTimes },
-      });
+      await deleteRecommendedMealLists();
+      alert("식단 추천 목록이 삭제되었습니다.");
     } catch (err) {
-      console.error(err);
-      alert("식단 인증 등록 또는 추천 식단 불러오기 실패!");
+      console.error("식단 추천 목록이 삭제 실패:", err);
+      alert("삭제에 실패했습니다.");
     }
   };
+
+  const fetchRecommendedMealLists = async () => {
+    if (loading) return; // 이미 로딩 중이면 중복 호출 방지
+    setLoading(true);
+    try {
+      const res = await getRecommendedMealLists();
+      let recommendedData = res?.results;
+
+      // 객체가 들어올 수도 있으니 항상 배열로 변환
+      const dataArray = recommendedData
+        ? Array.isArray(recommendedData)
+          ? recommendedData
+          : [recommendedData]
+        : [];
+      if (dataArray.length > 0) {
+        recommendedData = dataArray[0];
+        console.log(recommendedData);
+        // 알림창 띄우기
+        const goToRecommend = window.confirm(
+          "기본 식단 목록이 있습니다. 다시 추천 받으시겠습니까? \n취소를 누르고 삭제하시겠습니까?"
+        );
+
+        if (goToRecommend) {
+          navigate(`${CONST_URL.MEAL_URL}/recommend`, {
+            state: { recommendedMeals: recommendedData, nDays, nTimes },
+          });
+        } else {
+          handleDelete();
+        }
+      } else {
+        try {
+          // 추천 식단 가져오기
+          const response = await recommendedMealLists(nDays, nTimes);
+          console.log(response);
+
+          navigate(`${CONST_URL.MEAL_URL}/recommend`, {
+            state: { recommendedMeals: response.results, nDays, nTimes },
+          });
+        } catch (err) {
+          console.error(err);
+          alert("식단 인증 등록 또는 추천 식단 불러오기 실패!");
+        }
+      }
+    } catch (err) {
+      console.error("추천 커리큘럼 조회 실패:", err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // useEffect(() => {
+  //   fetchRecommendedMealLists();
+  // }, []);
 
   return (
     <div className="meal-grid">
@@ -176,8 +226,12 @@ const Meal = () => {
           <button>근력 증가</button>
           <button>균형/건강</button>
         </div>
-        <button className="meal-btn small" onClick={handleMainAuthUpload}>
-          식단 인증 등록
+        <button
+          className="meal-btn small"
+          onClick={fetchRecommendedMealLists}
+          disabled={loading} // 로딩 중이면 클릭 방지
+        >
+          {loading ? "로딩 중..." : "식단 인증 등록"}
         </button>
       </div>
     </div>

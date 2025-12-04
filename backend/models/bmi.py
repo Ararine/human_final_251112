@@ -1,7 +1,7 @@
 import pandas as pd
 from sqlalchemy import text
 from db.pool import engine
-from services import bmi, user_base
+from services import bmi
 
 
 # -----------------------------
@@ -9,13 +9,13 @@ from services import bmi, user_base
 # -----------------------------
 def create_body_history(
     user_id: int, weight: float, height: float,
-    age: int, gender: str, bmi: float, bmr: float):
-
+    bmi: float, bmr: float):
+    print(user_id, weight, height, bmi, bmr)
     query = text("""
         INSERT INTO body_history (
-            user_id, weight, height, age, gender, bmi, bmr
+            user_id, weight, height, bmi, bmr
         ) VALUES (
-            :user_id, :weight, :height, :age, :gender, :bmi, :bmr
+            :user_id, :weight, :height, :bmi, :bmr
         )
     """)
 # age gender 삭제 필요
@@ -23,8 +23,6 @@ def create_body_history(
         "user_id": user_id,
         "weight": weight,
         "height": height,
-        "age": age,
-        "gender": gender,
         "bmi": bmi,
         "bmr": bmr
     }
@@ -57,16 +55,14 @@ def get_body_history_by_id(record_id: int):
 # -----------------------------
 def update_body_history(
     record_id: int, weight: float, height: float, 
-    age: int, gender: str, bmi: float, bmr: float):
-
+    bmi: float, bmr: float):
+    
     # age gender 삭제 필요
     query = text("""
         UPDATE body_history
         SET 
             weight = :weight,
             height = :height,
-            age = :age,
-            gender = :gender,
             bmi = :bmi,
             bmr = :bmr
         WHERE id = :record_id
@@ -76,8 +72,6 @@ def update_body_history(
         "record_id": record_id,
         "weight": weight,
         "height": height,
-        "age": age,
-        "gender": gender,
         "bmi": bmi,
         "bmr": bmr
     }

@@ -1,13 +1,33 @@
 
 from models import user, user_base, user_detail
 import utils
+
+def calculate_bmi(weight: float, height: float):
+    return round(weight / ((height / 100) ** 2), 2)
+
+
+def calculate_bmr(weight: float, height: float, age: int, gender: str):
+    gender = gender.lower()
+    
+    if gender in ["male"]:
+        bmr = 66.47 + (13.75 * weight) + (5 * height) - (6.76 * age)
+    elif gender in ["female"]:
+        bmr = 655.1 + (9.56 * weight) + (1.85 * height) - (4.68 * age)
+    else:
+        bmr = 0
+
+    return round(bmr, 2)
+
 # 유저 생성
 def create_user(
     email: str, password: str, 
     age:int, gender:str, height:float, weight:float):
     hashed_password = utils.hash_password(password)
+    bmi_value = calculate_bmi(weight, height)
+    bmr_value = calculate_bmr(weight, height, age, gender)
     response = user.create_user_with_base_info(
-        email, hashed_password, gender, age, height, weight)
+        email, hashed_password, gender, age, height, weight,
+        bmi_value, bmr_value)
     # bmi table 행 추가 기능 구현 필요
     
     return response

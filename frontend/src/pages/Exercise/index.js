@@ -1,7 +1,11 @@
-import React, { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import RandomVideo from "./RandomVideo";
-import { recommendedCurriculum } from "../../api/exercise";
+import {
+  recommendedCurriculum,
+  getRecommendedCurriculum,
+  deleteRecommendedCurriculum,
+} from "../../api/exercise";
 import URL from "../../constants/url";
 export default function Exercise() {
   const navigate = useNavigate();
@@ -36,11 +40,8 @@ export default function Exercise() {
 
     try {
       // API 호출
-      const token = localStorage.getItem("token"); // 필요시
       const response = await recommendedCurriculum(days, time);
-      console.log(response);
       const recommendedData = response.results;
-
       // 다음 페이지로 이동하면서 데이터 전달
       navigate(`${URL.EXERCISE_URL}/recommend`, { state: { recommendedData } });
     } catch (err) {
@@ -50,6 +51,57 @@ export default function Exercise() {
       setLoading(false);
     }
   };
+  const handleDelete = async () => {
+    setLoading(true);
+    try {
+      await deleteRecommendedCurriculum();
+      alert("기본 커리큘럼이 삭제되었습니다.");
+    } catch (err) {
+      console.error("기본 커리큘럼 삭제 실패:", err);
+      alert("삭제에 실패했습니다.");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const fetchCurriculum = async () => {
+    setLoading(true);
+    try {
+      const res = await getRecommendedCurriculum();
+      let recommendedData = res?.results;
+
+      // 객체가 들어올 수도 있으니 항상 배열로 변환
+      const dataArray = recommendedData
+        ? Array.isArray(recommendedData)
+          ? recommendedData
+          : [recommendedData]
+        : [];
+      if (dataArray.length > 0) {
+        recommendedData = dataArray[0];
+
+        // 알림창 띄우기
+        const goToRecommend = window.confirm(
+          "기본 커리큘럼이 있습니다. 추천 페이지로 이동하시겠습니까?\n취소를 누르면 삭제하시겠습니까?"
+        );
+
+        if (goToRecommend) {
+          navigate(`${URL.EXERCISE_URL}/recommend`, {
+            state: { recommendedData },
+          });
+        } else {
+          handleDelete();
+        }
+      }
+    } catch (err) {
+      console.error("추천 커리큘럼 조회 실패:", err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchCurriculum();
+  }, []);
 
   return (
     <div className="flex flex-col items-center gap-8">

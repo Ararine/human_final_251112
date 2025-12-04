@@ -6,14 +6,43 @@ from fastapi.responses import JSONResponse
 from services import meal
 from utils import verify_token
 
-async def recommended_meal_list(
+async def create_recommended_meal(
     body: dict = Body(...), user=Depends(verify_token)):
     try:
         user_id=user["user_id"]
         n_days=body.get("n_days")
         n_times=body.get("n_times")
-        
         results = meal.create_meal_list(user_id, n_days, n_times)
+        return JSONResponse(
+            {"message": "기본 식단 생성 완료", 
+             "results": results}, status_code=status.HTTP_201_CREATED)
+    except Exception as e:
+        return JSONResponse(
+            {"message": "기본 식단 생성 실패", "error":str(e)}, 
+            status_code=status.HTTP_400_BAD_REQUEST)
+
+
+async def get_recommended_meal(
+     user=Depends(verify_token)):
+    try:
+        user_id=user["user_id"]
+        
+        results = meal.get_curriculum_by_id(user_id)
+        return JSONResponse(
+            {"message": "기본 식단 생성 완료", 
+             "results": results}, status_code=status.HTTP_201_CREATED)
+    except Exception as e:
+        return JSONResponse(
+            {"message": "기본 식단 생성 실패", "error":str(e)}, 
+            status_code=status.HTTP_400_BAD_REQUEST)
+
+
+async def remove_recommended_meal(
+    user=Depends(verify_token)):
+    try:
+        user_id=user["user_id"]
+        
+        results = meal.delete_curriculum_by_id(user_id)
         return JSONResponse(
             {"message": "기본 식단 생성 완료", 
              "results": results}, status_code=status.HTTP_201_CREATED)

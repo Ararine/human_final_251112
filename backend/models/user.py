@@ -57,7 +57,8 @@ def delete_user_by_id(user_id: int):
 # 사용자 생성
 def create_user_with_base_info(
     email: str, password: str,
-    gender: str, age: int, height: float, weight: float
+    gender: str, age: int, height: float, weight: float,
+    bmi:float, bmr:float, 
 ):
     with engine.begin() as conn:  # 트랜잭션 시작
         # user 생성
@@ -77,6 +78,19 @@ def create_user_with_base_info(
             "user_id": user_id, "gender": gender,
             "age": age, "height": height, "weight": weight
         })
+        query = text("""
+            INSERT INTO body_history (
+                user_id, weight, height, bmi, bmr
+            ) VALUES (
+                :user_id, :weight, :height, :bmi, :bmr
+            )
+        """)
+        params = {
+            "user_id": user_id,
+            "weight": weight, "height": height,
+            "bmi": bmi, "bmr": bmr
+        }
+        result = conn.execute(query, params)
     return result.lastrowid
 
 def get_user_info(user_id: int):

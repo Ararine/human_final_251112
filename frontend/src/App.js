@@ -149,7 +149,10 @@ function App() {
               <Route path=":id" element={<QnaDetail />} />
               <Route path="edit/:id" element={<QnaEdit />} />
               <Route element={<PrivateRoute userInfo={userInfo} />}>
-                <Route path="write" element={<QnaWrite />} />
+                <Route
+                  path="write"
+                  element={<QnaWrite userInfo={userInfo} />}
+                />
               </Route>
             </Route>
 
