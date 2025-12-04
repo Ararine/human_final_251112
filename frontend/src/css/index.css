@@ -6,7 +6,11 @@ body {
   margin: 0px;
   box-sizing: border-box;
   display: flex;
+  color: white;
   flex-direction: column;
+  background: #0d0d0d;
+  font-family: "Pretendard", sans-serif;
+  white-space: nowrap;
 }
 
 header {
@@ -26,6 +30,15 @@ header > div {
   display: flex;
   align-items: center;
 }
+header nav {
+  color: rgba(255, 255, 255, 0.85);
+  display: flex;
+  gap: 8px;
+}
+
+header nav a:hover {
+  color: white;
+}
 
 main {
   flex: 1;
@@ -43,9 +56,69 @@ footer {
 }
 
 button {
-  border: none;
+  border: 1px solid rgba(255, 255, 255, 0.6);
   border-radius: 6px;
   padding: 6px 14px;
   cursor: pointer;
   transition: background-color 0.2s ease;
+  color: white;
+  background: transparent;
+}
+
+a {
+  text-decoration: none;
+  font-weight: 500;
+  color: inherit;
+}
+
+/* 테이블 전체 */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  background: #1d1f21;
+  border-radius: 12px;
+  overflow: hidden;
+  font-family: "Pretendard", sans-serif;
+}
+
+table thead tr {
+  background: #2c2f33;
+  color: #fff;
+  text-align: left;
+  font-weight: 700;
+}
+
+table th,
+table td {
+  padding: 14px 18px;
+  font-size: 15px;
+  border-bottom: 1px solid #2b2b2b;
+}
+
+table tbody tr {
+  color: #e2e2e2;
+  transition: background 0.2s ease;
+}
+
+.styled-table tbody tr:hover {
+  background: rgba(255, 255, 255, 0.07);
+}
+
+/* 마지막 줄 border 제거 */
+.styled-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+/* Zebra striping (선택 사항) */
+.styled-table tbody tr:nth-child(even) {
+  background: rgba(255, 255, 255, 0.03);
+}
+
+/* 반응형 - 모바일 줄바꿈 */
+@media (max-width: 768px) {
+  .styled-table th,
+  .styled-table td {
+    padding: 10px 12px;
+    font-size: 14px;
+  }
 }

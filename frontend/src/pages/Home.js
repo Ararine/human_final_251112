@@ -39,39 +39,37 @@ export default function Home({ userInfo }) {
     setShowAttendance(true);
   };
 
-  const prevSlide = () => {
-    setCurrent((prev) => (prev === 0 ? images.length - 1 : prev - 1));
-  };
+  // const prevSlide = () => {
+  //   setCurrent((prev) => (prev === 0 ? images.length - 1 : prev - 1));
+  // };
 
-  const nextSlide = () => {
-    setCurrent((prev) => (prev === images.length - 1 ? 0 : prev + 1));
-  };
+  // const nextSlide = () => {
+  //   setCurrent((prev) => (prev === images.length - 1 ? 0 : prev + 1));
+  // };
 
+  const overay_text = ["aaaa", "bbb", "ccc"];
   return (
     <div className="home-container">
       <section>
         {/* 🔥 히어로 배너 */}
-        <div className="hero-section">
-          <img
-            src={images[current]}
-            key={current}
-            alt="banner"
-            className="hero-image fade"
-          />
+        <div className="image-container">
+          <img src={images[current]} key={current} alt="banner" />
 
-          <div className="hero-center-box">
+          <p>{overay_text[current]}</p>
+          <div>
             <button className="start-btn" onClick={handleStart}>
               바로 시작하기
             </button>
           </div>
 
-          <button className="arrow left" onClick={prevSlide}>
+          {/* <button className="arrow left" onClick={prevSlide}>
             &#10094;
           </button>
           <button className="arrow right" onClick={nextSlide}>
             &#10095;
-          </button>
+          </button> */}
         </div>
+
         {/* 기존 섹션들 유지 */}
         <div className="hero-text-box">
           <h1 className="hero-title">당신만을 위한 최적의 운동 루틴</h1>

@@ -7,11 +7,12 @@ import UserInfo from "./UserInfo";
 import UserPostList from "./UserPostList";
 import UserDelete from "./UserDelete";
 
-import { getPostsByUserId, deletePost } from "../../api/Community";
+import { getPosts, deletePost } from "../../api/Community";
 import { getMyQna } from "../../api/Qna";
 import { getUserByUserId, updateUserByUserId } from "../../api/UserBase";
 
 const Profile = ({ userInfo }) => {
+  console.log(userInfo);
   const navigate = useNavigate();
 
   // 로그인 정보 안전 처리
@@ -48,24 +49,34 @@ const Profile = ({ userInfo }) => {
     loadUserBaseInfo();
   }, []);
 
-  // 🔹 유저 게시글 목록 불러오기
+  // 🔹 내가 작성한 게시글 프론트에서 필터링
   useEffect(() => {
     const loadPosts = async () => {
-      if (!safeUser.id) return;
+      if (!safeUser.user_id) return;
 
       try {
-        const posts = await getPostsByUserId(safeUser.id);
+        const allPosts = await getPosts();
 
-        console.log("getPostsByUserId 결과:", posts);
+        console.log("전체 게시글:", allPosts);
 
-        setMyPosts(posts.data || []);
+        // data 배열만 꺼내기
+        const postsArray = allPosts.data || [];
+
+        const myFilteredPosts = postsArray.filter(
+          (post) => post.user_id === safeUser.user_id
+        );
+
+        console.log("내 게시글:", myFilteredPosts);
+
+        setMyPosts(myFilteredPosts);
       } catch (err) {
         console.error("유저 게시글 불러오기 실패:", err);
       }
     };
 
     loadPosts();
-  }, [safeUser.id]);
+  }, [safeUser.user_id]);
+
   // 변경 핸들러
   const handleChange = (e) => {
     const { name, value } = e.target;

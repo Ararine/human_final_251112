@@ -1,213 +1,30 @@
-/* ===========================
-   GLOBAL LAYOUT
-=========================== */
-body {
-  background: #0d0d0d;
-  color: #ededed;
-  font-family: "Pretendard", sans-serif;
-}
-
-/* main {
-  padding: 0 !important;
-  margin: 0;
-  width: 100%;
-} */
-
-.home-container {
-  width: 100%;
-  overflow-x: hidden;
-}
-
-/* ===========================
-   HERO SECTION
-=========================== */
-.hero-section {
-  width: 100%;
-  height: 70vh;
+.image-container {
   position: relative;
+  width: 100%;
+  height: 65vh;
   overflow: hidden;
-  margin-bottom: 80px;
+  display: flex;
+  flex-direction: column;
 }
 
-.hero-image {
+.image-container img {
   width: 100%;
-  height: auto;
-  object-fit: cover;
+  /* height: 100%; */
+  object-fit: contain;
+  object-position: top;
   filter: brightness(70%); /* 다크 UI에 맞게 살짝 어둡게 */
 }
-/* 히어로 아래 그라데이션 페이드 */
-.hero-section::after {
-  content: "";
+.image-container p {
   position: absolute;
-  left: 0;
-  bottom: 0;
-
-  width: 100%;
-  height: 150px; /* 페이드 길이 - 원하면 늘릴 수 있음 */
-
-  background: linear-gradient(
-    to bottom,
-    rgba(0, 0, 0, 0) 0%,
-    /* 완전 투명 → 시작 */ #0d0d0d 100% /* 너의 사이트 배경색 */
-  );
-
-  pointer-events: none;
-}
-
-/* 시작 버튼 */
-.hero-center-box {
-  position: absolute;
-  top: 78%;
+  top: 30%;
   left: 50%;
   transform: translate(-50%, -50%);
   z-index: 10;
 }
-.hero-text-box {
-  width: 100%;
-  text-align: center; /* 텍스트 가운데 */
-  margin: 40px 0; /* 위아래 여백 */
-}
-
-.hero-title {
-  font-size: 28px;
-  font-weight: 700;
-  margin-bottom: 10px;
-  color: white; /* 배경이 어두우면 글자색 흰색 */
-}
-
-.hero-desc {
-  font-size: 16px;
-  opacity: 0.85;
-  color: white;
-}
-
-.start-btn {
-  padding: 16px 36px;
-  font-size: 16px;
-  font-weight: 700;
-  border-radius: 50px;
-  cursor: pointer;
-
-  background: rgba(255, 255, 255, 0.25);
-  color: #fff;
-  backdrop-filter: blur(10px);
-  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.25);
-  transition: 0.25s ease;
-}
-
-.start-btn:hover {
-  background: rgba(255, 255, 255, 0.4);
-  transform: translateY(-4px);
-}
-
-/* ===========================
-   SECTION COMMON STYLE
-=========================== */
-.section,
-.feature-card,
-.premium-inner,
-.success-card,
-.faq-item,
-.trust-list li {
-  background: #1a1a1a;
-  border-radius: 12px;
-  padding: 24px;
-  color: #ededed;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
-  box-sizing: border-box;
-}
-
-.section-title {
-  font-size: 32px;
-  font-weight: 700;
-  margin: 40px 0;
-  text-align: center;
-}
-
-/* ===========================
-   FEATURE CARD (운동/식단/ROM)
-=========================== */
-.card-section {
-  display: flex;
-  gap: 24px;
-  max-width: 1200px;
-  margin: 40px auto 80px;
-  padding: 0 40px;
-}
-
-.feature-card {
-  flex: 1;
-  cursor: pointer;
-  transition: transform 0.25s, box-shadow 0.25s;
-}
-
-.feature-card:hover {
-  transform: translateY(-8px);
-  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.45);
-}
-
-/* ===========================
-   PREMIUM SECTION
-=========================== */
-.premium-section {
-  padding: 80px 0;
-  background: #111; /* 섹션 전체 등급 낮은 다크 */
-}
-
-.premium-inner {
-  max-width: 1200px;
-  margin: 0 auto;
-}
-
-.premium-list li {
-  color: #cfcfcf;
-  margin-bottom: 8px;
-}
-
-.premium-btn {
-  margin-top: 20px;
-  padding: 12px 28px;
-  background: #333;
-  color: #fff;
-  border-radius: 8px;
-  font-size: 15px;
-  transition: 0.2s;
-  cursor: pointer;
-}
-
-.premium-btn:hover {
-  background: #555;
-}
-
-/* ===========================
-   HOW IT WORKS
-=========================== */
-.how-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 16px;
-}
-
-/* ===========================
-   SUCCESS CASES
-=========================== */
-.success-grid {
-  display: flex;
-  gap: 24px;
-  flex-wrap: wrap;
-  justify-content: center;
-}
-
-/* ===========================
-   FAQ
-=========================== */
-.faq-q {
-  font-size: 18px;
-  font-weight: 600;
-  margin-bottom: 8px;
-}
-
-.faq-a {
-  color: #c7c7c7;
-  margin-bottom: 20px;
+.image-container button {
+  position: absolute;
+  top: 50%; /* 세로 중앙 */
+  left: 50%; /* 가로 중앙 */
+  transform: translate(-50%, -50%); /* 정확한 중앙 보정 */
+  z-index: 10; /* 이미지 위에 보이도록 */
 }
