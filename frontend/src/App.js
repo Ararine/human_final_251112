@@ -41,6 +41,8 @@ import "./css/index.css";
 import "./css/global.css";
 import "./css/home.css";
 
+import "./css/community.css";
+import "./css/qna.css";
 // import "./css/signup.css";
 // import "./css/login.css";
 // import "./css/admin.css";
@@ -96,17 +98,15 @@ function App() {
               <Route index element={<Exercise />} />
               <Route path="recommend" element={<ExRecommend />} />
             </Route>
-            <Route path={URL.MEAL_URL} element={<Meal />} />
 
             <Route path={URL.MEAL_URL}>
               <Route index element={<Meal />} />
               <Route path="recommend" element={<MealRecommend />} />
             </Route>
 
-            <Route path={URL.COMMUNITY_URL} element={<Community />} />
-
             {/* 커뮤니티 */}
             <Route path={URL.COMMUNITY_URL}>
+              <Route index element={<Community />} />
               <Route path="read/:id" element={<CommunityRead />} />
               <Route element={<PrivateRoute userInfo={userInfo} />}>
                 <Route

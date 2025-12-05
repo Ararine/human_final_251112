@@ -81,6 +81,27 @@ a {
   color: inherit;
 }
 
+input {
+  font-size: 13px;
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  border-radius: 6px;
+  padding: 6px 14px;
+  background: transparent;
+  color: white;
+  min-width: 10ch;
+  outline: none;
+  transition: border-color 0.2s ease, background-color 0.2s ease;
+}
+
+input::placeholder {
+  color: rgba(255, 255, 255, 0.5);
+}
+
+input:focus {
+  border-color: rgba(255, 255, 255, 0.9);
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
 /* 테이블 전체 */
 table {
   width: 100%;

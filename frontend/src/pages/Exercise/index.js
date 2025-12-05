@@ -37,7 +37,6 @@ export default function Exercise() {
   const handleRecommend = async () => {
     if (!days || !time) return;
     setLoading(true);
-
     try {
       // API 호출
       const response = await recommendedCurriculum(days, time);
