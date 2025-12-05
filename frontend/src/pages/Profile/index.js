@@ -110,7 +110,7 @@ const Profile = ({ userInfo }) => {
 
   // 게시글 수정
   const handleEditPost = (postId) => {
-    navigate(`/community/write/${postId}?from=profile`);
+    navigate(`/community/edit/${postId}?from=profile`);
   };
 
   // 게시글 삭제
@@ -153,7 +153,7 @@ const Profile = ({ userInfo }) => {
 
   // Q&A 수정
   const handleEditQna = (qnaId) => {
-    navigate(`/qna/write/${qnaId}?from=profile`);
+    navigate(`/qna/edit/${qnaId}?from=profile`);
   };
 
   // Q&A 삭제

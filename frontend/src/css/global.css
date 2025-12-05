@@ -140,3 +140,9 @@ p {
 .gap-40 {
   gap: 40px;
 }
+button {
+  font-size: 13px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: 0.2s;
+}
