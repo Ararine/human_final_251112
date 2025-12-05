@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import AttendanceCheckPage from "../AttendanceCheckPage";
+import AttendanceCalendar from "../../components/AttendanceCalendar";
 import FirstSection from "./FirstSection";
 import SecondSection from "./SecondSection";
 import ThirdSection from "./ThirdSection";
+import { Attendance } from "../../api/Attendance";
 
 export default function Home({ userInfo }) {
   const [open, setOpen] = useState(false);
+  const [attendanceDates, setAttendanceDates] = useState([]);
   const navigate = useNavigate();
   const images = ["/3.jpg", "/4.jpg", "/5.jpg"];
   const overay_text = ["aaaa", "bbb", "ccc"];
@@ -31,6 +33,25 @@ export default function Home({ userInfo }) {
     // 4) 처음이면 → 출석 모달 띄우기
     setOpen(true);
   };
+  const handleCalendar = async () => {
+    try {
+      const res = await Attendance(userInfo.user_id);
+      let data = res.data;
+      data = data.map((item) => item.attended_at);
+      setAttendanceDates(data);
+      setOpen(true);
+    } catch (err) {
+      if (err?.response?.status == 409) {
+        let data = err.response.data?.data;
+        data = data.map((item) => item.attended_at);
+        setAttendanceDates(data);
+        setOpen(true);
+      } else {
+        console.log(err);
+        alert("출석 처리에 실패하였습니다.");
+      }
+    }
+  };
   return (
     <div className="home-container">
       <FirstSection
@@ -40,30 +61,23 @@ export default function Home({ userInfo }) {
       />
       <SecondSection navigate={navigate} />
       <ThirdSection />
-      {/* 🔥 출석 모달 */}
-      {open && (
-        <AttendanceCheckPage
-          userInfo={userInfo}
-          onClose={() => setOpen(false)}
-        />
+
+      {userInfo && (
+        <button className="floating-calendar-btn" onClick={handleCalendar}>
+          📅
+        </button>
       )}
-      <button className="floating-calendar-btn" onClick={() => setOpen(true)}>
-        📅
-      </button>
-      {/* 
+
       {open && (
-        <div className="calendar-modal-overlay" onClick={() => setOpen(false)}>
-          <div className="calendar-modal" onClick={(e) => e.stopPropagation()}>
-            <AttendanceCheckPage
-              userInfo={userInfo}
+        <div className="modal-overlay" onClick={() => setOpen(false)}>
+          <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+            <AttendanceCalendar
+              attendanceDates={attendanceDates}
               onClose={() => setOpen(false)}
             />
-            <button className="close-btn" onClick={() => setOpen(false)}>
-              닫기
-            </button>
           </div>
         </div>
-      )} */}
+      )}
     </div>
   );
 }

@@ -11,10 +11,6 @@
   z-index: 1000;
 }
 .modal-content {
-  background: #fff;
-  padding: 30px;
-  border-radius: 10px;
-  width: 300px;
   text-align: center;
 }
 

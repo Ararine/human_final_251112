@@ -22,7 +22,6 @@ import Login from "./pages/Login";
 import SignUp from "./pages/SignUp";
 import ForgotPassword from "./pages/ForgotPassword";
 import ROM from "./pages/ROM";
-import AttendanceCheckPage from "./pages/AttendanceCheckPage";
 
 import Admin from "./pages/Admin";
 import AdminExercise from "./pages/Admin/Exercise";
@@ -43,10 +42,11 @@ import "./css/home.css";
 
 import "./css/community.css";
 import "./css/qna.css";
+import "./css/modal.css";
+import "./css/attendanceCheck.css";
 // import "./css/signup.css";
 // import "./css/login.css";
 // import "./css/admin.css";
-// import "./css/attendanceCheck.css";
 // import "./css/exercise.css";
 // import "./css/meal.css";
 import "./css/profile.css";
