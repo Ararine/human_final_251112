@@ -28,6 +28,7 @@ nginx/
 
 ```bash
 cd final/nginx # nginx폴더로 이동
+# final/nginx/temp 폴더 생성 후 아래 명령어 실행
 nginx.exe # nginx 실행
 nginx -s quit # 종료
 taskkill /F /IM nginx.exe # 종료 제대로 안될 시
