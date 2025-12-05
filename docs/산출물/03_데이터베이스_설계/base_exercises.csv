@@ -1,0 +1,11 @@
+"id","name","type","link"
+1,스쿼트,하체,http://localhost/data/squat.mp4
+3,런지,하체,http://localhost/data/lunge.mp4
+4,버피 테스트,전신,http://localhost/data/HIIT(Tabata).mp4
+5,팔굽혀펴기,상체,http://localhost/data/fushup.mp4
+6,수퍼맨,코어,http://localhost/data/superman.mp4
+7,브릿지,"둔근,하체",http://localhost/data/bridge.mp4
+8,플랭크,"코어,복근",http://localhost/data/plank.mp4
+9,크런치,"복근,코어",http://localhost/data/crunch.mp4
+10,리버스크런치,"복근,코어",http://localhost/data/reverse_crunch.mp4
+11,점핑잭,전신,http://localhost/data/jumping_jack.mp4
