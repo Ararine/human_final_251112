@@ -4,7 +4,6 @@ import { api } from "./axios"; // axios 인스턴스 import
 export async function getLatestBodyIndex(user_id) {
   try {
     const res = await api.get(`/bmi/${user_id}`);
-    console.log(res);
     return res.data; // res.data.data 형태 반환 예상
   } catch (err) {
     console.error("BMI/BMR 불러오기 실패:", err);

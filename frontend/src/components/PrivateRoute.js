@@ -3,7 +3,6 @@ import URL from "../constants/url";
 
 export default function PrivateRoute({ userInfo, requireAdmin = false }) {
   const location = useLocation();
-  console.log(userInfo);
   // 아직 유저 정보 로딩 중
   if (userInfo === undefined) {
     return <div>Loading...</div>;

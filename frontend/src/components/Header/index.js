@@ -1,7 +1,9 @@
+import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import URL from "../../constants/url";
 
+import URL from "../../constants/url";
 const Header = ({ userInfo, onLogout }) => {
+  const [showDropdown, setShowDropdown] = useState(false);
   const navigate = useNavigate();
   const goHome = () => navigate(URL.HOME);
   const goLogin = () => navigate(URL.LOGIN_URL);
@@ -38,9 +40,41 @@ const Header = ({ userInfo, onLogout }) => {
             </button>
             <span>{(userInfo.email || userInfo.username) + " 님"}</span>
 
-            <button className="btn-ghost zero-padding" onClick={goProfile}>
-              마이페이지
-            </button>
+            <div
+              style={{
+                display: "flex",
+                position: "relative",
+                alignItems: "center",
+              }}
+              onMouseEnter={() => setShowDropdown(true)}
+              onMouseLeave={() => setShowDropdown(false)}
+            >
+              <button className="btn-ghost zero-padding">마이페이지</button>
+
+              {showDropdown && (
+                <div
+                  style={{
+                    position: "absolute",
+                    top: "100%",
+                    left: 0,
+                    padding: "8px",
+                    display: "flex",
+                    gap: "4px",
+                    flexDirection: "column",
+                    fontSize: "13px",
+                    background: "rgba(255, 255, 255, 0.15)",
+                    backdropFilter: "blur(12px)",
+                    WebkitBackdropFilter: "blur(12px)",
+                    borderRadius: "10px",
+                  }}
+                >
+                  <div onClick={() => navigate("/profile")}>활동정보</div>
+                  <div onClick={() => navigate("/profile/personal")}>
+                    개인정보
+                  </div>
+                </div>
+              )}
+            </div>
 
             <button onClick={handleLogoutClick}>로그아웃</button>
           </>

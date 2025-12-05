@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams, useLocation } from "react-router-dom";
 import { getQnaDetail, updateQna, deleteQna } from "../../api/Qna";
-import "../../css/form.css";
+// import "../../css/form.css";
 
 export default function QnaEdit() {
   const { id } = useParams();

@@ -43,28 +43,6 @@
   font-size: 14px;
 }
 
-/* postlist */
-.postlist-table {
-  width: 100%;
-  border-collapse: collapse;
-  table-layout: fixed; /* 열 너비 균등 분배 */
-}
-
-.postlist-table th,
-.postlist-table td {
-  padding: 10px;
-  border: 1px solid #ddd;
-  vertical-align: middle; /* 가운데 정렬 */
-  text-align: center;
-  word-break: break-word; /* 긴 글자 줄바꿈 */
-}
-
-.postlist-table .title {
-  white-space: normal; /* 줄바꿈 허용 */
-  text-align: left; /* 왼쪽 정렬 */
-  min-width: 200px; /* 최소 너비 지정 */
-}
-
 .truncate-3 {
   display: -webkit-box;
   -webkit-line-clamp: 3; /* 최대 3줄 */
@@ -113,13 +91,6 @@
   padding: 0 20px;
 }
 
-.user-title {
-  text-align: center;
-  margin-bottom: 25px;
-  font-size: 26px;
-  font-weight: bold;
-}
-
 /* 검색 박스 */
 .search-box {
   margin-bottom: 20px;
@@ -131,32 +102,6 @@
   width: 260px;
   border: 1px solid #ccc;
   border-radius: 8px;
-}
-
-/* 테이블 */
-.user-table {
-  width: 100%;
-  border-collapse: collapse;
-  background: white;
-  border-radius: 10px;
-  overflow: hidden;
-  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
-}
-
-.user-table th,
-.user-table td {
-  padding: 12px 14px;
-  text-align: center;
-  border-bottom: 1px solid #eee;
-}
-
-.user-table th {
-  background: #f5f5f5;
-  font-weight: bold;
-}
-
-.user-table tr:hover {
-  background: #fafafa;
 }
 
 .username {
@@ -254,32 +199,6 @@
 
 .btn-add:hover {
   background: #43a047;
-}
-
-/* 테이블 */
-.exercise-table {
-  width: 100%;
-  border-collapse: collapse;
-  background: white;
-  border-radius: 10px;
-  overflow: hidden;
-  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
-}
-
-.exercise-table th,
-.exercise-table td {
-  padding: 12px 14px;
-  text-align: center;
-  border-bottom: 1px solid #eee;
-}
-
-.exercise-table th {
-  background: #f5f5f5;
-  font-weight: bold;
-}
-
-.exercise-table tr:hover {
-  background: #fafafa;
 }
 
 .name {
@@ -418,32 +337,6 @@
 
 .btn-add:hover {
   background: #fb8c00;
-}
-
-/* 테이블 */
-.meal-table {
-  width: 100%;
-  border-collapse: collapse;
-  background: white;
-  border-radius: 10px;
-  overflow: hidden;
-  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
-}
-
-.meal-table th,
-.meal-table td {
-  padding: 12px 14px;
-  text-align: center;
-  border-bottom: 1px solid #eee;
-}
-
-.meal-table th {
-  background: #f5f5f5;
-  font-weight: bold;
-}
-
-.meal-table tr:hover {
-  background: #fafafa;
 }
 
 .name {

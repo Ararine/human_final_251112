@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { createPost } from "../../../api/Community";
-import "../../../css/form.css";
+// import "../../../css/form.css";
 
 export default function CommunityWrite({ userInfo }) {
   const navigate = useNavigate();

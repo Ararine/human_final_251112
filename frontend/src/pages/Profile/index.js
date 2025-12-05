@@ -1,86 +1,15 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-import UserInfo from "./UserInfo";
 import UserPostList from "./UserPostList";
 import UserQnaList from "./UserQnaList";
 import UserDelete from "./UserDelete";
 
 import { getMyPosts, deletePost } from "../../api/Community";
 import { getMyQna, deleteQna } from "../../api/Qna";
-import { getUserByUserId, updateUserByUserId } from "../../api/UserBase";
 
 const Profile = ({ userInfo }) => {
   const navigate = useNavigate();
-
-  // ------------------------------
-  // 로그인 유저 정보 세팅
-  // ------------------------------
-  const safeUser =
-    userInfo || JSON.parse(localStorage.getItem("userInfo")) || {};
-
-  // ------------------------------
-  // 개인정보 상태
-  // ------------------------------
-  const [form, setForm] = useState({
-    gender: "",
-    age: "",
-    height: "",
-    weight: "",
-  });
-
-  // 🔥 개인정보 불러오기
-  useEffect(() => {
-    const loadUserBaseInfo = async () => {
-      if (!safeUser.user_id) return;
-
-      try {
-        const response = await getUserByUserId(safeUser.user_id);
-        const user = response.data[0];
-
-        setForm({
-          gender: user.gender || "",
-          age: user.age || "",
-          height: user.height || "",
-          weight: user.weight || "",
-        });
-      } catch (err) {
-        console.error("유저 정보 불러오기 실패:", err);
-      }
-    };
-
-    loadUserBaseInfo();
-  }, [safeUser.user_id]);
-
-  // ------------------------------
-  // 개인정보 입력 핸들러
-  // ------------------------------
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setForm((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
-  };
-
-  // 개인정보 저장
-  const handleSave = async (e) => {
-    e.preventDefault();
-
-    try {
-      await updateUserByUserId(
-        safeUser.user_id,
-        form.gender,
-        form.age,
-        form.height,
-        form.weight
-      );
-      alert("개인정보가 저장되었습니다.");
-    } catch (err) {
-      console.error("개인정보 저장 실패:", err);
-      alert("저장 실패");
-    }
-  };
 
   // ------------------------------
   // 내가 작성한 게시물
@@ -89,10 +18,10 @@ const Profile = ({ userInfo }) => {
 
   useEffect(() => {
     const loadPosts = async () => {
-      if (!safeUser.user_id) return;
+      if (!userInfo.user_id) return;
 
       try {
-        const res = await getMyPosts(safeUser.user_id);
+        const res = await getMyPosts(userInfo.user_id);
         const posts =
           res?.data?.data || // { data:[...] }
           res?.data || // 배열 자체
@@ -106,11 +35,11 @@ const Profile = ({ userInfo }) => {
     };
 
     loadPosts();
-  }, [safeUser.user_id]);
+  }, [userInfo.user_id]);
 
   // 게시글 수정
   const handleEditPost = (postId) => {
-    navigate(`/community/edit/${postId}?from=profile`);
+    navigate(`/community/edit/${postId}`);
   };
 
   // 게시글 삭제
@@ -133,10 +62,10 @@ const Profile = ({ userInfo }) => {
 
   useEffect(() => {
     const loadQna = async () => {
-      if (!safeUser.user_id) return;
+      if (!userInfo.user_id) return;
 
       try {
-        const res = await getMyQna(safeUser.user_id);
+        const res = await getMyQna(userInfo.user_id);
         const list =
           res?.data?.data || // { data:[...] }
           res?.data || // 배열 자체
@@ -149,11 +78,11 @@ const Profile = ({ userInfo }) => {
     };
 
     loadQna();
-  }, [safeUser.user_id]);
+  }, [userInfo.user_id]);
 
   // Q&A 수정
   const handleEditQna = (qnaId) => {
-    navigate(`/qna/edit/${qnaId}?from=profile`);
+    navigate(`/qna/edit/${qnaId}`);
   };
 
   // Q&A 삭제
@@ -174,14 +103,7 @@ const Profile = ({ userInfo }) => {
   // ------------------------------
   return (
     <div className="profile-page">
-      <h2 className="profile-title">마이페이지</h2>
-
-      {/* 1. 개인정보 관리 */}
-      <UserInfo
-        form={form}
-        handleChange={handleChange}
-        handleSave={handleSave}
-      />
+      <h2 className="profile-title">내 활동 정보</h2>
 
       {/* 2. 내가 작성한 게시물 */}
       <UserPostList

@@ -50,9 +50,11 @@ def create_user_detail_info(
 
 # 사용자 상세정보 조회
 def get_user_detail_info_by_id(user_id: int):
-    query = text("SELECT * FROM user_detail_info where id = :user_id")
+    query = text("SELECT * FROM user_detail_info where user_id = :user_id")
     with engine.connect() as conn:
-        df = pd.read_sql(query, conn, {"user_id": user_id})
+        df = pd.read_sql(query, conn, params={"user_id": user_id})
+        df["activity_duration"] = df["activity_duration"].astype(str)  
+        df["sleep_duration"] = df["sleep_duration"].astype(str)  
     return df.to_dict(orient="records")
 
 # 사용자 상세정보 수정
@@ -99,7 +101,7 @@ def update_user_detail_info_by_id(
 
 # 사용자 상세정보 삭제
 def delete_user_detail_info_by_id(user_id: int):
-    query = text("DELETE FROM user_detail_info WHERE id = :user_id ")
+    query = text("DELETE FROM user_detail_info WHERE user_id = :user_id ")
     with engine.connect() as conn:
         result = conn.execute(query, {"user_id": user_id})
         conn.commit()

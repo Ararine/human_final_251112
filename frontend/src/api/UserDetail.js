@@ -1,50 +1,48 @@
-import axios from "axios";
+import { api } from "./axios";
 
-/* -----------------------------
-    🔹 1) 기본정보 (user_base_info)
-    ✔ FastAPI 실제 경로 = /base/{user_id}
------------------------------ */
+export async function createUserDetailInfo(contents) {
+  try {
+    const token = localStorage.getItem("token");
+    const res = await api.post("/detail", contents, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
 
-const BASE_URL_BASE = "http://localhost:5001/base";
-const BASE_URL_DETAIL = "http://localhost:5001/users";
+    return res.data;
+  } catch (err) {
+    console.error("사용자 상세 정보 생성 실패:", err);
+    throw err;
+  }
+}
 
-// 조회
-export const getUserBase = async (userId) => {
-  const res = await axios.get(`${BASE_URL_BASE}/${userId}`);
-  return res.data;
-};
+export async function getUserDetailInfoByUserId() {
+  try {
+    const token = localStorage.getItem("token");
+    const res = await api.get("/detail", {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    return res.data;
+  } catch (err) {
+    console.error("사용자 상세 정보 조회 실패:", err);
+    throw err;
+  }
+}
 
-// 생성
-export const createUserBase = async (userId, data) => {
-  const res = await axios.post(`${BASE_URL_BASE}/${userId}`, data);
-  return res.data;
-};
+export async function updateUserDetailInfo(contents) {
+  try {
+    const token = localStorage.getItem("token");
+    const res = await api.put("/detail", contents, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
 
-// 수정
-export const updateUserBase = async (userId, data) => {
-  const res = await axios.put(`${BASE_URL_BASE}/${userId}`, data);
-  return res.data;
-};
-
-/* -----------------------------
-    🔹 2) 상세정보 (user_detail_info)
-    ✔ FastAPI 경로 = /users/{user_id}/detail
------------------------------ */
-
-// 조회
-export const getUserDetail = async (userId) => {
-  const res = await axios.get(`${BASE_URL_DETAIL}/${userId}/detail`);
-  return res.data;
-};
-
-// 생성
-export const createUserDetail = async (userId, data) => {
-  const res = await axios.post(`${BASE_URL_DETAIL}/${userId}/detail`, data);
-  return res.data;
-};
-
-// 수정
-export const updateUserDetail = async (userId, data) => {
-  const res = await axios.put(`${BASE_URL_DETAIL}/${userId}/detail`, data);
-  return res.data;
-};
+    return res.data;
+  } catch (err) {
+    console.error("사용자 상세 정보 수정 실패:", err);
+    throw err;
+  }
+}

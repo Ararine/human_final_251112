@@ -105,7 +105,7 @@ const Exercise = () => {
         </button>
       </div>
 
-      <table className="exercise-table">
+      <table>
         <thead>
           <tr>
             <th>ID</th>

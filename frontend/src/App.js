@@ -19,6 +19,7 @@ import CommunityRead from "./pages/Community/Read";
 import CommunityEdit from "./pages/Community/Edit";
 
 import Profile from "./pages/Profile";
+import UserDetail from "./pages/Profile/UserDetail";
 import Login from "./pages/Login";
 import SignUp from "./pages/SignUp";
 import ForgotPassword from "./pages/ForgotPassword";
@@ -43,13 +44,14 @@ import "./css/home.css";
 
 import "./css/community.css";
 import "./css/qna.css";
+import "./css/meal.css";
 import "./css/modal.css";
 import "./css/attendanceCheck.css";
 // import "./css/signup.css";
 // import "./css/login.css";
-// import "./css/admin.css";
-// import "./css/exercise.css";
-// import "./css/meal.css";
+import "./css/admin.css";
+import "./css/exercise.css";
+
 import "./css/profile.css";
 
 function App() {
@@ -123,10 +125,14 @@ function App() {
             </Route>
 
             {/* 프로필 */}
-            <Route element={<PrivateRoute userInfo={userInfo} />}>
+            <Route
+              path={URL.PROFILE_URL}
+              element={<PrivateRoute userInfo={userInfo} />}
+            >
+              <Route index element={<Profile userInfo={userInfo} />} />
               <Route
-                path={URL.PROFILE_URL}
-                element={<Profile userInfo={userInfo} />}
+                path="personal"
+                element={<UserDetail userInfo={userInfo} />}
               />
             </Route>
 

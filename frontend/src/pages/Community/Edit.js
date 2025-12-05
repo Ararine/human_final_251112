@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useNavigate, useParams, useLocation } from "react-router-dom";
 import { getPostDetail, updatePost, deletePost } from "../../api/Community";
-import "../../css/form.css";
+// import "../../css/form.css";
 
 export default function CommunityEdit() {
   const navigate = useNavigate();
