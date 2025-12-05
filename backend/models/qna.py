@@ -34,9 +34,16 @@ def checked_title(title: str):
 
 # 3. 모든 QnA 목록 조회 (SELECT ALL)
 def get_all_qna():
-    query = text("""
-        SELECT * FROM qna ORDER BY created_at DESC
-    """)
+    query = """
+        SELECT 
+            q.*, 
+            u.email
+        FROM qna AS q
+        INNER JOIN user AS u
+            ON q.user_id = u.id
+        ORDER BY q.created_at DESC;
+    """
+    query = text(query)
     with engine.connect() as conn:
         df = pd.read_sql(query, conn)
     df["created_at"] = df["created_at"].astype(str) 

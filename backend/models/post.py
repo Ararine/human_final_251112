@@ -13,7 +13,14 @@ def insert_post(title: str, contents: str, user_id: str):
 
 # 게시글 전체 조회
 def fetch_all_posts():
-    query = text("SELECT * FROM post")
+    query = """
+        SELECT post.*, user.email
+        FROM post
+        INNER JOIN user
+            ON post.user_id = user.id
+        WHERE post.is_public = 1;
+    """
+    query = text(query)
     with engine.connect() as conn:
         df = pd.read_sql(query, conn)
     # datetime → 문자열 변환
