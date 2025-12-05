@@ -16,6 +16,7 @@ import MealRecommend from "./pages/Meal/Recommend";
 import Community from "./pages/Community";
 import CommunityWrite from "./pages/Community/Write";
 import CommunityRead from "./pages/Community/Read";
+import CommunityEdit from "./pages/Community/Edit";
 
 import Profile from "./pages/Profile";
 import Login from "./pages/Login";
@@ -118,6 +119,7 @@ function App() {
                   element={<CommunityWrite userInfo={userInfo} />}
                 />
               </Route>
+              <Route path="edit/:id" element={<CommunityEdit />} />
             </Route>
 
             {/* 프로필 */}
