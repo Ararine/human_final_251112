@@ -19,6 +19,7 @@ export default function Bmi({ userInfo }) {
     setError("");
     try {
       const res = await getLatestBodyIndex(userInfo.user_id);
+      console.log(res);
       const data = res?.data[0];
 
       if (!data) {
@@ -82,22 +83,22 @@ export default function Bmi({ userInfo }) {
       >
         <thead>
           <tr>
-            <th style={thStyle}>저체중</th>
-            <th style={thStyle}>정상</th>
-            <th style={thStyle}>비만전단계</th>
-            <th style={thStyle}>1단계 비만</th>
-            <th style={thStyle}>2단계 비만</th>
-            <th style={thStyle}>3단계 비만</th>
+            <th>저체중</th>
+            <th>정상</th>
+            <th>비만전단계</th>
+            <th>1단계 비만</th>
+            <th>2단계 비만</th>
+            <th>3단계 비만</th>
           </tr>
         </thead>
         <tbody>
           <tr>
-            <td style={tdStyle}>18.5kg/m² 미만</td>
-            <td style={tdStyle}>18.5 ~ 22.9kg/m²</td>
-            <td style={tdStyle}>23 ~ 24.9kg/m²</td>
-            <td style={tdStyle}>25 ~ 29.9kg/m²</td>
-            <td style={tdStyle}>30 ~ 34.9kg/m²</td>
-            <td style={tdStyle}>35kg/m² 이상</td>
+            <td>18.5kg/m² 미만</td>
+            <td>18.5 ~ 22.9kg/m²</td>
+            <td>23 ~ 24.9kg/m²</td>
+            <td>25 ~ 29.9kg/m²</td>
+            <td>30 ~ 34.9kg/m²</td>
+            <td>35kg/m² 이상</td>
           </tr>
         </tbody>
       </table>
@@ -116,17 +117,3 @@ export default function Bmi({ userInfo }) {
     </div>
   );
 }
-
-// 스타일 분리
-const thStyle = {
-  border: "1px solid #ddd",
-  padding: "10px",
-  background: "#f3f6fa",
-  fontWeight: "600",
-};
-
-const tdStyle = {
-  border: "1px solid #ddd",
-  padding: "10px",
-  background: "#fff",
-};
