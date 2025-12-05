@@ -10,7 +10,6 @@ async def service_create_body_history(
         user_id = body.get("user_id")
         weight = body.get("weight")
         height = body.get("height")
-        print(weight,height)
         # 호출하는 함수는 서비스에 존재하는 함수명으로 수정 필요
         create = bmi.service_create_body_history(
             user_id, weight, height)
@@ -42,7 +41,6 @@ async def service_get_body_history(
         # print(weight,height)
         # 호출하는 함수는 서비스에 존재하는 함수명으로 수정 필요
         # 키 몸무게 삭제 필요
-        print(1)
         get = bmi.service_get_body_history(user_id)
 
         if not get:

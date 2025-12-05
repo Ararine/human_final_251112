@@ -4,15 +4,33 @@ from sqlalchemy import text
 from db.pool import engine
 
 # 사용자 기본 생성
-def create_user_base_info(user_id: str, gender: str, age:int, height:float, weight:float):
-    query = text("""
+def create_user_base_info(
+    user_id: str, gender: str, age:int, height:float, weight:float,
+    bmi:float, bmr:float
+    ):
+    user_base_query = text("""
     INSERT INTO user_base_info (user_id, gender, age, height, weight)
     VALUES (:user_id, :gender, :age, :height, :weight)
     """)
+
+    body_history_query = text("""
+        INSERT INTO body_history (
+            user_id, weight, height, bmi, bmr
+        ) VALUES (
+            :user_id, :weight, :height, :bmi, :bmr
+        )
+    """)
+    params = {
+        "user_id": user_id,
+        "weight": weight, "height": height,
+        "bmi": bmi, "bmr": bmr
+    }
+        
     with engine.connect() as conn:
-        result = conn.execute(query, {
+        result = conn.execute(user_base_query, {
             "user_id": user_id, "gender": gender, "age":age, 
             "height":height, "weight":weight})
+        result = conn.execute(body_history_query, params)
         conn.commit()
     return result.lastrowid
 
@@ -25,17 +43,39 @@ def get_user_base_info_by_id(user_id: int):
     return df.to_dict(orient="records")
 
 # 사용자 기본정보 수정
-def update_user_base_info_by_id(user_id: int, gender:str, age:str, height:float, weight:float):
-    query = text("UPDATE user_base_info SET gender = :gender, age = :age, height = :height, weight = :weight WHERE user_id = :user_id")
+def update_user_base_info_by_id(
+    user_id: int, gender:str, age:str, height:float, weight:float,
+    bmi:float, bmr:float):
+    user_base_query = text(
+        """
+        UPDATE user_base_info 
+        SET gender = :gender, age = :age, 
+            height = :height, weight = :weight 
+        WHERE user_id = :user_id
+        """)
+    user_base_params = {
+                "user_id": user_id,
+                "gender": gender,
+                "age": age,
+                "height": height,
+                "weight": weight
+            }
+    body_history_query = text("""
+        INSERT INTO body_history (
+            user_id, weight, height, bmi, bmr
+        ) VALUES (
+            :user_id, :weight, :height, :bmi, :bmr
+        )
+    """)
+    body_history_params = {
+        "user_id": user_id,
+        "weight": weight, "height": height,
+        "bmi": bmi, "bmr": bmr
+    }
+        
     with engine.connect() as conn:
-        params = {
-            "user_id": user_id,
-            "gender": gender,
-            "age": age,
-            "height": height,
-            "weight": weight
-        }
-        result = conn.execute(query, params)
+        result = conn.execute(user_base_query, user_base_params)
+        result = conn.execute(body_history_query, body_history_params)
         conn.commit()
     return result.rowcount
 
