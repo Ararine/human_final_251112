@@ -11,6 +11,8 @@ body {
   background: #0d0d0d;
   font-family: "Pretendard", sans-serif;
   white-space: nowrap;
+  overflow-y: scroll; /* 항상 스크롤 공간 확보 (레이아웃 흔들림 제거) */
+  scrollbar-width: none;
 }
 
 header {
