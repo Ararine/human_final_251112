@@ -152,7 +152,7 @@ function App() {
               path="/admin"
               element={<PrivateRoute userInfo={userInfo} requireAdmin={true} />}
             >
-              <Route index element={<Admin userInfo={userInfo} />} />
+              <Route index element={<Admin />} />
               <Route path="ex" element={<AdminExercise />} />
               <Route path="meal" element={<AdminMeal />} />
               <Route path="user" element={<AdminUser />} />
