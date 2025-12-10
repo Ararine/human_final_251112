@@ -103,7 +103,7 @@ function App() {
             </Route>
 
             <Route path={URL.MEAL_URL}>
-              <Route index element={<Meal />} />
+              <Route index element={<Meal userInfo={userInfo} />} />
               <Route path="recommend" element={<MealRecommend />} />
             </Route>
 
@@ -145,7 +145,7 @@ function App() {
             <Route path="/forgot-password" element={<ForgotPassword />} />
 
             {/* ROM */}
-            <Route path={URL.ROM_URL} element={<ROM />} />
+            <Route path={URL.ROM_URL} element={<ROM userInfo={userInfo} />} />
 
             {/* 관리자 */}
             <Route

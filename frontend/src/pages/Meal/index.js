@@ -10,7 +10,7 @@ import {
 } from "../../api/Meal";
 import { getUserDetailInfoByUserId } from "../../api/UserDetail";
 import CONST_URL from "../../constants/url";
-const Meal = () => {
+const Meal = ({ userInfo }) => {
   const navigate = useNavigate();
 
   // AI 분석 전용 스테이트
@@ -26,6 +26,13 @@ const Meal = () => {
   const [nDays, setNDays] = useState(3);
   const [nTimes, setNTimes] = useState(3);
   const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    if (userInfo?.type === "normal") {
+      alert("구독자만 사용할 수 있는 기능입니다.");
+      navigate("/subscribe"); // 이동할 경로
+    }
+  }, [userInfo, navigate]);
 
   // AI 분석 이미지 프리뷰
   useEffect(() => {
