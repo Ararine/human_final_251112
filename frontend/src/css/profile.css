@@ -1,54 +1,100 @@
+/* ============================= */
 /* 전체 레이아웃 */
+/* ============================= */
+
 .profile-page {
   max-width: 680px;
-  margin: 40px auto;
+  margin: 50px auto;
   padding: 0 20px;
-  box-sizing: border-box;
   color: rgba(255, 255, 255, 0.92);
+  animation: fadeIn 0.3s ease;
 }
 
-/* 카드 */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* 스크롤바 숨기기 */
+::-webkit-scrollbar {
+  display: none;
+}
+
+/* ============================= */
+/* Glass Card Section */
+/* ============================= */
+
 .profile-section {
   background: rgba(255, 255, 255, 0.07);
   border: 1px solid rgba(255, 255, 255, 0.12);
-  border-radius: 16px;
-  padding: 32px;
-  margin-bottom: 32px;
+  border-radius: 20px;
+  padding: 36px;
+  margin-bottom: 40px;
+
   backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.28);
+  transition: all 0.25s ease;
 }
 
+.profile-section:hover {
+  background: rgba(255, 255, 255, 0.1);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.35);
+}
+
+/* ============================= */
 /* 제목 */
+/* ============================= */
+
 .section-title {
-  font-size: 22px;
+  font-size: 24px;
   font-weight: 700;
   text-align: center;
-  margin-bottom: 28px;
+  letter-spacing: 0.4px;
+  margin-bottom: 32px;
+  color: #ffffff;
 }
 
+/* ============================= */
 /* 필드 그룹 */
+/* ============================= */
+
 .profile-field {
-  margin-bottom: 24px;
+  margin-bottom: 28px;
   display: flex;
   flex-direction: column;
 }
 
 .profile-field label {
-  font-size: 14px;
+  font-size: 15px;
   font-weight: 600;
-  margin-bottom: 8px;
+  margin-bottom: 10px;
   color: rgba(255, 255, 255, 0.85);
 }
 
+/* ============================= */
 /* input + select */
+/* ============================= */
+
 .profile-field input,
 .profile-field select {
   width: 100%;
-  padding: 14px;
-  font-size: 15px;
-  border-radius: 10px;
+  padding: 16px;
+  font-size: 16px;
+  border-radius: 12px;
+
   border: 1px solid rgba(255, 255, 255, 0.22);
   background: rgba(255, 255, 255, 0.12);
   color: #fff;
+
+  transition: all 0.25s ease;
   box-sizing: border-box;
   appearance: none;
 }
@@ -57,29 +103,68 @@
   color: rgba(255, 255, 255, 0.55);
 }
 
-/* focus */
+/* focus 효과 */
 .profile-field input:focus,
 .profile-field select:focus {
-  border-color: #3a8bfd;
-  outline: none;
+  border-color: #4aa3ff;
+  background: rgba(255, 255, 255, 0.18);
+  transform: translateY(-2px);
 }
 
+/* ============================= */
 /* 에러 메시지 */
+/* ============================= */
+
 .error-text {
   margin-top: 6px;
   font-size: 13px;
   color: #ff6b6b;
 }
 
-/* 기본 버튼 */
+/* ============================= */
+/* 버튼 */
+/* ============================= */
+
 .btn-primary {
   width: 100%;
-  padding: 14px;
-  font-size: 15px;
-  border-radius: 10px;
-  background: #3a8bfd;
+  padding: 16px;
+  font-size: 17px;
+  border-radius: 12px;
+  background: linear-gradient(135deg, #3a8bfd, #5ca9ff);
   border: none;
   color: #fff;
   font-weight: 600;
   cursor: pointer;
+
+  box-shadow: 0 6px 16px rgba(58, 139, 253, 0.35);
+  transition: all 0.25s ease;
+}
+
+.btn-primary:hover {
+  background: linear-gradient(135deg, #5ca9ff, #3a8bfd);
+  transform: translateY(-3px);
+  box-shadow: 0 10px 22px rgba(58, 139, 253, 0.45);
+}
+
+.btn-primary:active {
+  transform: translateY(1px);
+  box-shadow: none;
+}
+
+/* ============================= */
+/* 모바일 개선 */
+/* ============================= */
+
+@media (max-width: 480px) {
+  .profile-section {
+    padding: 26px;
+  }
+
+  .section-title {
+    font-size: 20px;
+  }
+
+  .btn-primary {
+    padding: 14px;
+  }
 }
