@@ -88,11 +88,17 @@ input {
   padding: 6px 14px;
   background: transparent;
   color: white;
-  min-width: 10ch;
+  min-width: 30ch;
   outline: none;
   transition: border-color 0.2s ease, background-color 0.2s ease;
+  text-align: center;
 }
-
+input[type="checkbox"] {
+  min-width: auto;
+  width: auto;
+  padding: 0;
+  text-align: initial;
+}
 input::placeholder {
   color: rgba(255, 255, 255, 0.5);
 }
@@ -100,6 +106,26 @@ input::placeholder {
 input:focus {
   border-color: rgba(255, 255, 255, 0.9);
   background-color: rgba(255, 255, 255, 0.1);
+}
+
+select {
+  font-size: 13px;
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  border-radius: 6px;
+  padding: 6px 14px;
+  background: transparent;
+  color: rgba(255, 255, 255, 0.5);
+  min-width: 10ch;
+  outline: none;
+  transition: border-color 0.2s ease, background-color 0.2s ease;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  cursor: pointer;
+}
+
+select option {
+  background-color: rgba(0, 0, 0, 0.8); /* 드롭다운 배경 */
+  color: white;
 }
 
 /* 테이블 전체 */

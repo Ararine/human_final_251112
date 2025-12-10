@@ -1,27 +1,27 @@
 const BasicInfoSection = ({ form, onChange }) => {
   return (
-    <section className="signup-section">
-      <h3 className="section-title">기본 정보</h3>
+    <section className="flex-column flex-center">
+      <h3>기본 정보</h3>
 
-      <div className="form-row">
-        <label className="form-label">이름</label>
+      <div className="flex-column">
+        <label>이름</label>
         <input
+          className="form-input"
           type="text"
           name="name"
           value={form.name ?? ""}
           onChange={(e) => onChange("name", e.target.value)}
-          className="form-input"
           required
         />
       </div>
 
-      <div className="form-row">
-        <label className="form-label">성별</label>
+      <div className="flex-column" style={{ width: "100%" }}>
+        <label>성별</label>
         <select
+          className="form-input"
           name="gender"
           value={form.gender ?? ""}
           onChange={(e) => onChange("gender", e.target.value)}
-          className="form-input"
           required
         >
           <option value="">선택하세요</option>
@@ -29,59 +29,52 @@ const BasicInfoSection = ({ form, onChange }) => {
           <option value="female">여성</option>
         </select>
       </div>
-
-      <div className="form-row">
-        <label className="form-label">나이</label>
-        <select
+      <div className="flex-column">
+        <label htmlFor="age">나이</label>
+        <input
+          type="number"
+          id="age"
           name="age"
+          min="1"
+          max="100"
           value={form.age ?? ""}
           onChange={(e) => onChange("age", e.target.value)}
           className="form-input"
+          placeholder="나이를 입력하세요"
           required
-        >
-          <option value="">선택하세요</option>
-          {Array.from({ length: 100 }, (_, i) => String(i + 1)).map((num) => (
-            <option key={num} value={num}>
-              {num}
-            </option>
-          ))}
-        </select>
+        />
       </div>
 
-      <div className="form-row">
-        <label className="form-label">키 (cm)</label>
-        <select
+      <div className="flex-column">
+        <label htmlFor="height">키 (cm)</label>
+        <input
+          type="number"
+          id="height"
           name="height"
+          min="100"
+          max="230"
           value={form.height ?? ""}
           onChange={(e) => onChange("height", e.target.value)}
           className="form-input"
+          placeholder="키를 입력하세요"
           required
-        >
-          <option value="">선택하세요</option>
-          {Array.from({ length: 131 }, (_, i) => String(i + 100)).map((num) => (
-            <option key={num} value={num}>
-              {num} cm
-            </option>
-          ))}
-        </select>
+        />
       </div>
 
-      <div className="form-row">
-        <label className="form-label">몸무게 (kg)</label>
-        <select
+      <div className="flex-column">
+        <label htmlFor="weight">몸무게 (kg)</label>
+        <input
+          type="number"
+          id="weight"
           name="weight"
+          min="20"
+          max="200"
           value={form.weight ?? ""}
           onChange={(e) => onChange("weight", e.target.value)}
           className="form-input"
+          placeholder="몸무게를 입력하세요"
           required
-        >
-          <option value="">선택하세요</option>
-          {Array.from({ length: 181 }, (_, i) => String(i + 20)).map((num) => (
-            <option key={num} value={num}>
-              {num} kg
-            </option>
-          ))}
-        </select>
+        />
       </div>
     </section>
   );

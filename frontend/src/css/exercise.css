@@ -11,3 +11,7 @@
 .ex-container .modal-content::-webkit-scrollbar {
   display: none; /* Chrome, Safari, Opera */
 }
+
+.exercise-container h2 {
+  margin: 0px;
+}

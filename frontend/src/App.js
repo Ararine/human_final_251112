@@ -47,12 +47,12 @@ import "./css/qna.css";
 import "./css/meal.css";
 import "./css/modal.css";
 import "./css/attendanceCheck.css";
-// import "./css/signup.css";
-// import "./css/login.css";
 import "./css/admin.css";
 import "./css/exercise.css";
-
 import "./css/profile.css";
+
+import "./css/signup.css";
+import "./css/login.css";
 
 function App() {
   const [userInfo, setUserInfo] = useState(undefined);

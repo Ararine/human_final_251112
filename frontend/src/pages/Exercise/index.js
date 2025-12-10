@@ -158,7 +158,6 @@ export default function Exercise() {
       try {
         const res = await getUserDetailInfoByUserId();
         const data = res.data;
-        console.log(data);
         if (data.length == 0) {
           alert("사용자 상세 정보를 기입하여야 사용할 수 있는 페이지 입니다.");
           setOpen(true);
@@ -188,11 +187,11 @@ export default function Exercise() {
     <div className="ex-container flex flex-col items-center gap-8">
       <RandomVideo data={exercises} />
 
-      <div className="exercise-container w-full max-w-xl px-4">
+      <div className="exercise-container flex-column gap-20">
         {/* ---- 기간 입력 ---- */}
-        <section className="exercise-section mb-6">
-          <h2 className="section-title">운동 가능 기간 선택</h2>
-          <div className="input-wrap mt-2">
+        <section className="flex-column flex-center">
+          <h2>운동 가능 기간 선택</h2>
+          <div>
             <input
               type="number"
               min="1"
@@ -200,20 +199,15 @@ export default function Exercise() {
               value={days}
               onChange={(e) => setDays(e.target.value)}
               placeholder="며칠 동안 운동하나요? (1~31일)"
-              className="day-input border rounded px-2 py-1 w-full"
             />
           </div>
         </section>
 
         {/* ---- 운동 시간 선택 ---- */}
-        <section className="exercise-section mb-6">
-          <h2 className="section-title">하루 운동 가능 시간 선택</h2>
-          <div className="input-wrap mt-2">
-            <select
-              value={time}
-              onChange={(e) => setTime(e.target.value)}
-              className="time-select border rounded px-2 py-1 w-full"
-            >
+        <section className="flex-column flex-center">
+          <h2>하루 운동 가능 시간 선택</h2>
+          <div>
+            <select value={time} onChange={(e) => setTime(e.target.value)}>
               <option value="">운동 시간 선택</option>
               {timeOptions.map((t) => (
                 <option key={t} value={t}>
@@ -225,12 +219,10 @@ export default function Exercise() {
         </section>
 
         {/* ---- 추천 운동 생성 ---- */}
-        <section className="exercise-section mb-6">
-          <h2 className="section-title">맞춤 운동 생성</h2>
-          <div className="recommend-box mt-2 flex flex-col items-center gap-2">
-            <p className="recommend-text text-center">
-              운동 기간과 운동 시간을 입력하여 맞춤 운동을 생성하세요.
-            </p>
+        <section className="flex-column flex-center">
+          <h2>맞춤 운동 생성</h2>
+          <div className="flex flex-column gap-10 flex-center">
+            <p>운동 기간과 운동 시간을 입력하여 맞춤 운동을 생성하세요.</p>
             <button
               className="recommend-btn bg-blue-500 text-white px-4 py-2 rounded disabled:bg-gray-400"
               disabled={loading}
