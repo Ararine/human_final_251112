@@ -10,9 +10,8 @@ async def create_curriculum(
         user_id=user["user_id"]
         n_days=body.get("n_days")
         available_time = body.get("available_time")
-        print(user_id, n_days, available_time)
+        
         results = exercise.create_curriculum(user_id, n_days, available_time)
-        print(results)
         return JSONResponse(
             {"message": "기본 커리큘럼 생성 완료", 
              "results": results}, status_code=status.HTTP_201_CREATED)

@@ -5,13 +5,18 @@ import FirstSection from "./FirstSection";
 import SecondSection from "./SecondSection";
 import ThirdSection from "./ThirdSection";
 import { Attendance } from "../../api/Attendance";
+import RomInfo from "./RomInfo";
 
 export default function Home({ userInfo }) {
   const [open, setOpen] = useState(false);
   const [attendanceDates, setAttendanceDates] = useState([]);
   const navigate = useNavigate();
   const images = ["/3.jpg", "/4.jpg", "/5.jpg"];
-  const overay_text = ["aaaa", "bbb", "ccc"];
+  const overay_text = [
+    "ROM 분석으로 더 안전한 자세 교정",
+    "ROM으로 내 몸이 가장 편한 움직임 범위를 찾기",
+    "ROM에 맞춘 동작으로, 누구나 자신의 몸 상태에 맞는 운동을",
+  ];
 
   useEffect(() => {
     document.body.style.overflow = "hidden";
@@ -61,7 +66,7 @@ export default function Home({ userInfo }) {
       />
       <SecondSection navigate={navigate} />
       <ThirdSection />
-
+      <RomInfo />
       {userInfo && (
         <button className="floating-calendar-btn" onClick={handleCalendar}>
           📅

@@ -1,0 +1,208 @@
+/* 전체 섹션 */
+.sec-rom {
+  width: 100%;
+  max-width: 1100px;
+  margin: 0 auto;
+  margin-top: -10px;
+  padding: 80px 16px;
+  text-align: center;
+}
+
+/* 헤더 */
+.rom-head {
+  margin-bottom: -35px;
+}
+
+.rom-chip {
+  display: inline-block;
+  padding: 6px 18px;
+  font-size: 13px;
+  color: #cbd5e1;
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(148, 163, 184, 0.18);
+}
+
+.rom-title {
+  font-size: 32px;
+  font-weight: 700;
+  margin-top: 18px;
+}
+
+.rom-sub {
+  font-size: 15px;
+  color: #d0d2d6;
+  margin-top: 10px;
+}
+
+/* 비주얼 영역 – 무릎 ROM SVG */
+/* 비주얼 영역 – 라인 아트 무릎 ROM */
+.rom-visual {
+  position: relative;
+  height: 190px;
+  max-width: 360px;
+  margin: 0 auto 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.rom-knee-svg {
+  width: 210px;
+  height: auto;
+}
+
+/* ROM 아크 */
+.rom-knee-arc {
+  stroke: rgba(148, 163, 184, 0.65);
+  stroke-width: 3;
+  stroke-linecap: round;
+  filter: drop-shadow(0 4px 10px rgba(15, 23, 42, 0.6));
+}
+
+/* 기본 뼈 선 (기준선) */
+.rom-knee-bone-base {
+  stroke: rgba(55, 65, 81, 0.8);
+  stroke-width: 6;
+  stroke-linecap: round;
+}
+
+/* 허벅지 / 종아리 라인 */
+.rom-knee-bone {
+  stroke: rgba(229, 231, 235, 0.95);
+  stroke-width: 8;
+  stroke-linecap: round;
+}
+
+/* 무릎 관절 원 */
+.rom-knee-joint {
+  fill: #0f172a;
+  stroke: #f9fafb;
+  stroke-width: 2;
+  filter: drop-shadow(0 6px 16px rgba(15, 23, 42, 0.8));
+}
+
+/* 발끝 점 */
+.rom-knee-foot {
+  fill: #f97316;
+  filter: drop-shadow(0 4px 10px rgba(248, 113, 113, 0.7));
+}
+
+/* 종아리 라인이 ROM 범위 안에서 살짝 회전 */
+.rom-knee-indicator {
+  transform-origin: 120px 70px; /* 무릎 중심 */
+  animation: rom-knee-swing 2.2s ease-in-out infinite;
+}
+
+@keyframes rom-knee-swing {
+  0% {
+    transform: rotate(-5deg);
+  }
+  50% {
+    transform: rotate(40deg);
+  }
+  100% {
+    transform: rotate(-5deg);
+  }
+}
+
+/* 캡션 */
+.rom-visual-caption {
+  margin-top: 12px;
+  font-size: 12px;
+  color: #9ca3af;
+  text-align: center;
+}
+
+/* ========================= */
+/*          메인 구조       */
+/* ========================= */
+
+/* PC일 때 2컬럼 */
+@media (min-width: 960px) {
+  .rom-body {
+    flex-direction: row;
+    align-items: stretch;
+  }
+}
+
+/* 왼쪽 메인 카드 */
+.rom-main-card {
+  flex: 1.2;
+  text-align: center;
+  margin-bottom: 15px;
+}
+.rom-main-card h3 {
+  margin-bottom: 12px;
+}
+.rom-main-card p {
+  font-size: 14px;
+  line-height: 1.7;
+}
+
+/* 오른쪽 카드 목록 */
+.rom-grid {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* 카드 */
+.rom-card {
+  padding: 22px 26px;
+  border-radius: 18px;
+  background: rgba(30, 41, 59, 0.75);
+  border: 1px solid rgba(71, 85, 105, 0.4);
+  backdrop-filter: blur(5px);
+  text-align: left;
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.24);
+}
+
+/* 카드 제목 + 아이콘 */
+.rom-card-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 6px;
+}
+
+.rom-card-icon {
+  font-size: 18px;
+}
+
+.rom-card-header h4 {
+  margin: 0;
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.rom-card p {
+  font-size: 13px;
+  line-height: 1.55;
+  word-break: keep-all;
+  opacity: 0.88;
+}
+
+/* CTA */
+.rom-cta {
+  margin-top: 26px;
+}
+
+.rom-cta-text {
+  display: inline-block;
+  padding: 11px 24px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, #f97316, #fb7185);
+  color: #050505;
+  font-size: 15px;
+  font-weight: 500;
+  box-shadow: 0 12px 30px rgba(248, 113, 113, 0.35);
+  transition: all 0.18s ease-out;
+}
+
+.rom-cta-text:hover {
+  transform: translateY(-1px);
+  filter: brightness(1.05);
+}
