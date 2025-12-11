@@ -39,8 +39,6 @@ import QnaWrite from "./pages/Qna/QnaWrite";
 import QnaDetail from "./pages/Qna/QnaDetail";
 import QnaEdit from "./pages/Qna/QnaEdit";
 
-import Bmi from "./pages/Bmi";
-
 import "./css/index.css";
 import "./css/global.css";
 import "./css/home.css";
@@ -56,7 +54,6 @@ import "./css/profile.css";
 
 import "./css/signup.css";
 import "./css/login.css";
-import BodyHistoryGraph from "./pages/BodyHistory";
 
 function App() {
   const [userInfo, setUserInfo] = useState(undefined);
@@ -183,12 +180,6 @@ function App() {
               </Route>
             </Route>
 
-            {/* 임시 작성 */}
-            <Route path="/bmi" element={<Bmi userInfo={userInfo} />} />
-            <Route
-              path="/bodyhistory"
-              element={<BodyHistoryGraph userInfo={userInfo} />}
-            />
             {/* 기타 */}
             <Route path="/*" element={<Navigate to={URL.HOME} replace />} />
           </Routes>

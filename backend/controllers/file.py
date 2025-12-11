@@ -1,18 +1,15 @@
-import shutil
-from fastapi import status, File, UploadFile
+from fastapi import status, File, UploadFile, Depends
 from fastapi.responses import JSONResponse
-from pathlib import Path
 
-UPLOAD_DIR = Path("./uploaded_data")
-UPLOAD_DIR.mkdir(parents=True, exist_ok=True)
+from services import file as file_services
+from utils import verify_token
+
 
 # 파일 업로드 생성
-async def upload(file:UploadFile = File(...)):
+async def upload(file:UploadFile = File(...), user=Depends(verify_token)):
     try:
-        file_location = f"{UPLOAD_DIR}/{file.filename}"
-        with open(file_location, "wb") as f:
-            shutil.copyfileobj(file.file, f)
-
+        user_id=user["user_id"]
+        file_services.upload(file, user_id)
         return JSONResponse(
             {"message": "파일 업로드 완료"}, 
             status_code=status.HTTP_201_CREATED)

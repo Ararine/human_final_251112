@@ -15,6 +15,7 @@ const Comment = ({
   userInfo,
 }) => {
   const navigate = useNavigate();
+  console.log(comments.comment_user_id, userInfo?.user_id);
   return (
     <>
       {/* 댓글 작성 */}
@@ -78,7 +79,8 @@ const Comment = ({
                     </>
                   ) : (
                     <>
-                      {userInfo?.user_id && (
+                      {(comment.comment_user_id === userInfo?.user_id ||
+                        userInfo?.type === "admin") && (
                         <div className="flex-row">
                           <button
                             className="black"

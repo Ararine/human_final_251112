@@ -10,6 +10,7 @@ import {
   getUserDetailInfoByUserId,
   updateUserDetailInfo,
 } from "../../api/UserDetail";
+import BodyHistoryGraph from "../BodyHistory";
 
 function timeStrToMinutes(timeStr) {
   if (!timeStr) return 0;
@@ -154,6 +155,9 @@ const UserDetail = ({ userInfo }) => {
         <Bmi bmi={bmi} bmr={bmr} />
       </section>
 
+      <section className="profile-section">
+        <BodyHistoryGraph userInfo={userInfo} />
+      </section>
       <UserDetailInfo
         detail={detail}
         setDetail={setDetail}
