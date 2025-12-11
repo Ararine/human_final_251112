@@ -17,7 +17,7 @@ const FirstSection = ({ images, texts, handleStart }) => {
         <div className="image-container">
           <img src={images[current]} key={current} alt="banner" />
 
-          <p className="hero-overlay-text">{texts[current]}</p>
+          {/* <p className="hero-overlay-text">{texts[current]}</p> */}
           <div>
             <button className="start-btn" onClick={handleStart}>
               바로 시작하기

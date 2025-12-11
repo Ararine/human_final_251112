@@ -64,9 +64,10 @@ export default function Home({ userInfo }) {
         texts={overay_text}
         handleStart={handleStart}
       />
+      <RomInfo />
+
       <SecondSection navigate={navigate} />
       <ThirdSection />
-      <RomInfo />
       {userInfo && (
         <button className="floating-calendar-btn" onClick={handleCalendar}>
           📅
