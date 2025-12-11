@@ -15,7 +15,7 @@ const Comment = ({
   userInfo,
 }) => {
   const navigate = useNavigate();
-  console.log(comments, editingCommentId);
+  console.log(comments.comment_user_id, userInfo?.user_id);
   return (
     <>
       {/* 댓글 작성 */}
@@ -55,7 +55,7 @@ const Comment = ({
                       <strong>내용:</strong> {comment.comment}
                     </p>
                   </div>
-                  {editingCommentId === comment.comment_user_id ? (
+                  {editingCommentId === comment.id ? (
                     <>
                       <textarea
                         value={editingContent}
@@ -79,7 +79,8 @@ const Comment = ({
                     </>
                   ) : (
                     <>
-                      {userInfo?.user_id && (
+                      {(comment.comment_user_id === userInfo?.user_id ||
+                        userInfo?.type === "admin") && (
                         <div className="flex-row">
                           <button
                             className="black"
