@@ -1,35 +1,8 @@
-import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 // import AttendanceCalendar from "../../components/AttendanceCalendar";
 // import { Attendance } from "../../api/Attendance";
 
-const Admin = ({ userInfo }) => {
-  console.log(userInfo);
-  const [attendedDates, setAttendedDates] = useState([]);
-
-  useEffect(() => {
-    const fetchAttendance = async () => {
-      try {
-        // const res = await Attendance(userInfo.user_id);
-        // const dates = res.data.map((item) => new Date(item.attended_at));
-        // setAttendedDates(dates);
-        alert("출석처리되었습니다.");
-      } catch (error) {
-        if (error.status == 409) {
-          if (error?.response?.data?.data) {
-            const dates = error.response.data.data.map(
-              (item) => new Date(item.attended_at)
-            );
-            setAttendedDates(dates);
-          }
-          alert("이미 출석하였습니다.");
-        } else {
-          console.error("출석 조회  g실패:", error);
-        }
-      }
-    };
-    fetchAttendance();
-  }, []);
+const Admin = () => {
   return (
     <div className="admin-container">
       <h2 className="admin-title">관리자 페이지</h2>

@@ -1,0 +1,52 @@
+/* 기본 헤더 */
+
+/* 메뉴 */
+.gnb a {
+  margin-right: 18px;
+  text-decoration: none;
+  color: rgba(255, 255, 255, 0.85);
+  font-weight: 500;
+}
+
+.gnb a:hover {
+  color: white;
+}
+
+/* 버튼 */
+.header-right button {
+  font-size: 14px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+/* outline */
+.btn-outline {
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  background: transparent;
+  color: white;
+  margin-right: 10px;
+}
+.btn-outline:hover {
+  background: rgba(255, 255, 255, 0.15);
+}
+
+/* primary */
+.btn-primary.small {
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  background: transparent;
+  color: white;
+}
+.btn-primary.small:hover {
+  background: rgba(255, 255, 255, 0.15);
+}
+
+/* ghost */
+.btn-ghost {
+  background: transparent;
+  border: none;
+  color: white;
+  opacity: 0.8;
+}
+.btn-ghost:hover {
+  opacity: 1;
+}

@@ -8,8 +8,9 @@ import {
   recommendedMealLists,
   uploadMealAuth,
 } from "../../api/Meal";
+import { getUserDetailInfoByUserId } from "../../api/UserDetail";
 import CONST_URL from "../../constants/url";
-const Meal = () => {
+const Meal = ({ userInfo }) => {
   const navigate = useNavigate();
 
   // AI 분석 전용 스테이트
@@ -25,6 +26,13 @@ const Meal = () => {
   const [nDays, setNDays] = useState(3);
   const [nTimes, setNTimes] = useState(3);
   const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    if (userInfo?.type === "normal") {
+      alert("구독자만 사용할 수 있는 기능입니다.");
+      navigate("/subscribe"); // 이동할 경로
+    }
+  }, [userInfo, navigate]);
 
   // AI 분석 이미지 프리뷰
   useEffect(() => {
@@ -156,14 +164,31 @@ const Meal = () => {
   //   fetchRecommendedMealLists();
   // }, []);
 
+  useEffect(() => {
+    const fetchUserDetail = async () => {
+      try {
+        const res = await getUserDetailInfoByUserId();
+        const data = res.data;
+      } catch (err) {
+        if (err.response.status == 401) {
+          alert("로그인이 필요한 서비스입니다.");
+          navigate(`${CONST_URL.LOGIN_URL}`);
+        }
+        console.error("유저 상세 정보 불러오기 실패:", err);
+      }
+    };
+
+    fetchUserDetail();
+  }, []);
+
   return (
     <div className="meal-grid">
-      {/* 2. AI 분석 */}
-      <div className="meal-card meal-ai">
+      {/* 1. AI 분석 */}
+      <div className="card bg-midgray gap-10">
         <div className="meal-icon">🍱</div>
         <h2>AI 식단 분석</h2>
-        <h3>* 업로드시 식단인증 자동 등록 고려 *</h3>
-        <div className="meal-center">
+        <p>* 업로드시 식단인증 자동 등록 고려 *</p>
+        <div className="upload-container flex-column flex-center ">
           <Uploader
             files={aiFiles}
             setFiles={setAiFiles}
@@ -173,26 +198,25 @@ const Meal = () => {
         </div>
       </div>
 
-      {/* 3. 식단 인증 */}
-      <div className="meal-card meal-auth">
+      {/* 2. 식단 인증 */}
+      <div className="card bg-midgray">
         <div className="meal-icon">📷</div>
         <h2>식단 인증</h2>
-        <Uploader
-          files={authFiles}
-          setFiles={setAuthFiles}
-          handleUpload={handleAuthUpload}
-          upload_button_name="식단 인증 등록"
-        />
+        <p>구현필요</p>
+        <div className="upload-container flex-column flex-center">
+          <Uploader
+            files={authFiles}
+            setFiles={setAuthFiles}
+            handleUpload={handleAuthUpload}
+            upload_button_name="식단 인증 등록"
+          />
+        </div>
       </div>
 
-      {/* 1. 목적별 추천 (메인) */}
+      {/* 3. 목적별 추천 (메인) */}
       <div
-        className="meal-card meal-goal main-card"
+        className="card bg-midgray"
         style={{
-          justifyContent: "center",
-          alignItems: "center",
-          display: "flex",
-          flexDirection: "column",
           gap: "10px",
         }}
       >
@@ -200,9 +224,9 @@ const Meal = () => {
         <h2>목적별 식단 추천</h2>
 
         {/* 일수, 끼니 수 입력 */}
-        <div className="meal-goal-inputs">
+        <div className="flex-row gap-20">
           <label>
-            일수:
+            추천 일수:
             <input
               type="number"
               min={1}
@@ -221,13 +245,13 @@ const Meal = () => {
           </label>
         </div>
 
-        <div className="meal-goal-buttons">
-          <button>체중 감량</button>
-          <button>근력 증가</button>
-          <button>균형/건강</button>
+        <div className="meal-goal-buttons flex-row gap-5">
+          <button className="bg-lightgray btn-ghost">체중 감량</button>
+          <button className="bg-lightgray btn-ghost">근력 증가</button>
+          <button className="bg-lightgray btn-ghost">균형/건강</button>
         </div>
         <button
-          className="meal-btn small"
+          className="bg-blue btn-ghost"
           onClick={fetchRecommendedMealLists}
           disabled={loading} // 로딩 중이면 클릭 방지
         >

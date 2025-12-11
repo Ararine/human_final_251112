@@ -1,0 +1,12 @@
+.qna-container {
+  padding: 20px;
+}
+.qna-container table td:nth-child(3) > div {
+  width: 120px;
+  white-space: normal;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  word-break: break-word;
+}

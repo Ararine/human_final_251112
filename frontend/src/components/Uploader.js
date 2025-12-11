@@ -35,7 +35,7 @@ const Uploader = ({
     fileInputRef.current.click();
   };
   return (
-    <div className="uploader-container">
+    <>
       <div
         className="drop-area"
         onDrop={handleDrop}
@@ -56,7 +56,7 @@ const Uploader = ({
       <button className="btn" onClick={handleUpload}>
         {upload_button_name}
       </button>
-    </div>
+    </>
   );
 };
 

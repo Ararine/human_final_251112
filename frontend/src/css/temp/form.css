@@ -1,0 +1,135 @@
+/* ===== Form 공통 컨테이너 ===== */
+.form-container {
+  max-width: 600px;
+  margin: 20px auto;
+  padding: 0 10px;
+}
+
+/* ===== Form Title ===== */
+.form-title {
+  font-size: 24px;
+  font-weight: 600;
+  margin-bottom: 20px;
+}
+
+/* ===== Form Meta Info ===== */
+.form-meta {
+  margin-bottom: 20px;
+  font-size: 14px;
+  color: #bbbbbb;
+}
+
+.form-meta p {
+  margin: 4px 0;
+}
+
+/* ===============================
+   Floating Input (공통)
+================================ */
+.form-input-wrapper {
+  position: relative;
+  width: 100%;
+}
+
+.form-input {
+  width: 100%;
+  padding: 12px;
+  font-size: 16px;
+  border: 1px solid #444;
+  border-radius: 5px;
+  background: #1a1a1a;
+  color: white;
+  outline: none;
+  box-sizing: border-box;
+}
+
+.form-input-label {
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 16px;
+  color: #888;
+  background-color: #0d0d0d;
+  padding: 0 4px;
+  transition: 0.2s ease;
+  pointer-events: none;
+}
+
+.form-input-label.active {
+  top: -8px;
+  font-size: 12px;
+  transform: none;
+}
+
+/* ===============================
+   Floating Textarea (공통)
+================================ */
+.form-textarea-wrapper {
+  position: relative;
+  width: 100%;
+}
+
+.form-textarea {
+  width: 100%;
+  padding: 16px 12px;
+  font-size: 16px;
+  border: 1px solid #444;
+  border-radius: 5px;
+  background: #1a1a1a;
+  color: white;
+  outline: none;
+  min-height: 200px;
+  resize: vertical;
+  box-sizing: border-box;
+}
+
+.form-textarea-label {
+  position: absolute;
+  left: 12px;
+  top: 16px;
+  font-size: 16px;
+  color: #888;
+  background-color: #0d0d0d;
+  padding: 0 4px;
+  transition: 0.2s ease;
+  pointer-events: none;
+}
+
+.form-textarea-label.active {
+  top: -8px;
+  font-size: 12px;
+}
+
+/* ===============================
+   Buttons (공통)
+================================ */
+.form-btn-submit {
+  padding: 10px 20px;
+  background-color: #3b82f6;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+  margin-top: 10px;
+}
+
+.form-btn-submit:hover {
+  background-color: #2563eb;
+}
+
+.form-btn-delete {
+  padding: 10px 20px;
+  background-color: #ef4444;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+  margin-top: 10px;
+}
+
+.form-btn-delete:hover {
+  background-color: #dc2626;
+}

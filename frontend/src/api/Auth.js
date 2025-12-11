@@ -17,6 +17,15 @@ export async function loginRequest(email, password) {
       email,
       password,
     });
+    //추가 (박한비)- 로컬저장
+    const { token, user } = response.data;
+
+    // 🔥 여기서 토큰/유저정보 저장
+    localStorage.setItem("token", token);
+    localStorage.setItem("userInfo", JSON.stringify(user));
+
+    // 여기까지 (박한비)- 로컬저장
+
     return response.data;
   } catch (error) {
     console.error("로그인 실패:", error);

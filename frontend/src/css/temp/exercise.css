@@ -1,0 +1,131 @@
+/* 전체 */
+.exercise-container {
+  width: 100%;
+  padding: 40px 20px;
+  box-sizing: border-box;
+}
+
+/* 공통 타이틀 */
+.section-title {
+  font-size: 22px;
+  font-weight: 700;
+  margin-bottom: 18px;
+}
+
+/* 🔥 추천 운동 박스 */
+.recommend-box {
+  width: 100%;
+  padding: 30px;
+  background: #f9f9f9;
+  border-radius: 12px;
+  text-align: center;
+}
+
+.recommend-text {
+  font-size: 16px;
+  margin-bottom: 16px;
+  color: #555;
+}
+
+.recommend-btn {
+  padding: 12px 24px;
+  font-size: 16px;
+  background: black;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: 0.25s;
+}
+
+.recommend-btn:hover {
+  opacity: 0.85;
+}
+
+/* 🔥 시간 선택 카드 */
+.time-card-wrap {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.time-card {
+  flex: 1;
+  min-width: 120px;
+  padding: 24px 0;
+  background: #f1f1f1;
+  border-radius: 10px;
+  text-align: center;
+  font-size: 18px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.25s;
+}
+
+.time-card:hover {
+  background: #e8e8e8;
+  transform: translateY(-4px);
+}
+
+/* 🔥 프로그램(루틴) */
+.program-card-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.program-card {
+  padding: 20px;
+  background: #fafafa;
+  border-radius: 12px;
+  transition: 0.25s;
+  cursor: pointer;
+  border-left: 6px solid #000;
+}
+
+.program-card h3 {
+  font-size: 18px;
+  margin-bottom: 6px;
+}
+
+.program-card p {
+  font-size: 14px;
+  color: #555;
+}
+
+.program-card:hover {
+  background: #f0f0f0;
+  transform: translateY(-4px);
+}
+
+/* 🔥 모바일 */
+@media (max-width: 768px) {
+  .time-card-wrap {
+    flex-direction: column;
+  }
+}
+
+/*  */
+.input-wrap {
+  margin-top: 12px;
+}
+
+.day-input,
+.time-select {
+  width: 100%;
+  padding: 14px;
+  font-size: 16px;
+  border-radius: 10px;
+  border: 1px solid #ccc;
+}
+
+.day-input:focus,
+.time-select:focus {
+  outline: none;
+  border-color: #4f7cff;
+}
+
+.recommend-btn:disabled {
+  background: #ccc !important;
+  cursor: not-allowed !important;
+}

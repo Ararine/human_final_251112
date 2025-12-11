@@ -62,7 +62,7 @@ const User = () => {
         />
       </div>
 
-      <table className="user-table table-nowrap">
+      <table className="table-nowrap">
         <thead>
           <tr>
             <th>ID</th>

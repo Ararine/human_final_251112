@@ -16,13 +16,14 @@ import MealRecommend from "./pages/Meal/Recommend";
 import Community from "./pages/Community";
 import CommunityWrite from "./pages/Community/Write";
 import CommunityRead from "./pages/Community/Read";
+import CommunityEdit from "./pages/Community/Edit";
 
 import Profile from "./pages/Profile";
+import UserDetail from "./pages/Profile/UserDetail";
 import Login from "./pages/Login";
 import SignUp from "./pages/SignUp";
 import ForgotPassword from "./pages/ForgotPassword";
 import ROM from "./pages/ROM";
-import AttendanceCheckPage from "./pages/AttendanceCheckPage";
 
 import Admin from "./pages/Admin";
 import AdminExercise from "./pages/Admin/Exercise";
@@ -39,15 +40,19 @@ import Bmi from "./pages/Bmi";
 
 import "./css/index.css";
 import "./css/global.css";
+import "./css/home.css";
+
+import "./css/community.css";
+import "./css/qna.css";
+import "./css/meal.css";
+import "./css/modal.css";
+import "./css/attendanceCheck.css";
+import "./css/admin.css";
+import "./css/exercise.css";
+import "./css/profile.css";
+
 import "./css/signup.css";
 import "./css/login.css";
-import "./css/admin.css";
-import "./css/header.css";
-import "./css/home.css";
-import "./css/attendanceCheck.css";
-import "./css/exercise.css";
-import "./css/meal.css";
-import "./css/profile.css";
 
 function App() {
   const [userInfo, setUserInfo] = useState(undefined);
@@ -96,29 +101,38 @@ function App() {
               <Route index element={<Exercise />} />
               <Route path="recommend" element={<ExRecommend />} />
             </Route>
-            <Route path={URL.MEAL_URL} element={<Meal />} />
 
             <Route path={URL.MEAL_URL}>
-              <Route index element={<Meal />} />
+              <Route index element={<Meal userInfo={userInfo} />} />
               <Route path="recommend" element={<MealRecommend />} />
             </Route>
 
-            <Route path={URL.COMMUNITY_URL} element={<Community />} />
-
             {/* 커뮤니티 */}
             <Route path={URL.COMMUNITY_URL}>
+              <Route index element={<Community />} />
               <Route path="read/:id" element={<CommunityRead />} />
               <Route element={<PrivateRoute userInfo={userInfo} />}>
-                <Route path="write" element={<CommunityWrite />} />
-                <Route path="write/:id" element={<CommunityWrite />} />
+                <Route
+                  path="write"
+                  element={<CommunityWrite userInfo={userInfo} />}
+                />
+                <Route
+                  path="write/:id"
+                  element={<CommunityWrite userInfo={userInfo} />}
+                />
               </Route>
+              <Route path="edit/:id" element={<CommunityEdit />} />
             </Route>
 
             {/* 프로필 */}
-            <Route element={<PrivateRoute userInfo={userInfo} />}>
+            <Route
+              path={URL.PROFILE_URL}
+              element={<PrivateRoute userInfo={userInfo} />}
+            >
+              <Route index element={<Profile userInfo={userInfo} />} />
               <Route
-                path={URL.PROFILE_URL}
-                element={<Profile userInfo={userInfo} />}
+                path="personal"
+                element={<UserDetail userInfo={userInfo} />}
               />
             </Route>
 
@@ -131,14 +145,14 @@ function App() {
             <Route path="/forgot-password" element={<ForgotPassword />} />
 
             {/* ROM */}
-            <Route path={URL.ROM_URL} element={<ROM />} />
+            <Route path={URL.ROM_URL} element={<ROM userInfo={userInfo} />} />
 
             {/* 관리자 */}
             <Route
               path="/admin"
               element={<PrivateRoute userInfo={userInfo} requireAdmin={true} />}
             >
-              <Route index element={<Admin userInfo={userInfo} />} />
+              <Route index element={<Admin />} />
               <Route path="ex" element={<AdminExercise />} />
               <Route path="meal" element={<AdminMeal />} />
               <Route path="user" element={<AdminUser />} />

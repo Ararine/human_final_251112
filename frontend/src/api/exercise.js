@@ -31,6 +31,7 @@ export async function getRecommendedCurriculum() {
       },
       timeout: 120000,
     });
+    console.log(res);
     return res.data;
   } catch (err) {
     console.error("기본 커리큘럼 조회 실패:", err);

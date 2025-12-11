@@ -49,7 +49,7 @@ const jointMap = {
   rightAnkle: "오른쪽 발목",
 };
 
-const ROM = () => {
+const ROM = ({ userInfo }) => {
   const videoRef = useRef(null);
   const [measuring, setMeasuring] = useState(false);
   const [resultAngles, setResultAngles] = useState({});
@@ -137,14 +137,13 @@ const ROM = () => {
 
   return (
     <div>
-      <div style={{ display: "flex" }}>
+      <div style={{ display: "flex", gap: "20px" }}>
         <RomTable romData={romData} />
         <div
           style={{
             display: "flex",
             gap: "10px",
             flexWrap: "wrap",
-            background: "white",
           }}
         >
           <ROMImageSlider romImages={romImages} />
@@ -165,18 +164,22 @@ const ROM = () => {
           </option>
         ))}
       </select>
-      <CalcROM
-        videoRef={videoRef}
-        displayedPoses={displayedPoses}
-        transcript={transcript}
-        measuring={measuring}
-        angles={angles}
-        jointMap={jointMap}
-        resultAngles={resultAngles}
-        startMeasure={startMeasure}
-        stopMeasure={stopMeasure}
-      />
-      <Object3D poses={poses} />
+      {userInfo?.type !== "normal" && (
+        <>
+          <CalcROM
+            videoRef={videoRef}
+            displayedPoses={displayedPoses}
+            transcript={transcript}
+            measuring={measuring}
+            angles={angles}
+            jointMap={jointMap}
+            resultAngles={resultAngles}
+            startMeasure={startMeasure}
+            stopMeasure={stopMeasure}
+          />
+          <Object3D poses={poses} />
+        </>
+      )}
     </div>
   );
 };

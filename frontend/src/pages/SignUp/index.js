@@ -70,16 +70,17 @@ const SignUp = () => {
   };
 
   return (
-    <div className="signup-page">
-      <h2 className="signup-title">회원가입</h2>
+    <div className="signup-container flex-center black">
+      <div className="card bg-white flex-column flex-center">
+        <h2>회원가입</h2>
 
-      <AccountSection form={form} onChange={handleChange} />
-      <BasicInfoSection form={form} onChange={handleChange} />
-      <TermsSection agreeTerms={agreeTerms} setAgreeTerms={setAgreeTerms} />
-
-      <button className="signup-btn" onClick={handleSubmit}>
-        가입하기
-      </button>
+        <AccountSection form={form} onChange={handleChange} />
+        <BasicInfoSection form={form} onChange={handleChange} />
+        <TermsSection agreeTerms={agreeTerms} setAgreeTerms={setAgreeTerms} />
+        <button className="btn-primary login-button" onClick={handleSubmit}>
+          가입하기
+        </button>
+      </div>
     </div>
   );
 };

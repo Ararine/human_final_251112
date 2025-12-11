@@ -21,7 +21,9 @@
   flex-direction: row;
   justify-content: center;
 }
-
+.black {
+  color: black;
+}
 .white {
   color: #fff;
 }
@@ -57,4 +59,146 @@
   font-weight: 700;
   cursor: pointer;
   color: inherit;
+}
+
+.btn-ghost {
+  border: none;
+}
+.zero-padding {
+  padding: 0px;
+}
+.bg-white {
+  background-color: #fff;
+}
+.bg-red {
+  background-color: red;
+}
+.bg-darkgray {
+  background-color: #333333; /* 또는 #646464 */
+}
+.bg-midgray {
+  background: #1f1f1f;
+}
+.bg-lightgray {
+  background-color: rgb(60, 60, 60);
+}
+.bg-darkgray:hover {
+  background-color: rgb(120, 120, 120); /* hover 조금 밝게 */
+}
+
+.bg-blue {
+  background-color: rgb(58, 139, 253);
+}
+.bg-green {
+  background-color: #22c55e;
+}
+.bg-green:hover {
+  background-color: #16a34a;
+}
+.start-btn {
+  padding: 16px 36px;
+  font-size: 16px;
+  font-weight: 700;
+  border-radius: 50px;
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+  transition: 0.25s ease;
+}
+
+.card {
+  border-radius: 16px;
+  padding: 20px;
+  cursor: pointer;
+  transition: 0.25s ease;
+}
+.card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.35);
+  background: rgba(255, 255, 255, 0.12);
+}
+
+.card p {
+  font-size: 14px;
+  color: #bbbbbb;
+}
+
+.zero-margin > h2,
+h3,
+h4,
+p {
+  margin: 0;
+}
+
+.gap-5 {
+  gap: 5px;
+}
+
+.gap-10 {
+  gap: 10px;
+}
+
+.gap-20 {
+  gap: 20px;
+}
+
+.gap-40 {
+  gap: 40px;
+}
+
+.upload-container {
+  gap: 4px;
+}
+.upload-container > button {
+  background-color: rgb(58, 139, 253);
+  border: none;
+}
+
+.drop-area {
+  width: 100%;
+  padding: 25px;
+  border: 2px dashed rgba(255, 255, 255, 0.25); /* 은은한 라인 */
+  border-radius: 12px;
+  background: rgba(20, 20, 20, 0.9); /* 거의 블랙 톤 */
+  color: #ccc;
+  text-align: center;
+}
+
+.drop-area:hover {
+  border-color: rgba(255, 255, 255, 0.5);
+  background: rgba(35, 35, 35, 0.95);
+  transform: translateY(-2px);
+}
+
+.drop-area.dragover {
+  border-color: #4aa3ff; /* 강조 효과 */
+  background: rgba(40, 40, 40, 1);
+  color: #fff;
+}
+
+/*  */
+.multi-select {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.multi-btn {
+  padding: 6px 12px;
+  border: 1px solid #888;
+  border-radius: 6px;
+  background-color: #1f1f1f; /* 기본 배경 다크 */
+  color: #ccc; /* 기본 글자색 */
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.multi-btn:hover {
+  background-color: #333; /* 호버 시 조금 밝게 */
+}
+
+.multi-btn.active {
+  background-color: #4aa3ff; /* 선택된 버튼 강조 색 */
+  color: #fff; /* 글자 색 하얗게 */
+  border-color: #4aa3ff;
 }

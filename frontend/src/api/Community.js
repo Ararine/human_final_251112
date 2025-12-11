@@ -15,6 +15,11 @@ export async function createPost(title, contents, authorId) {
   }
 }
 
+// 특정 아이디 게시글 목록 조회
+export async function getMyPosts(userId) {
+  return api.get(`/posts/user/${userId}`);
+}
+
 // 게시글 목록 조회
 export async function getPosts() {
   try {

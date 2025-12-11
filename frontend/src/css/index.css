@@ -6,13 +6,19 @@ body {
   margin: 0px;
   box-sizing: border-box;
   display: flex;
+  color: white;
   flex-direction: column;
+  background: #0d0d0d;
+  font-family: "Pretendard", sans-serif;
+  white-space: nowrap;
+  overflow-y: scroll; /* 항상 스크롤 공간 확보 (레이아웃 흔들림 제거) */
+  scrollbar-width: none;
 }
 
 header {
   position: sticky;
   top: 0;
-  z-index: 10;
+  z-index: 100;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -25,6 +31,16 @@ header {
 header > div {
   display: flex;
   align-items: center;
+  gap: 8px;
+}
+header nav {
+  color: rgba(255, 255, 255, 0.85);
+  display: flex;
+  gap: 8px;
+}
+
+header nav a:hover {
+  color: white;
 }
 
 main {
@@ -36,16 +52,132 @@ main {
 }
 
 footer {
-  margin-top: auto;
+  background: #0d0d0d;
+  color: #888;
+  width: 100%;
+  font-size: 14px;
+  margin-top: 40px;
   text-align: center;
   border-top: 1px solid rgba(255, 255, 255, 0.1);
-  padding: 10px 0;
+  padding: 16px 0;
 }
 
 button {
-  border: none;
+  font-size: 13px;
+  border: 1px solid rgba(255, 255, 255, 0.6);
   border-radius: 6px;
   padding: 6px 14px;
   cursor: pointer;
   transition: background-color 0.2s ease;
+  color: white;
+  background: transparent;
+}
+
+span {
+  font-size: 13px;
+}
+
+a {
+  text-decoration: none;
+  font-weight: 500;
+  color: inherit;
+}
+
+input {
+  font-size: 13px;
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  border-radius: 6px;
+  padding: 6px 14px;
+  background: transparent;
+  color: white;
+  min-width: 30ch;
+  outline: none;
+  transition: border-color 0.2s ease, background-color 0.2s ease;
+  text-align: center;
+}
+input[type="checkbox"] {
+  min-width: auto;
+  width: auto;
+  padding: 0;
+  text-align: initial;
+}
+input::placeholder {
+  color: rgba(255, 255, 255, 0.5);
+}
+
+input:focus {
+  border-color: rgba(255, 255, 255, 0.9);
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+select {
+  font-size: 13px;
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  border-radius: 6px;
+  padding: 6px 14px;
+  background: transparent;
+  color: rgba(255, 255, 255, 0.5);
+  min-width: 10ch;
+  outline: none;
+  transition: border-color 0.2s ease, background-color 0.2s ease;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  cursor: pointer;
+}
+
+select option {
+  background-color: rgba(0, 0, 0, 0.8); /* 드롭다운 배경 */
+  color: white;
+}
+
+/* 테이블 전체 */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  background: #1d1f21;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+table thead tr {
+  background: #2c2f33;
+  color: #fff;
+  text-align: left;
+  font-weight: 700;
+}
+
+table th,
+table td {
+  padding: 7px 9px;
+  font-size: 15px;
+  border-bottom: 1px solid #2b2b2b;
+  text-align: center;
+}
+
+table tbody tr {
+  color: #e2e2e2;
+  transition: background 0.2s ease;
+}
+
+.styled-table tbody tr:hover {
+  background: rgba(255, 255, 255, 0.07);
+}
+
+/* 마지막 줄 border 제거 */
+.styled-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+/* Zebra striping (선택 사항) */
+.styled-table tbody tr:nth-child(even) {
+  background: rgba(255, 255, 255, 0.03);
+}
+
+/* 반응형 - 모바일 줄바꿈 */
+@media (max-width: 768px) {
+  .styled-table th,
+  .styled-table td {
+    padding: 10px 12px;
+    font-size: 14px;
+  }
 }

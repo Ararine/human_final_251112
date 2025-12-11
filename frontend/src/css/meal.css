@@ -1,140 +1,21 @@
-/* 전체 그리드 */
 .meal-grid {
+  margin: 40px 100px;
   display: flex; /* 가로 배열 */
   gap: 20px; /* 카드 사이 간격 */
   justify-content: space-between; /* 양 끝 정렬 */
   flex-wrap: wrap; /* 화면 작아지면 줄바꿈 */
 }
 
-.meal-card {
-  flex: 1 1 30%; /* 카드 너비 30%, 유동적 크기 */
-  padding: 20px;
-  background: #fff;
-  border-radius: 12px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+.meal-grid > .card {
+  flex: 1 1 30%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
-.meal-card:hover {
-  transform: translateY(-4px);
-}
-
-/* 카드별 컬러 포인트 */
-.meal-ai {
-  background: #e7e7ec;
-}
-.meal-goal {
-  background: #e7e7ec;
-}
-.meal-food {
-  background: #e7e7ec;
-}
-.meal-auth {
-  background: #e7e7ec;
-}
-
-/* 아이콘 */
 .meal-icon {
   font-size: 38px;
   text-align: center;
   margin-bottom: 5px;
-}
-
-/* 제목 */
-.meal-card h2 {
-  text-align: center;
-  margin-bottom: 15px;
-  font-size: 22px;
-  font-weight: 700;
-}
-.meal-card h3 {
-  text-align: center;
-  margin-bottom: 15px;
-  font-size: 16px;
-  font-weight: 500;
-  color: #ff0000;
-}
-
-/* 중앙 컨텐츠 */
-.meal-center {
-  text-align: center;
-}
-
-/* 미리보기 이미지 */
-.meal-preview-box {
-  margin-top: 15px;
-  display: flex;
-  gap: 10px;
-  flex-wrap: wrap;
-  justify-content: center;
-}
-
-.meal-preview-box img {
-  width: 90px;
-  height: 90px;
-  border-radius: 10px;
-  object-fit: cover;
-}
-
-/* 버튼 */
-.meal-btn {
-  width: 200px;
-  padding: 11px;
-  margin: 0 auto;
-  border: none;
-  background: #1a1a1a;
-  color: white;
-  border-radius: 10px;
-  font-weight: 600;
-}
-
-.meal-btn.small {
-  width: 220px;
-}
-
-.meal-btn:hover {
-  background: #333;
-}
-
-/* 목표 버튼 */
-.meal-goal-buttons {
-  display: flex;
-  justify-content: center;
-  gap: 12px;
-}
-
-.meal-goal-buttons button {
-  padding: 8px 14px;
-  border-radius: 10px;
-  border: none;
-  background: #fff;
-  font-weight: 600;
-  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
-}
-
-.meal-goal-buttons button:hover {
-  background: #f0f0f0;
-}
-
-/* 추천 식품 태그 */
-.meal-tag-list {
-  text-align: center;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 12px;
-}
-
-.meal-tag-list span {
-  padding: 8px 14px;
-  background: white;
-  border-radius: 10px;
-  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
-  font-weight: 600;
-}
-
-/* 반응형 */
-@media (max-width: 900px) {
-  .meal-grid {
-    grid-template-columns: 1fr;
-  }
 }

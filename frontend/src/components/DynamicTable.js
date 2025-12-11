@@ -61,7 +61,7 @@ const DynamicTable = ({ data, setSelectedData, rowsPerPage = 10 }) => {
     <div className="p-4">
       <table className="w-full border border-gray-300">
         <thead>
-          <tr className="bg-gray-100">
+          <tr>
             {columns.map((col) => (
               <th
                 key={col}
@@ -86,14 +86,21 @@ const DynamicTable = ({ data, setSelectedData, rowsPerPage = 10 }) => {
             >
               {columns.map((col) => (
                 <td key={col} className="border px-4 py-2 text-center">
-                  {row[col]}
+                  <div>{row[col]}</div>
                 </td>
               ))}
             </tr>
           ))}
         </tbody>
       </table>
-      <div className="flex items-center justify-between mt-4 space-x-2">
+      <div
+        style={{
+          display: "flex",
+          gap: "20px",
+          justifyContent: "center",
+          marginTop: "10px",
+        }}
+      >
         <button
           onClick={handlePrev}
           disabled={currentPage === 1}
@@ -106,7 +113,14 @@ const DynamicTable = ({ data, setSelectedData, rowsPerPage = 10 }) => {
           이전
         </button>
 
-        <div className="flex items-center space-x-2">
+        <div
+          style={{
+            display: "flex",
+            gap: "10px",
+            textAlign: "center",
+            alignItems: "center",
+          }}
+        >
           <span>
             {currentPage} / {totalPages}
           </span>
@@ -118,14 +132,8 @@ const DynamicTable = ({ data, setSelectedData, rowsPerPage = 10 }) => {
             onChange={handlePageInputChange}
             onKeyPress={handleKeyPress}
             placeholder="페이지"
-            className="w-16 px-2 py-1 border rounded text-center"
           />
-          <button
-            onClick={goToPage}
-            className="px-3 py-1 border rounded hover:bg-gray-200"
-          >
-            이동
-          </button>
+          <button onClick={goToPage}>이동</button>
         </div>
 
         <button

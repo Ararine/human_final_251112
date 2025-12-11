@@ -112,7 +112,7 @@ const Meal = () => {
         </button>
       </div>
 
-      <table className="meal-table">
+      <table>
         <thead>
           <tr>
             <th>ID</th>

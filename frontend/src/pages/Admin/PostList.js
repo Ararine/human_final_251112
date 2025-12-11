@@ -50,7 +50,7 @@ const PostList = () => {
   return (
     <div className="postlist-container">
       <h2 className="postlist-title">게시글 관리</h2>
-      <table className="postlist-table">
+      <table>
         <thead>
           <tr>
             <th>ID</th>
