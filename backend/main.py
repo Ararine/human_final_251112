@@ -7,7 +7,7 @@ from routes import (
     community, user, test, comment, reaction,
     attendance, qna, ai, file, exercise, meal,
     user_base, 
-    bmi
+    bmi, bodyhistory
 )
 
 app = FastAPI()
@@ -32,6 +32,7 @@ app.include_router(exercise.router, prefix="/exercise")
 app.include_router(meal.router, prefix="/meal")
 app.include_router(user_base.router, prefix="/base")
 app.include_router(bmi.router, prefix="/bmi")
+app.include_router(bodyhistory.router, prefix="/bodyhistory")
 
 if __name__ == "__main__":
     try:
