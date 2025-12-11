@@ -10,6 +10,10 @@
   align-items: center;
   justify-content: center;
 }
+.flex-end {
+  display: flex;
+  justify-content: flex-end;
+}
 
 .flex-column {
   display: flex;
@@ -94,6 +98,12 @@
 }
 .bg-green:hover {
   background-color: #16a34a;
+}
+.bg-orange {
+  background-color: #ff9800;
+}
+.bg-lightred {
+  background-color: #f44336;
 }
 .start-btn {
   padding: 16px 36px;

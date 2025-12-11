@@ -166,18 +166,20 @@ const ROM = ({ userInfo }) => {
       </select>
       {userInfo?.type !== "normal" && (
         <>
-          <CalcROM
-            videoRef={videoRef}
-            displayedPoses={displayedPoses}
-            transcript={transcript}
-            measuring={measuring}
-            angles={angles}
-            jointMap={jointMap}
-            resultAngles={resultAngles}
-            startMeasure={startMeasure}
-            stopMeasure={stopMeasure}
-          />
-          <Object3D poses={poses} />
+          <div className="flex-row">
+            <CalcROM
+              videoRef={videoRef}
+              displayedPoses={displayedPoses}
+              transcript={transcript}
+              measuring={measuring}
+              angles={angles}
+              jointMap={jointMap}
+              resultAngles={resultAngles}
+              startMeasure={startMeasure}
+              stopMeasure={stopMeasure}
+            />
+            <Object3D poses={poses} />
+          </div>
         </>
       )}
     </div>

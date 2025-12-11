@@ -111,7 +111,10 @@ function App() {
             {/* 커뮤니티 */}
             <Route path={URL.COMMUNITY_URL}>
               <Route index element={<Community />} />
-              <Route path="read/:id" element={<CommunityRead />} />
+              <Route
+                path="read/:id"
+                element={<CommunityRead userInfo={userInfo} />}
+              />
               <Route element={<PrivateRoute userInfo={userInfo} />}>
                 <Route
                   path="write"
@@ -173,6 +176,7 @@ function App() {
               </Route>
             </Route>
 
+            {/* 임시 작성 */}
             <Route path="/bmi" element={<Bmi userInfo={userInfo} />} />
             <Route
               path="/bodyhistory"

@@ -181,3 +181,15 @@ table tbody tr {
     font-size: 14px;
   }
 }
+
+textarea {
+  padding: 12px 14px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 15px;
+  font-family: inherit;
+  resize: vertical; /* 세로만 조절 가능 */
+  line-height: 1.5;
+  transition: all 0.2s ease;
+  background: #fafafa;
+}
