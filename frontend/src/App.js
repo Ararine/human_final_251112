@@ -31,6 +31,9 @@ import AdminMeal from "./pages/Admin/Meal";
 import AdminUser from "./pages/Admin/User";
 import AdminPostList from "./pages/Admin/PostList";
 
+import SubscribeManage from "./pages/SubscribeManage";
+import Subscribe from "./pages/Subscribe";
+
 import Qna from "./pages/Qna";
 import QnaWrite from "./pages/Qna/QnaWrite";
 import QnaDetail from "./pages/Qna/QnaDetail";
@@ -104,6 +107,10 @@ function App() {
               <Route index element={<Meal userInfo={userInfo} />} />
               <Route path="recommend" element={<MealRecommend />} />
             </Route>
+
+            {/* 구독 */}
+            <Route path="/subscribe/manage" element={<SubscribeManage />} />
+            <Route path="/subscribe" element={<Subscribe />} />
 
             {/* 커뮤니티 */}
             <Route path={URL.COMMUNITY_URL}>

@@ -1,0 +1,206 @@
+/* ============================= */
+/* 공통 스타일 */
+/* ============================= */
+
+.subscribe-page,
+.sub-manage-page {
+  max-width: 900px;
+  margin: 50px auto;
+  padding: 0 20px;
+  color: white;
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.subscribe-title,
+.sub-title {
+  font-size: 28px;
+  font-weight: 700;
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+/* Glass Card 공통 */
+.plan-card,
+.sub-card {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  text-align: center;
+  border-radius: 18px;
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.28);
+  transition: all 0.25s ease;
+}
+
+.plan-card:hover,
+.sub-card:hover {
+  transform: translateY(-6px);
+  background: rgba(255, 255, 255, 0.12);
+}
+
+/* ============================= */
+/* 구독 플랜 선택 페이지 */
+/* (/subscribe) */
+/* ============================= */
+
+.plan-container {
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+  flex-wrap: wrap;
+}
+
+.plan-card {
+  width: 260px;
+  padding: 28px;
+}
+
+.plan-card h3 {
+  font-size: 22px;
+  margin-bottom: 10px;
+}
+
+.plan-card p {
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 18px;
+}
+
+.plan-card ul {
+  list-style: none;
+  padding: 0;
+  margin-bottom: 20px;
+}
+
+.plan-card ul li {
+  font-size: 14px;
+  margin: 6px 0;
+}
+
+/* 기본 버튼 */
+.subscribe-btn {
+  width: 100%;
+  padding: 12px;
+  border-radius: 10px;
+  background: #3a8bfd;
+  color: white;
+  border: none;
+  cursor: pointer;
+  font-weight: 600;
+  transition: 0.2s;
+}
+
+.subscribe-btn:hover {
+  background: #5aa4ff;
+}
+
+/* 프리미엄 카드 강조 */
+.premium {
+  border: 1px solid #ffaa33;
+  background: rgba(255, 170, 51, 0.12);
+}
+
+.premium-btn {
+  background: #ff9d28;
+}
+
+.premium-btn:hover {
+  background: #ffb45a;
+}
+
+/* ============================= */
+/* 구독 관리 페이지 */
+/* (/subscribe/manage) */
+/* ============================= */
+
+.sub-card {
+  padding: 36px;
+}
+
+.active-title {
+  color: #4aa3ff;
+  font-size: 22px;
+  margin-bottom: 20px;
+}
+
+.inactive-title {
+  color: #ffb24a;
+  font-size: 22px;
+  margin-bottom: 20px;
+}
+
+.sub-info {
+  margin-bottom: 25px;
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+/* 버튼 그룹 */
+.btn-group {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  margin-top: 10px;
+}
+
+.btn {
+  width: 100%;
+  padding: 14px;
+  border-radius: 10px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  border: none;
+  transition: 0.25s ease;
+}
+
+/* 연장 */
+.btn.extend {
+  background: #33c46d;
+}
+
+.btn.extend:hover {
+  background: #54d184;
+}
+
+/* 취소 */
+.btn.cancel {
+  background: #e24c4c;
+}
+
+.btn.cancel:hover {
+  background: #ff6e6e;
+}
+
+/* 구독 등록 */
+.btn.subscribe {
+  background: #3a8bfd;
+}
+
+.btn.subscribe:hover {
+  background: #61a9ff;
+}
+
+/* 모바일 최적화 */
+@media (max-width: 480px) {
+  .plan-card,
+  .sub-card {
+    padding: 24px;
+  }
+
+  .subscribe-title,
+  .sub-title {
+    font-size: 24px;
+  }
+}
