@@ -53,6 +53,7 @@ import "./css/profile.css";
 
 import "./css/signup.css";
 import "./css/login.css";
+import BodyHistoryGraph from "./pages/BodyHistory";
 
 function App() {
   const [userInfo, setUserInfo] = useState(undefined);
@@ -173,6 +174,10 @@ function App() {
             </Route>
 
             <Route path="/bmi" element={<Bmi userInfo={userInfo} />} />
+            <Route
+              path="/bodyhistory"
+              element={<BodyHistoryGraph userInfo={userInfo} />}
+            />
             {/* 기타 */}
             <Route path="/*" element={<Navigate to={URL.HOME} replace />} />
           </Routes>
