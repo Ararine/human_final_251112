@@ -1,3 +1,9 @@
+.login-container > .card:hover {
+  transform: none !important;
+  background: white !important;
+  cursor: default !important;
+}
+
 .login-page {
   max-width: 420px; /* 카드 너비 */
   margin: 100px auto 80px; /* 위·아래 여백 + 가운데 정렬 */
@@ -7,37 +13,6 @@
   background-color: #ffffff;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
   font-size: 14px;
-}
-
-.login-title {
-  margin-bottom: 24px;
-  font-size: 22px;
-  font-weight: 600;
-}
-
-/* 폼 공통 레이아웃 */
-.login-form .form-row {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-  margin-bottom: 16px;
-}
-
-.form-label {
-  font-size: px;
-  color: #555;
-}
-
-.form-input {
-  padding: 8px 10px;
-  border-radius: 6px;
-  border: 1px solid #d0d0d0;
-  outline: none;
-}
-
-.form-input:focus {
-  border-color: #4a74ff;
-  box-shadow: 0 0 0 2px rgba(74, 116, 255, 0.15);
 }
 
 /* 로그인 버튼 */
@@ -86,4 +61,16 @@
 
 .link-normal:hover {
   text-decoration: underline;
+}
+
+.login-container .form-input {
+  padding: 8px 10px;
+  border-radius: 6px;
+  border: 1px solid #d0d0d0;
+  outline: none;
+}
+
+.login-container .form-input:focus {
+  border-color: #4a74ff;
+  box-shadow: 0 0 0 2px rgba(74, 116, 255, 0.15);
 }

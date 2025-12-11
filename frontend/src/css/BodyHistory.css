@@ -1,0 +1,113 @@
+/* ============================================= */
+/* ⭐ BodyHistory 전체 페이지 레이아웃 */
+/* ============================================= */
+
+.bodyhistory-page {
+  max-width: 640px;
+  margin: 40px auto;
+  padding: 0 16px;
+}
+
+/* 페이지 제목 */
+.bodyhistory-title {
+  font-size: 24px;
+  font-weight: 700;
+  margin-bottom: 24px;
+}
+
+/* 섹션 박스 (그래프 포함) */
+.bodyhistory-section {
+  border: 1px solid #e5e5e5;
+  background: #fff;
+  border-radius: 8px;
+  padding: 16px 20px;
+  margin-bottom: 24px;
+}
+
+/* 에러 상태 */
+.bodyhistory-section.danger {
+  border-color: #ff6b6b;
+  background-color: #fff5f5;
+}
+
+/* 섹션 제목 */
+.bodyhistory-section-title {
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 12px;
+}
+
+/* 로딩/에러 텍스트 */
+.bodyhistory-error-text {
+  font-size: 14px;
+  color: #d32f2f;
+  margin-bottom: 12px;
+}
+
+/* ============================================= */
+/* ⭐ 차트 영역 */
+/* ============================================= */
+
+.chart-box {
+  width: 100%;
+  height: 220px;
+  margin-top: 12px;
+  margin-bottom: 32px;
+  position: relative;
+}
+
+.chart-title {
+  font-size: 1rem;
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+
+/* ============================================= */
+/* ⭐ 변화 데이터 표 (선택적으로 사용 가능) */
+/* ============================================= */
+
+.bodyhistory-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 15px;
+  text-align: center;
+}
+
+.bodyhistory-table th,
+.bodyhistory-table td {
+  border: 1px solid #ddd;
+  padding: 10px;
+  color: #0059b2; /* 🔵 파란색 텍스트 */
+}
+
+.bodyhistory-table th {
+  background: #b7d7f2; /* 연하늘색 */
+  font-weight: 600;
+}
+
+.bodyhistory-table td {
+  background: #e4f1fb;
+}
+
+/* ============================================= */
+/* 버튼 영역 */
+/* ============================================= */
+
+.bodyhistory-actions {
+  margin-top: 16px;
+  text-align: right;
+}
+
+.bodyhistory-btn {
+  padding: 8px 14px;
+  background: #1976d2;
+  color: #fff;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.bodyhistory-btn:hover {
+  background: #11508a;
+}

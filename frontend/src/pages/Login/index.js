@@ -68,28 +68,30 @@ const Login = ({ setUserInfo }) => {
   };
 
   return (
-    <div className="login-page">
-      <h2 className="login-title">로그인</h2>
+    <div className="login-container flex-center black">
+      <div className="card flex-column flex-center bg-white">
+        <h2 className="login-title black">로그인</h2>
 
-      <LoginForm
-        form={form}
-        handleChange={handleChange}
-        handleLogin={handleLogin}
-      />
+        <LoginForm
+          form={form}
+          handleChange={handleChange}
+          handleLogin={handleLogin}
+        />
 
-      <div className="login-links">
-        <p>
-          아직 회원이 아니신가요?
-          <Link to="/signup" className="link-strong">
-            회원가입
-          </Link>
-        </p>
-        <p>
-          비밀번호를 잊으셨나요?
-          <Link to="/forgot-password" className="link-normal">
-            비밀번호 재설정
-          </Link>
-        </p>
+        <div className="login-links">
+          <p>
+            아직 회원이 아니신가요?
+            <Link to="/signup" className="link-strong">
+              회원가입
+            </Link>
+          </p>
+          <p>
+            비밀번호를 잊으셨나요?
+            <Link to="/forgot-password" className="link-normal">
+              비밀번호 재설정
+            </Link>
+          </p>
+        </div>
       </div>
     </div>
   );

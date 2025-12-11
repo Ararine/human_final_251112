@@ -14,7 +14,7 @@ import {
   updatePostReactionById,
 } from "../../../api/Reaction";
 
-const CommunityRead = () => {
+const CommunityRead = ({ userInfo }) => {
   const navigate = useNavigate();
   const { id } = useParams();
   const [editingCommentId, setEditingCommentId] = useState(null);
@@ -57,7 +57,14 @@ const CommunityRead = () => {
 
   const handleReaction = async (type) => {
     try {
-      await updatePostReactionById(id, { user_id: 1, reaction_type: type });
+      if (!userInfo?.user_id) {
+        alert("로그인이 필요한 기능입니다.");
+        return; // 실행 중단
+      }
+      await updatePostReactionById(id, {
+        user_id: userInfo?.user_id,
+        reaction_type: type,
+      });
       fetchReactions();
     } catch (error) {
       console.error(error);
@@ -178,6 +185,10 @@ const CommunityRead = () => {
   };
 
   const handleReportClick = () => {
+    if (!userInfo?.user_id) {
+      alert("로그인이 필요한 기능입니다.");
+      return; // 실행 중단
+    }
     setReporting(true);
   };
   const handleReportSubmit = async () => {
@@ -204,140 +215,112 @@ const CommunityRead = () => {
     }
   };
   return (
-    <div style={{ maxWidth: "800px", margin: "20px auto", padding: "0 16px" }}>
-      <h2>게시글 상세보기</h2>
-      <div style={{ marginBottom: "16px" }}>
-        <p>
-          <strong>게시글 번호:</strong> {post.id}
-        </p>
-        <p>
-          <strong>게시자:</strong> {post.email}
-        </p>
-        <p>
-          <strong>게시일:</strong> {formatDate(post.create_at)}
-        </p>
-        <p>
-          <strong>공개 여부:</strong> {getPublicStatus(post.is_public)}
-        </p>
-        {/* 링크 복사 버튼 추가 */}
-        <button
-          onClick={handleClipBoard}
-          style={{
-            marginTop: "8px",
-            padding: "6px 12px",
-            backgroundColor: "#007bff",
-            color: "white",
-            border: "none",
-            borderRadius: "4px",
-            cursor: "pointer",
-          }}
-        >
-          링크 복사
-        </button>
-        {/* 신고 버튼 */}
-        <button
-          onClick={handleReportClick}
-          style={{
-            marginTop: "8px",
-            padding: "6px 12px",
-            backgroundColor: "#dc3545",
-            color: "white",
-            border: "none",
-            borderRadius: "4px",
-            cursor: "pointer",
-          }}
-        >
-          신고
-        </button>
-        {/* 신고 입력창 */}
-        {reporting && (
-          <div style={{ marginTop: "8px" }}>
-            <textarea
-              value={reportReason}
-              onChange={(e) => setReportReason(e.target.value)}
-              placeholder="신고 사유를 입력해주세요."
-              rows={3}
-              style={{ width: "100%", padding: "8px" }}
-            />
-            <button
-              onClick={handleReportSubmit}
-              style={{
-                marginTop: "4px",
-                padding: "6px 12px",
-                backgroundColor: "#dc3545",
-                color: "white",
-                border: "none",
-                borderRadius: "4px",
-                cursor: "pointer",
-              }}
-            >
-              제출
-            </button>
-            <button
-              onClick={() => setReporting(false)}
-              style={{
-                marginTop: "4px",
-                marginLeft: "8px",
-                padding: "6px 12px",
-                backgroundColor: "#6c757d",
-                color: "white",
-                border: "none",
-                borderRadius: "4px",
-                cursor: "pointer",
-              }}
-            >
-              취소
-            </button>
-          </div>
-        )}
-        {/* 좋아요 / 싫어요 */}
-        <div style={{ marginTop: "12px" }}>
-          <button
-            onClick={() => handleReaction("like")}
-            style={{
-              padding: "6px 12px",
-              backgroundColor: "#28a745",
-              color: "#fff",
-              border: "none",
-              borderRadius: "4px",
-              cursor: "pointer",
-              marginRight: "8px",
-            }}
-          >
-            👍 좋아요 ({likes})
-          </button>
-          <button
-            onClick={() => handleReaction("dislike")}
-            style={{
-              padding: "6px 12px",
-              backgroundColor: "#6c757d",
-              color: "white",
-              border: "none",
-              borderRadius: "4px",
-              cursor: "pointer",
-            }}
-          >
-            👎 싫어요 ({dislikes})
-          </button>
+    <div
+      className="community-container flex-column black"
+      style={{
+        minWidth: "60%",
+        width: "60%",
+        margin: "20px auto",
+        padding: "0 16px",
+      }}
+    >
+      <div className="card bg-white">
+        <div className="flex-center">
+          <h2>제목: {post.title}</h2>
         </div>
+        <div style={{ marginBottom: "16px" }}>
+          <div className="post-container">
+            <div className="post-info">
+              <p>
+                <strong>게시글 번호:</strong> {post.id}
+              </p>
+              <p>
+                <strong>게시자:</strong> {post.email}
+              </p>
+              <p>
+                <strong>게시일:</strong> {formatDate(post.create_at)}
+              </p>
+              <p>
+                <strong>공개 여부:</strong> {getPublicStatus(post.is_public)}
+              </p>
+            </div>
+            <div className="post-content">{post.contents}</div>
+          </div>
+
+          <div className="flex-column gap-10">
+            {/* 좋아요 / 싫어요 */}
+            <div className="flex-end gap-5">
+              <button
+                className="bg-blue btn-ghost"
+                onClick={() => handleReaction("like")}
+              >
+                👍 좋아요 ({likes})
+              </button>
+              <button
+                className="bg-lightred btn-ghost"
+                onClick={() => handleReaction("dislike")}
+              >
+                👎 싫어요 ({dislikes})
+              </button>
+            </div>
+            <div className="flex-end gap-5 ">
+              {/* 링크 복사 버튼 추가 */}
+              <div>
+                <button onClick={handleClipBoard} className="bg-green">
+                  링크 복사
+                </button>
+              </div>
+              {/* 신고 버튼 */}
+              {!reporting && (
+                <>
+                  <button
+                    onClick={handleReportClick}
+                    className="bg-red btn-ghost"
+                  >
+                    신고
+                  </button>
+                </>
+              )}
+              {/* 신고 입력창 */}
+              {reporting && (
+                <div className="flex-column">
+                  <textarea
+                    value={reportReason}
+                    onChange={(e) => setReportReason(e.target.value)}
+                    placeholder="신고 사유를 입력해주세요."
+                    rows={3}
+                  />
+                  <button className="bg-blue" onClick={handleReportSubmit}>
+                    제출
+                  </button>
+                  <button
+                    className="bg-green"
+                    onClick={() => setReporting(false)}
+                  >
+                    취소
+                  </button>
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+        <hr />
+
+        <Comment
+          comments={comments}
+          newComment={newComment}
+          setNewComment={setNewComment}
+          handleCreateComment={handleCreateComment}
+          editingCommentId={editingCommentId}
+          setEditingCommentId={setEditingCommentId}
+          editingContent={editingContent}
+          setEditingContent={setEditingContent}
+          handleUpdate={handleUpdate}
+          handleEdit={handleEdit}
+          handleDelete={handleDelete}
+          userInfo={userInfo}
+        />
       </div>
-      <hr />
-      <div style={{ marginTop: "16px" }}>
-        <h3>{post.title}</h3>
-        <p style={{ whiteSpace: "pre-wrap" }}>{post.contents}</p>
-      </div>
-      <Comment
-        comments={comments}
-        newComment={newComment}
-        setNewComment={setNewComment}
-        handleCreateComment={handleCreateComment}
-        editingCommentId={editingCommentId}
-        editingContent={editingContent}
-        setEditingContent={setEditingContent}
-        handleUpdate={handleUpdate}
-        handleEdit={handleEdit}
-        handleDelete={handleDelete}
-      />
     </div>
   );
 };

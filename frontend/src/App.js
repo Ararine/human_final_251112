@@ -50,12 +50,13 @@ import "./css/qna.css";
 import "./css/meal.css";
 import "./css/modal.css";
 import "./css/attendanceCheck.css";
-// import "./css/signup.css";
-// import "./css/login.css";
 import "./css/admin.css";
 import "./css/exercise.css";
-
 import "./css/profile.css";
+
+import "./css/signup.css";
+import "./css/login.css";
+import BodyHistoryGraph from "./pages/BodyHistory";
 
 function App() {
   const [userInfo, setUserInfo] = useState(undefined);
@@ -117,7 +118,10 @@ function App() {
             {/* 커뮤니티 */}
             <Route path={URL.COMMUNITY_URL}>
               <Route index element={<Community />} />
-              <Route path="read/:id" element={<CommunityRead />} />
+              <Route
+                path="read/:id"
+                element={<CommunityRead userInfo={userInfo} />}
+              />
               <Route element={<PrivateRoute userInfo={userInfo} />}>
                 <Route
                   path="write"
@@ -179,7 +183,12 @@ function App() {
               </Route>
             </Route>
 
+            {/* 임시 작성 */}
             <Route path="/bmi" element={<Bmi userInfo={userInfo} />} />
+            <Route
+              path="/bodyhistory"
+              element={<BodyHistoryGraph userInfo={userInfo} />}
+            />
             {/* 기타 */}
             <Route path="/*" element={<Navigate to={URL.HOME} replace />} />
           </Routes>

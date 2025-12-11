@@ -2,9 +2,9 @@ import React from "react";
 
 const LoginForm = ({ form, handleChange, handleLogin }) => {
   return (
-    <form className="login-form" onSubmit={handleLogin}>
-      <div className="form-row">
-        <label className="form-label">이메일</label>
+    <form onSubmit={handleLogin} className="flex-column gap-5">
+      <div className="flex-column">
+        <label>이메일</label>
         <input
           name="email"
           type="email"
@@ -16,8 +16,8 @@ const LoginForm = ({ form, handleChange, handleLogin }) => {
         />
       </div>
 
-      <div className="form-row">
-        <label className="form-label">비밀번호</label>
+      <div className="flex-column">
+        <label>비밀번호</label>
         <input
           name="password"
           type="password"
