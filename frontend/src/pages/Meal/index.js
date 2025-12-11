@@ -170,11 +170,20 @@ const Meal = ({ userInfo }) => {
         const res = await getUserDetailInfoByUserId();
         const data = res.data;
       } catch (err) {
-        if (err.response.status == 401) {
+        console.log("RAW ERROR:", err);
+
+        const status = err?.response?.status;
+
+        if (status === 401) {
           alert("로그인이 필요한 서비스입니다.");
-          navigate(`${CONST_URL.LOGIN_URL}`);
+          navigate(CONST_URL.LOGIN_URL);
+          return;
         }
-        console.error("유저 상세 정보 불러오기 실패:", err);
+
+        // status가 undefined일 때
+        // 네트워크 오류 / CORS / undefined throw 등
+        alert("로그인이 필요한 서비스입니다.");
+        navigate(CONST_URL.LOGIN_URL);
       }
     };
 

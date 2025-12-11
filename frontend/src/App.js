@@ -170,7 +170,7 @@ function App() {
             {/* QNA */}
             <Route path={URL.QNA_URL}>
               <Route index element={<Qna />} />
-              <Route path=":id" element={<QnaDetail />} />
+              <Route path=":id" element={<QnaDetail userInfo={userInfo} />} />
               <Route path="edit/:id" element={<QnaEdit />} />
               <Route element={<PrivateRoute userInfo={userInfo} />}>
                 <Route

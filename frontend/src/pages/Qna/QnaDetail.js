@@ -3,7 +3,7 @@ import { useNavigate, useParams } from "react-router-dom";
 
 import { getQnaDetail, deleteQna } from "../../api/Qna";
 
-export default function QnaDetail() {
+export default function QnaDetail({ userInfo }) {
   const { id } = useParams();
   const navigate = useNavigate();
   const [qna, setQna] = useState(null);
@@ -42,19 +42,33 @@ export default function QnaDetail() {
   };
 
   if (!qna) return <div>로딩중...</div>;
-
   return (
-    <div style={{ padding: "20px" }}>
-      <h2>{qna.title}</h2>
-      <p>{qna.contents}</p>
+    <div
+      className="qna-container flex-column black"
+      style={{
+        minWidth: "60%",
+        width: "60%",
+        margin: "20px auto",
+        padding: "0 16px",
+      }}
+    >
+      <div className="card bg-white">
+        <h2>제목: {qna.title}</h2>
+        <div className="post-content">
+          <p>{qna.contents}</p>
+        </div>
 
-      <button onClick={handleEdit} style={{ marginRight: "10px" }}>
-        수정
-      </button>
-
-      <button onClick={handleDelete} style={{ color: "red" }}>
-        삭제
-      </button>
+        {userInfo?.user_id === qna.user_id && (
+          <div className="flex-end">
+            <button className="bg-green" onClick={handleEdit}>
+              수정
+            </button>
+            <button className="bg-red" onClick={handleDelete}>
+              삭제
+            </button>
+          </div>
+        )}
+      </div>
     </div>
   );
 }

@@ -72,7 +72,25 @@ const ROM = ({ userInfo }) => {
 
     if (transcript.includes("측정 시작")) startMeasure();
     if (transcript.includes("측정 종료")) stopMeasure();
+    if (transcript.includes("다음")) {
+      moveToNextJoint();
+    }
   }, [transcript]);
+  const moveToNextJoint = () => {
+    // 🔥 현재 관절 값 먼저 저장
+    saveCurrentJointResult();
+
+    // 🔥 다음 관절 계산
+    const keys = Object.keys(jointMap);
+    const currentIndex = keys.indexOf(selectedJoint);
+    const nextIndex = (currentIndex + 1) % keys.length;
+    const nextJoint = keys[nextIndex];
+
+    setSelectedJoint(nextJoint);
+
+    // 🔥 음성 피드백
+    speak(`${jointMap[nextJoint]} 로 이동합니다.`);
+  };
 
   const startMeasure = () => {
     console.log("측정 시작!");
@@ -80,27 +98,28 @@ const ROM = ({ userInfo }) => {
     angleHistoryRef.current = {}; // 각도 히스토리 초기화
     speak("측정이 시작되었습니다.");
   };
-
   const stopMeasure = () => {
     console.log("측정 종료!");
     setMeasuring(false);
 
-    const finalResults = {};
-    const history = angleHistoryRef.current;
-
-    Object.keys(history).forEach((key) => {
-      const arr = history[key];
-      if (!arr || arr.length === 0) return;
-
-      // 🔥 98% quantile 로 ROM 산출
-      finalResults[key] = quantile(arr, 0.98);
-    });
-    setResultAngles((prev) => ({
-      ...prev, // 기존 resultAngles 유지
-      [selectedJoint]: finalResults[selectedJoint], // 선택한 관절 값만 업데이트
-    }));
+    // 🔥 현재 선택된 관절 값 저장
+    saveCurrentJointResult();
 
     speak("측정 종료되었습니다.");
+  };
+
+  const saveCurrentJointResult = () => {
+    const history = angleHistoryRef.current;
+
+    if (!history[selectedJoint] || history[selectedJoint].length === 0) return;
+
+    const arr = history[selectedJoint];
+    const value = quantile(arr, 0.98);
+
+    setResultAngles((prev) => ({
+      ...prev,
+      [selectedJoint]: value,
+    }));
   };
 
   // 🔥 measuring = true일 때만 각도 history 저장
@@ -164,7 +183,7 @@ const ROM = ({ userInfo }) => {
           </option>
         ))}
       </select>
-      {userInfo?.type !== "normal" && (
+      {userInfo && userInfo?.type !== "normal" && (
         <>
           <div className="flex-row">
             <CalcROM

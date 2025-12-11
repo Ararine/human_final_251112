@@ -110,16 +110,20 @@ export function usePoseDetection3d(videoRef) {
            */
 
           // Elbow
-          const leftElbow = calculateAngle3D(
-            kp(keypoints, "left_shoulder"),
-            kp(keypoints, "left_elbow"),
-            kp(keypoints, "left_wrist")
-          );
-          const rightElbow = calculateAngle3D(
-            kp(keypoints, "right_shoulder"),
-            kp(keypoints, "right_elbow"),
-            kp(keypoints, "right_wrist")
-          );
+          const leftElbow =
+            180 -
+            calculateAngle3D(
+              kp(keypoints, "left_shoulder"),
+              kp(keypoints, "left_elbow"),
+              kp(keypoints, "left_wrist")
+            );
+          const rightElbow =
+            180 -
+            calculateAngle3D(
+              kp(keypoints, "right_shoulder"),
+              kp(keypoints, "right_elbow"),
+              kp(keypoints, "right_wrist")
+            );
 
           // Shoulder Flexion & Abduction
           const leftShoulderFlex = calculateAngle3D(
@@ -137,52 +141,68 @@ export function usePoseDetection3d(videoRef) {
           const rightShoulderAbd = rightShoulderFlex;
 
           // Wrist Flexion
-          const leftWristFlex = calculateAngle3D(
-            kp(keypoints, "left_elbow"),
-            kp(keypoints, "left_wrist"),
-            kp(keypoints, "left_index")
-          );
-          const rightWristFlex = calculateAngle3D(
-            kp(keypoints, "right_elbow"),
-            kp(keypoints, "right_wrist"),
-            kp(keypoints, "right_index")
-          );
+          const leftWristFlex =
+            180 -
+            calculateAngle3D(
+              kp(keypoints, "left_elbow"),
+              kp(keypoints, "left_wrist"),
+              kp(keypoints, "left_index")
+            );
+          const rightWristFlex =
+            180 -
+            calculateAngle3D(
+              kp(keypoints, "right_elbow"),
+              kp(keypoints, "right_wrist"),
+              kp(keypoints, "right_index")
+            );
 
           // Hip Flexion
-          const leftHipFlex = calculateAngle3D(
-            kp(keypoints, "left_knee"),
-            kp(keypoints, "left_hip"),
-            kp(keypoints, "left_shoulder")
-          );
-          const rightHipFlex = calculateAngle3D(
-            kp(keypoints, "right_knee"),
-            kp(keypoints, "right_hip"),
-            kp(keypoints, "right_shoulder")
-          );
+          const leftHipFlex =
+            180 -
+            calculateAngle3D(
+              kp(keypoints, "left_knee"),
+              kp(keypoints, "left_hip"),
+              kp(keypoints, "left_shoulder")
+            );
+          const rightHipFlex =
+            180 -
+            calculateAngle3D(
+              kp(keypoints, "right_knee"),
+              kp(keypoints, "right_hip"),
+              kp(keypoints, "right_shoulder")
+            );
 
           // Knee Flexion
-          const leftKnee = calculateAngle3D(
-            kp(keypoints, "left_hip"),
-            kp(keypoints, "left_knee"),
-            kp(keypoints, "left_ankle")
-          );
-          const rightKnee = calculateAngle3D(
-            kp(keypoints, "right_hip"),
-            kp(keypoints, "right_knee"),
-            kp(keypoints, "right_ankle")
-          );
+          const leftKnee =
+            180 -
+            calculateAngle3D(
+              kp(keypoints, "left_hip"),
+              kp(keypoints, "left_knee"),
+              kp(keypoints, "left_ankle")
+            );
+          const rightKnee =
+            180 -
+            calculateAngle3D(
+              kp(keypoints, "right_hip"),
+              kp(keypoints, "right_knee"),
+              kp(keypoints, "right_ankle")
+            );
 
           // Ankle Dorsiflexion
-          const leftAnkle = calculateAngle3D(
-            kp(keypoints, "left_knee"),
-            kp(keypoints, "left_ankle"),
-            kp(keypoints, "left_foot_index")
-          );
-          const rightAnkle = calculateAngle3D(
-            kp(keypoints, "right_knee"),
-            kp(keypoints, "right_ankle"),
-            kp(keypoints, "right_foot_index")
-          );
+          const leftAnkle =
+            90 -
+            calculateAngle3D(
+              kp(keypoints, "left_knee"),
+              kp(keypoints, "left_ankle"),
+              kp(keypoints, "left_foot_index")
+            );
+          const rightAnkle =
+            90 -
+            calculateAngle3D(
+              kp(keypoints, "right_knee"),
+              kp(keypoints, "right_ankle"),
+              kp(keypoints, "right_foot_index")
+            );
 
           /* ---------------------------
            *   저장

@@ -1,6 +1,11 @@
 .qna-container {
   padding: 20px;
 }
+.qna-container .card:hover {
+  transform: none !important;
+  background: white !important;
+  cursor: default !important;
+}
 .qna-container table td:nth-child(3) > div {
   width: 120px;
   white-space: normal;
