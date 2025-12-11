@@ -15,6 +15,7 @@ const Comment = ({
   userInfo,
 }) => {
   const navigate = useNavigate();
+  console.log(comments, editingCommentId);
   return (
     <>
       {/* 댓글 작성 */}
@@ -54,7 +55,7 @@ const Comment = ({
                       <strong>내용:</strong> {comment.comment}
                     </p>
                   </div>
-                  {editingCommentId === comment.id ? (
+                  {editingCommentId === comment.comment_user_id ? (
                     <>
                       <textarea
                         value={editingContent}

@@ -75,7 +75,7 @@ export async function getCalories(file) {
 
 // todo 인증 성공 시 보상 주게 수정 필요
 export async function uploadMealAuth(file) {
-  console.log(file);
+  const token = localStorage.getItem("token");
   try {
     const originalName = file.name;
     const newFileName = `imgs/${originalName}`; // 서버에서 imgs 폴더에 저장하도록 이름 지정
@@ -87,6 +87,7 @@ export async function uploadMealAuth(file) {
     const res = await api.post("/file/upload", formData, {
       headers: {
         "Content-Type": "multipart/form-data",
+        Authorization: `Bearer ${token}`,
       },
     });
     console.log("식단 인증 업로드 성공:", res);

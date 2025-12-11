@@ -182,12 +182,12 @@ const Meal = ({ userInfo }) => {
   }, []);
 
   return (
-    <div className="meal-grid">
+    <div className="meal-grid" style={{ width: "60%", maxWidth: "60%" }}>
       {/* 1. AI 분석 */}
-      <div className="card bg-midgray gap-10">
+      <div className="card bg-midgray">
         <div className="meal-icon">🍱</div>
         <h2>AI 식단 분석</h2>
-        <p>* 업로드시 식단인증 자동 등록 고려 *</p>
+        {/* <p>* 업로드시 식단인증 자동 등록 고려 *</p> */}
         <div className="upload-container flex-column flex-center ">
           <Uploader
             files={aiFiles}
@@ -202,7 +202,6 @@ const Meal = ({ userInfo }) => {
       <div className="card bg-midgray">
         <div className="meal-icon">📷</div>
         <h2>식단 인증</h2>
-        <p>구현필요</p>
         <div className="upload-container flex-column flex-center">
           <Uploader
             files={authFiles}
@@ -255,7 +254,7 @@ const Meal = ({ userInfo }) => {
           onClick={fetchRecommendedMealLists}
           disabled={loading} // 로딩 중이면 클릭 방지
         >
-          {loading ? "로딩 중..." : "식단 인증 등록"}
+          {loading ? "추천 식단 목록 생성 중..." : "추천 식단 받기"}
         </button>
       </div>
     </div>

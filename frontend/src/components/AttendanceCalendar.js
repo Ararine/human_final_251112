@@ -1,7 +1,12 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-export default function AttendanceCalendar({ attendanceDates = [], onClose }) {
+export default function AttendanceCalendar({
+  userInfo,
+  attendanceDates = [],
+  onClose,
+}) {
+  console.log(userInfo);
   const [monthOffset, setMonthOffset] = useState(0);
   const navigate = useNavigate();
 
@@ -97,7 +102,7 @@ export default function AttendanceCalendar({ attendanceDates = [], onClose }) {
         {isReward && <div className="trophy-animation">🏆 7일 연속 달성!</div>}
 
         <p className="rank-text">
-          현재 출석 랭킹: <b>{Math.floor(1000 / (streak + 1))}위</b>
+          수집된 포인트: <b>{userInfo.points}</b> 점
         </p>
 
         <Calendar />

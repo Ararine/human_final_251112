@@ -72,6 +72,7 @@ export default function Home({ userInfo }) {
         <div className="modal-overlay" onClick={() => setOpen(false)}>
           <div className="modal-content" onClick={(e) => e.stopPropagation()}>
             <AttendanceCalendar
+              userInfo={userInfo}
               attendanceDates={attendanceDates}
               onClose={() => setOpen(false)}
             />
