@@ -1,8 +1,5 @@
-import { useState } from "react";
-
-const ROMImageSlider = ({ romImages }) => {
+const ROMImageSlider = ({ romImages, currentIndex, setCurrentIndex }) => {
   const joints = Object.keys(romImages); // ["어깨정면", "팔꿈치", ...]
-  const [currentIndex, setCurrentIndex] = useState(0);
 
   const prevImage = () => {
     setCurrentIndex((prev) => (prev === 0 ? joints.length - 1 : prev - 1));
@@ -14,8 +11,8 @@ const ROMImageSlider = ({ romImages }) => {
 
   if (!joints || joints.length === 0) return null;
 
-  const currentJoint = joints[currentIndex]; // 현재 선택된 관절
-  const currentImg = romImages[currentJoint]; // 해당 관절 이미지
+  const currentJoint = joints[currentIndex];
+  const currentImg = romImages[currentJoint];
 
   return (
     <div
@@ -26,22 +23,20 @@ const ROMImageSlider = ({ romImages }) => {
         gap: "10px",
       }}
     >
-      {/* 이미지 Preview */}
       <img
         src={`/rom/${currentImg}`}
         alt={currentJoint}
         style={{
-          width: "400px", // 고정된 가로
-          height: "400px", // 고정된 세로
-          objectFit: "contain", // 비율 유지, 빈 공간 생김
+          width: "400px",
+          height: "400px",
+          objectFit: "contain",
           borderRadius: "8px",
-          backgroundColor: "#f5f5f5", // 여백 색 지정 (선택 사항)
+          backgroundColor: "#f5f5f5",
         }}
       />
 
       <p style={{ margin: "5px 0" }}>{currentJoint}</p>
 
-      {/* Prev / Next 버튼 */}
       <div style={{ display: "flex", gap: "10px" }}>
         <button onClick={prevImage}>Prev</button>
         <span>

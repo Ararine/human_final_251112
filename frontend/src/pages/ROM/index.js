@@ -8,6 +8,7 @@ import RomTable from "./RomTable";
 import ROMImageSlider from "./RomImageSlider";
 import CalcROM from "./CalcROM";
 import Object3D from "./Object3D";
+import App from "./test/App";
 
 // 🔥 배열에서 quantile 계산 함수
 function quantile(arr, q) {
@@ -53,11 +54,13 @@ const ROM = ({ userInfo }) => {
   const videoRef = useRef(null);
   const [measuring, setMeasuring] = useState(false);
   const [resultAngles, setResultAngles] = useState({});
+  const nextCountRef = useRef(0);
 
   const angleHistoryRef = useRef({}); // 🔥 각 관절별 angle 히스토리
   const { poses, angles } = usePoseDetection3d(videoRef);
   const [selectedJoint, setSelectedJoint] = useState(Object.keys(jointMap)[0]);
-
+  const romImageKeys = Object.keys(romImages);
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const { transcript, setListening } = useSTT();
   const speak = useKoreanSpeaker();
 
@@ -77,10 +80,10 @@ const ROM = ({ userInfo }) => {
     }
   }, [transcript]);
   const moveToNextJoint = () => {
-    // 🔥 현재 관절 값 먼저 저장
+    // 현재 관절 값 저장
     saveCurrentJointResult();
 
-    // 🔥 다음 관절 계산
+    // 다음 관절 계산
     const keys = Object.keys(jointMap);
     const currentIndex = keys.indexOf(selectedJoint);
     const nextIndex = (currentIndex + 1) % keys.length;
@@ -88,16 +91,23 @@ const ROM = ({ userInfo }) => {
 
     setSelectedJoint(nextJoint);
 
-    // 🔥 음성 피드백
+    // 🔥 "다음" 호출 횟수 증가
+    nextCountRef.current += 1;
+
+    // 🔥 2번마다 이미지 이동
+    if (nextCountRef.current % 2 === 0) {
+      setCurrentImageIndex((prev) => (prev + 1) % romImageKeys.length);
+    }
+
     speak(`${jointMap[nextJoint]} 로 이동합니다.`);
   };
-
   const startMeasure = () => {
-    console.log("측정 시작!");
     setMeasuring(true);
-    angleHistoryRef.current = {}; // 각도 히스토리 초기화
+    angleHistoryRef.current = {};
+    nextCountRef.current = 0; // 🔥 초기화
     speak("측정이 시작되었습니다.");
   };
+
   const stopMeasure = () => {
     console.log("측정 종료!");
     setMeasuring(false);
@@ -165,7 +175,11 @@ const ROM = ({ userInfo }) => {
             flexWrap: "wrap",
           }}
         >
-          <ROMImageSlider romImages={romImages} />
+          <ROMImageSlider
+            romImages={romImages}
+            currentIndex={currentImageIndex}
+            setCurrentIndex={setCurrentImageIndex}
+          />
         </div>
       </div>
       <label htmlFor="joint-select" style={{ marginRight: "10px" }}>
@@ -198,6 +212,12 @@ const ROM = ({ userInfo }) => {
               stopMeasure={stopMeasure}
             />
             <Object3D poses={poses} />
+            {/* <div style={{ display: "flex" }}>
+              <Object3D poses={poses} />
+              <div style={{ width: 300, height: 400 }}>
+                <App poses={poses} />
+              </div>
+            </div> */}
           </div>
         </>
       )}
