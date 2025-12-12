@@ -2,15 +2,21 @@
 .sec-rom {
   width: 100%;
   max-width: 1100px;
-  margin: 0 auto;
-  margin-top: -10px;
+  margin: 80px auto 0;
   padding: 80px 16px;
   text-align: center;
 }
 
 /* 헤더 */
 .rom-head {
-  margin-bottom: -35px;
+  margin-bottom: 14px;
+}
+
+.rom-title {
+  font-size: 43px;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  margin-bottom: 12px;
 }
 
 .rom-chip {
@@ -23,183 +29,219 @@
   border: 1px solid rgba(148, 163, 184, 0.18);
 }
 
-.rom-title {
-  font-size: 32px;
-  font-weight: 700;
-  margin-top: 18px;
-}
-
-.rom-sub {
-  font-size: 15px;
-  color: #d0d2d6;
-  margin-top: 10px;
-}
-
-/* 비주얼 영역 – 무릎 ROM SVG */
-/* 비주얼 영역 – 라인 아트 무릎 ROM */
+/* =========================
+   ICON VISUAL (업그레이드)
+   ========================= */
 .rom-visual {
   position: relative;
-  height: 190px;
-  max-width: 360px;
-  margin: 0 auto 24px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: flex-end;
+  width: 160px;
+  height: 160px;
+  margin: 18px auto 18px;
+  display: grid;
+  place-items: center;
 }
 
-.rom-knee-svg {
-  width: 210px;
-  height: auto;
+/* 은은한 빛 번짐(halo) */
+.rom-visual-halo {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle at 45% 35%,
+    rgba(249, 115, 22, 0.28),
+    rgba(251, 113, 133, 0.16) 42%,
+    rgba(2, 6, 23, 0) 70%
+  );
+  filter: blur(10px);
+  opacity: 0.9;
+  animation: romHalo 3.2s ease-in-out infinite;
+  pointer-events: none;
 }
 
-/* ROM 아크 */
-.rom-knee-arc {
-  stroke: rgba(148, 163, 184, 0.65);
-  stroke-width: 3;
-  stroke-linecap: round;
-  filter: drop-shadow(0 4px 10px rgba(15, 23, 42, 0.6));
-}
-
-/* 기본 뼈 선 (기준선) */
-.rom-knee-bone-base {
-  stroke: rgba(55, 65, 81, 0.8);
-  stroke-width: 6;
-  stroke-linecap: round;
-}
-
-/* 허벅지 / 종아리 라인 */
-.rom-knee-bone {
-  stroke: rgba(229, 231, 235, 0.95);
-  stroke-width: 8;
-  stroke-linecap: round;
-}
-
-/* 무릎 관절 원 */
-.rom-knee-joint {
-  fill: #0f172a;
-  stroke: #f9fafb;
-  stroke-width: 2;
-  filter: drop-shadow(0 6px 16px rgba(15, 23, 42, 0.8));
-}
-
-/* 발끝 점 */
-.rom-knee-foot {
-  fill: #f97316;
-  filter: drop-shadow(0 4px 10px rgba(248, 113, 113, 0.7));
-}
-
-/* 종아리 라인이 ROM 범위 안에서 살짝 회전 */
-.rom-knee-indicator {
-  transform-origin: 120px 70px; /* 무릎 중심 */
-  animation: rom-knee-swing 2.2s ease-in-out infinite;
-}
-
-@keyframes rom-knee-swing {
+@keyframes romHalo {
   0% {
-    transform: rotate(-5deg);
+    transform: scale(0.96);
+    opacity: 0.75;
   }
   50% {
-    transform: rotate(40deg);
+    transform: scale(1.05);
+    opacity: 0.95;
   }
   100% {
-    transform: rotate(-5deg);
+    transform: scale(0.96);
+    opacity: 0.75;
   }
 }
 
-/* 캡션 */
-.rom-visual-caption {
-  margin-top: 12px;
-  font-size: 12px;
-  color: #9ca3af;
-  text-align: center;
+/* 아이콘 자체: 부유 + 미세 스윙 + 아주 약한 확대/축소 */
+.rom-visual-img {
+  width: 120px;
+  height: 120px;
+
+  transform-origin: 50% 65%;
+  animation: romFloat 2.8s ease-in-out infinite;
+
+  /* 아이콘이 배경에서 떠 보이게 */
+  filter: drop-shadow(0 18px 26px rgba(0, 0, 0, 0.45))
+    drop-shadow(0 6px 14px rgba(249, 115, 22, 0.12));
+
+  will-change: transform;
+  user-select: none;
 }
 
-/* ========================= */
-/*          메인 구조       */
-/* ========================= */
-
-/* PC일 때 2컬럼 */
-@media (min-width: 960px) {
-  .rom-body {
-    flex-direction: row;
-    align-items: stretch;
+@keyframes romFloat {
+  0% {
+    transform: translateY(0) rotate(-1.2deg) scale(1);
+  }
+  50% {
+    transform: translateY(-10px) rotate(1.2deg) scale(1.02);
+  }
+  100% {
+    transform: translateY(0) rotate(-1.2deg) scale(1);
   }
 }
 
-/* 왼쪽 메인 카드 */
+/* 모션 민감 사용자 배려 */
+@media (prefers-reduced-motion: reduce) {
+  .rom-visual-img,
+  .rom-visual-halo {
+    animation: none !important;
+  }
+}
+
+/* =========================
+   메인 설명
+   ========================= */
 .rom-main-card {
-  flex: 1.2;
+  max-width: 520px;
+  margin: 0 auto;
   text-align: center;
-  margin-bottom: 15px;
-}
-.rom-main-card h3 {
-  margin-bottom: 12px;
-}
-.rom-main-card p {
-  font-size: 14px;
-  line-height: 1.7;
 }
 
-/* 오른쪽 카드 목록 */
+.rom-main-title {
+  margin-bottom: 12px;
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: -0.2px;
+}
+
+.rom-main-text {
+  font-size: 14px;
+  line-height: 1.8;
+  opacity: 0.9;
+}
+
+/* =========================
+   카드 3개 영역
+   ========================= */
 .rom-grid {
-  flex: 1;
   display: flex;
-  flex-direction: column;
-  gap: 16px;
+  justify-content: center;
+  gap: 24px;
+  margin: 40px auto 0;
+  width: 100%;
+  max-width: 980px;
 }
 
 /* 카드 */
 .rom-card {
-  padding: 22px 26px;
+  flex: 0 0 300px;
+  width: 300px;
+  max-width: 300px;
+  min-height: 160px;
+
+  padding: 22px 20px;
   border-radius: 18px;
-  background: rgba(30, 41, 59, 0.75);
-  border: 1px solid rgba(71, 85, 105, 0.4);
-  backdrop-filter: blur(5px);
-  text-align: left;
-  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.24);
+  background-color: #333333;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+
+  text-align: center;
+  row-gap: 10px;
+  overflow: hidden;
+
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
-/* 카드 제목 + 아이콘 */
+.rom-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 14px 34px rgba(0, 0, 0, 0.35);
+}
+
+/* 제목 + 아이콘 */
 .rom-card-header {
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: 8px;
-  margin-bottom: 6px;
+
+  margin-bottom: 12px;
+  min-height: 44px; /* 2줄 타이틀 높이 고정 */
 }
 
-.rom-card-icon {
-  font-size: 18px;
-}
-
+/* 제목 (2줄까지만) */
 .rom-card-header h4 {
   margin: 0;
-  font-size: 15px;
-  font-weight: 600;
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 1.25;
+
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
 
+/* 설명 */
 .rom-card p {
-  font-size: 13px;
-  line-height: 1.55;
+  margin: 0;
+  font-size: 15px; /* 카드 터짐 방지(권장) */
+  line-height: 1.6;
+  opacity: 0.9;
+
+  width: 100%;
+  max-width: 100%;
+  text-align: center;
+
+  white-space: normal;
   word-break: keep-all;
-  opacity: 0.88;
+  overflow-wrap: anywhere;
 }
 
-/* CTA */
+/* =========================
+   CTA (톤 맞춤)
+   ========================= */
 .rom-cta {
-  margin-top: 26px;
+  margin-top: 32px;
 }
 
 .rom-cta-text {
   display: inline-block;
-  padding: 11px 24px;
+  padding: 12px 30px;
   border-radius: 999px;
-  background: linear-gradient(90deg, #f97316, #fb7185);
-  color: #050505;
+
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.08),
+    rgba(255, 255, 255, 0.04)
+  );
+  border: 1px solid rgba(148, 163, 184, 0.28);
+
+  color: #e5e7eb;
   font-size: 15px;
   font-weight: 500;
-  box-shadow: 0 12px 30px rgba(248, 113, 113, 0.35);
-  transition: all 0.18s ease-out;
+  letter-spacing: -0.01em;
+
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08);
+  transition: all 0.2s ease;
+}
+
+.rom-cta-text strong {
+  font-weight: 700;
+  color: #f9fafb;
 }
 
 .rom-cta-text:hover {
