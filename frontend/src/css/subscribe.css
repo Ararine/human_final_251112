@@ -1,206 +1,264 @@
-/* ============================= */
-/* 공통 스타일 */
-/* ============================= */
-
-.subscribe-page,
-.sub-manage-page {
-  max-width: 900px;
-  margin: 50px auto;
-  padding: 0 20px;
-  color: white;
-  animation: fadeIn 0.3s ease-in-out;
+.subscribe-page {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 80px 16px;
+  color: #e5e7eb;
 }
 
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(8px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-.subscribe-title,
-.sub-title {
-  font-size: 28px;
-  font-weight: 700;
+.subscribe-hero {
   text-align: center;
-  margin-bottom: 40px;
+  margin-bottom: 26px;
 }
 
-/* Glass Card 공통 */
-.plan-card,
-.sub-card {
-  background: rgba(255, 255, 255, 0.08);
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  text-align: center;
-  border-radius: 18px;
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.28);
-  transition: all 0.25s ease;
+.subscribe-title {
+  font-size: 42px;
+  font-weight: 900;
+  letter-spacing: -0.03em;
+  margin: 0 0 10px;
 }
 
-.plan-card:hover,
-.sub-card:hover {
-  transform: translateY(-6px);
-  background: rgba(255, 255, 255, 0.12);
+.subscribe-desc {
+  margin: 0 auto 18px;
+  max-width: 720px;
+  font-size: 15px;
+  line-height: 1.6;
+  color: rgba(226, 232, 240, 0.8);
 }
 
-/* ============================= */
-/* 구독 플랜 선택 페이지 */
-/* (/subscribe) */
-/* ============================= */
-
-.plan-container {
-  display: flex;
-  justify-content: center;
-  gap: 30px;
-  flex-wrap: wrap;
+.billing-toggle {
+  display: inline-flex;
+  gap: 6px;
+  padding: 6px;
+  border-radius: 999px;
+  border: 1px solid rgba(148, 163, 184, 0.18);
+  background: rgba(255, 255, 255, 0.04);
 }
 
-.plan-card {
-  width: 260px;
-  padding: 28px;
-}
-
-.plan-card h3 {
-  font-size: 22px;
-  margin-bottom: 10px;
-}
-
-.plan-card p {
-  font-size: 18px;
-  font-weight: bold;
-  margin-bottom: 18px;
-}
-
-.plan-card ul {
-  list-style: none;
-  padding: 0;
-  margin-bottom: 20px;
-}
-
-.plan-card ul li {
-  font-size: 14px;
-  margin: 6px 0;
-}
-
-/* 기본 버튼 */
-.subscribe-btn {
-  width: 100%;
-  padding: 12px;
-  border-radius: 10px;
-  background: #3a8bfd;
-  color: white;
-  border: none;
+.toggle-btn {
+  appearance: none;
+  border: 0;
   cursor: pointer;
-  font-weight: 600;
+  padding: 10px 14px;
+  border-radius: 999px;
+  font-size: 13px;
+  color: rgba(226, 232, 240, 0.75);
+  background: transparent;
   transition: 0.2s;
 }
 
-.subscribe-btn:hover {
-  background: #5aa4ff;
+.toggle-btn.on {
+  color: #0b1220;
+  background: rgba(255, 255, 255, 0.92);
+  font-weight: 800;
 }
 
-/* 프리미엄 카드 강조 */
-.premium {
-  border: 1px solid #ffaa33;
-  background: rgba(255, 170, 51, 0.12);
+/* Plans Grid */
+.plan-container {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+  margin-top: 22px;
+  align-items: stretch;
 }
 
-.premium-btn {
-  background: #ff9d28;
-}
-
-.premium-btn:hover {
-  background: #ffb45a;
-}
-
-/* ============================= */
-/* 구독 관리 페이지 */
-/* (/subscribe/manage) */
-/* ============================= */
-
-.sub-card {
-  padding: 36px;
-}
-
-.active-title {
-  color: #4aa3ff;
-  font-size: 22px;
-  margin-bottom: 20px;
-}
-
-.inactive-title {
-  color: #ffb24a;
-  font-size: 22px;
-  margin-bottom: 20px;
-}
-
-.sub-info {
-  margin-bottom: 25px;
-  font-size: 16px;
-  line-height: 1.6;
-}
-
-/* 버튼 그룹 */
-.btn-group {
-  display: flex;
-  flex-direction: column;
-  gap: 14px;
-  margin-top: 10px;
-}
-
-.btn {
+/* Plan Card */
+.plan-card {
+  appearance: none;
+  -webkit-appearance: none;
+  margin: 0;
+  padding: 0;
   width: 100%;
-  padding: 14px;
-  border-radius: 10px;
-  font-size: 16px;
-  font-weight: 600;
+  box-sizing: border-box;
+
+  border-radius: 18px;
+  border: 1px solid rgba(148, 163, 184, 0.18);
+  background: rgba(255, 255, 255, 0.04);
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.25);
+
   cursor: pointer;
-  border: none;
-  transition: 0.25s ease;
+  text-align: left;
+  color: inherit;
+  font: inherit;
+  line-height: normal;
+
+  display: block;
+  height: 100%;
+
+  transition: transform 0.18s ease, border-color 0.18s ease,
+    background 0.18s ease;
 }
 
-/* 연장 */
-.btn.extend {
-  background: #33c46d;
+.plan-card:hover {
+  transform: translateY(-1px);
+  border-color: rgba(148, 163, 184, 0.35);
+  background: rgba(255, 255, 255, 0.055);
 }
 
-.btn.extend:hover {
-  background: #54d184;
+.plan-card.selected {
+  border-color: rgba(56, 189, 248, 0.6);
+  box-shadow: 0 22px 60px rgba(56, 189, 248, 0.12);
 }
 
-/* 취소 */
-.btn.cancel {
-  background: #e24c4c;
+.plan-card.premium.selected {
+  border-color: rgba(168, 85, 247, 0.65);
+  box-shadow: 0 22px 70px rgba(168, 85, 247, 0.14);
 }
 
-.btn.cancel:hover {
-  background: #ff6e6e;
+/* Inner Template */
+.plan-inner {
+  padding: 22px;
+  box-sizing: border-box;
+  height: 100%;
+
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  row-gap: 16px;
 }
 
-/* 구독 등록 */
-.btn.subscribe {
-  background: #3a8bfd;
+.plan-top {
+  margin: 0;
+  display: grid;
+  grid-template-rows: 28px 40px 18px;
+  row-gap: 10px;
+  height: 106px;
 }
 
-.btn.subscribe:hover {
-  background: #61a9ff;
+.plan-name {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  column-gap: 10px;
+  height: 28px;
 }
 
-/* 모바일 최적화 */
-@media (max-width: 480px) {
-  .plan-card,
-  .sub-card {
-    padding: 24px;
+.plan-name h3 {
+  margin: 0;
+  font-size: 20px;
+  font-weight: 900;
+  letter-spacing: -0.02em;
+  color: #f8fafc;
+}
+
+.plan-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 24px;
+  padding: 0 10px;
+
+  font-size: 12px;
+  font-weight: 800;
+  border-radius: 999px;
+
+  border: 1px solid rgba(168, 85, 247, 0.5);
+  background: rgba(168, 85, 247, 0.16);
+  color: rgba(233, 213, 255, 0.95);
+}
+
+.plan-badge.ghost {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.plan-price {
+  margin: 0;
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  height: 40px;
+}
+
+.price {
+  font-size: 28px;
+  font-weight: 900;
+  letter-spacing: -0.03em;
+}
+
+.suffix {
+  font-size: 13px;
+  color: rgba(226, 232, 240, 0.7);
+}
+
+.plan-hint {
+  margin: 0;
+  height: 18px;
+  display: flex;
+  align-items: center;
+  font-size: 13px;
+  color: rgba(226, 232, 240, 0.65);
+}
+
+/* Features */
+.plan-features {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  gap: 9px;
+  align-content: start;
+}
+
+.plan-features li {
+  position: relative;
+  padding-left: 20px;
+  font-size: 14px;
+  color: rgba(226, 232, 240, 0.85);
+  line-height: 1.45;
+}
+
+.plan-features li::before {
+  content: "✓";
+  position: absolute;
+  left: 0;
+  top: 0;
+  color: rgba(56, 189, 248, 0.9);
+  font-weight: 900;
+}
+
+.plan-card.premium .plan-features li::before {
+  color: rgba(168, 85, 247, 0.95);
+}
+
+/* CTA */
+.plan-cta {
+  margin: 0;
+  display: flex;
+  justify-content: center;
+}
+
+.subscribe-btn {
+  display: inline-flex;
+  justify-content: center;
+  width: 86%;
+  padding: 12px 14px;
+  border-radius: 12px;
+  font-weight: 900;
+  font-size: 14px;
+  letter-spacing: -0.01em;
+
+  border: 1px solid rgba(148, 163, 184, 0.18);
+  background: rgba(255, 255, 255, 0.06);
+  color: rgba(248, 250, 252, 0.95);
+
+  transition: background 0.2s ease, border-color 0.2s ease, transform 0.15s ease,
+    box-shadow 0.2s ease;
+}
+.subscribe-btn:hover {
+  background: rgba(255, 255, 255, 0.12);
+  border-color: rgba(148, 163, 184, 0.35);
+  transform: translateY(-1px);
+  box-shadow: 0 8px 22px rgba(0, 0, 0, 0.35);
+}
+
+.subscribe-btn:focus {
+  outline: none;
+}
+
+@media (max-width: 860px) {
+  .plan-container {
+    grid-template-columns: 1fr;
   }
-
-  .subscribe-title,
-  .sub-title {
-    font-size: 24px;
+  .subscribe-title {
+    font-size: 34px;
   }
 }

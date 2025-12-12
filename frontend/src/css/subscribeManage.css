@@ -1,0 +1,249 @@
+.sub-manage-page {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 80px 16px;
+  color: #e5e7eb;
+}
+
+.sub-hero {
+  text-align: center;
+  margin-bottom: 18px;
+}
+
+.sub-title {
+  margin: 0 0 10px;
+  font-size: 40px;
+  font-weight: 900;
+  letter-spacing: -0.03em;
+}
+
+.sub-desc {
+  margin: 0 auto;
+  max-width: 720px;
+  font-size: 14px;
+  line-height: 1.6;
+  color: rgba(226, 232, 240, 0.75);
+  /* text-align: center; */
+}
+
+.sub-card {
+  margin: 18px auto 0;
+  width: min(720px, 100%);
+  border-radius: 18px;
+  padding: 22px;
+  border: 1px solid rgba(148, 163, 184, 0.18);
+  background: rgba(255, 255, 255, 0.04);
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.25);
+}
+
+.sub-card.active {
+  border-color: rgba(56, 189, 248, 0.35);
+  box-shadow: 0 22px 60px rgba(56, 189, 248, 0.1);
+}
+
+.sub-card.expired {
+  border-color: rgba(248, 113, 113, 0.35);
+  box-shadow: 0 22px 60px rgba(248, 113, 113, 0.08);
+}
+
+.sub-card-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 14px;
+}
+
+.sub-head-left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.sub-card-title {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 900;
+  letter-spacing: -0.02em;
+  color: rgba(248, 250, 252, 0.98);
+}
+
+.status-badge {
+  font-size: 12px;
+  font-weight: 900;
+  padding: 6px 10px;
+  border-radius: 999px;
+  border: 1px solid rgba(148, 163, 184, 0.18);
+  background: rgba(255, 255, 255, 0.06);
+  color: rgba(226, 232, 240, 0.85);
+}
+
+.status-badge.active {
+  border-color: rgba(56, 189, 248, 0.45);
+  background: rgba(56, 189, 248, 0.14);
+}
+
+.status-badge.expired {
+  border-color: rgba(248, 113, 113, 0.45);
+  background: rgba(248, 113, 113, 0.12);
+}
+
+.status-badge.none {
+  border-color: rgba(148, 163, 184, 0.22);
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.sub-plan-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 12px;
+  border-radius: 999px;
+  border: 1px solid rgba(148, 163, 184, 0.18);
+  background: rgba(255, 255, 255, 0.04);
+  font-size: 13px;
+  color: rgba(226, 232, 240, 0.85);
+}
+
+.pill-label {
+  color: rgba(226, 232, 240, 0.65);
+}
+
+.pill-value {
+  color: rgba(248, 250, 252, 0.98);
+}
+
+.sub-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+  margin-top: 6px;
+}
+
+.sub-item {
+  border-radius: 14px;
+  padding: 12px 14px;
+  border: 1px solid rgba(148, 163, 184, 0.14);
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.sub-k {
+  display: block;
+  font-size: 12px;
+  color: rgba(226, 232, 240, 0.65);
+  margin-bottom: 6px;
+}
+
+.sub-v {
+  font-size: 14px;
+  color: rgba(248, 250, 252, 0.95);
+}
+
+.sub-progress {
+  margin-top: 14px;
+  border-radius: 16px;
+  padding: 14px;
+  border: 1px solid rgba(148, 163, 184, 0.14);
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.progress-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.progress-label {
+  font-size: 12px;
+  color: rgba(226, 232, 240, 0.7);
+  font-weight: 800;
+}
+
+.progress-value {
+  font-size: 12px;
+  color: rgba(248, 250, 252, 0.95);
+  font-weight: 900;
+}
+
+.progress-track {
+  height: 10px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.07);
+  overflow: hidden;
+  border: 1px solid rgba(148, 163, 184, 0.12);
+}
+
+.progress-fill {
+  height: 100%;
+  border-radius: 999px;
+  background: rgba(56, 189, 248, 0.75);
+}
+
+.sub-card.expired .progress-fill {
+  background: rgba(248, 113, 113, 0.75);
+}
+
+.progress-hint {
+  margin: 10px 0 0;
+  font-size: 12px;
+  color: rgba(226, 232, 240, 0.65);
+  line-height: 1.5;
+}
+
+.sub-empty {
+  margin: 10px 0 0;
+  font-size: 14px;
+  line-height: 1.6;
+  color: rgba(226, 232, 240, 0.82);
+}
+
+.btn-group {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-top: 16px;
+}
+
+.btn-group.single {
+  grid-template-columns: 1fr;
+}
+
+.btn {
+  border: 0;
+  cursor: pointer;
+  padding: 12px 14px;
+  border-radius: 14px;
+  font-weight: 900;
+  font-size: 14px;
+  transition: transform 0.18s ease;
+}
+
+.btn:hover {
+  transform: translateY(-1px);
+}
+
+.btn.extend {
+  color: #0b1220;
+  background: rgba(255, 255, 255, 0.92);
+}
+
+.btn.cancel {
+  color: rgba(248, 250, 252, 0.92);
+  background: rgba(248, 113, 113, 0.18);
+  border: 1px solid rgba(248, 113, 113, 0.35);
+}
+
+.btn.subscribe {
+  color: #0b1220;
+  background: rgba(255, 255, 255, 0.92);
+}
+
+@media (max-width: 560px) {
+  .sub-grid {
+    grid-template-columns: 1fr;
+  }
+  .btn-group {
+    grid-template-columns: 1fr;
+  }
+}
