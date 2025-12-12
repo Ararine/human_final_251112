@@ -1,6 +1,6 @@
 // src/pages/Home/RomInfo.js
 import React from "react";
-import "./romInfo.css";
+import "../../css/romInfo.css";
 
 export default function RomInfo() {
   return (
