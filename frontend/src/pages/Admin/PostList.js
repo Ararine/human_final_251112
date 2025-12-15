@@ -68,8 +68,8 @@ const PostList = () => {
             <tr key={post.id}>
               <td>{post.email}</td>
               <td className="title">{post.title}</td>
-              <td>{post.comments}</td>
-              <td>{post.contents}</td>
+              <td className="post-content">{post.comments}</td>
+              <td className="post-content">{post.contents}</td>
               <td>{post.reported_at}</td>
               <td>
                 <button

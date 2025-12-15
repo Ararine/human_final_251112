@@ -4,6 +4,9 @@
   cursor: default !important;
 }
 
+.login-container input {
+  color: black;
+}
 .login-page {
   max-width: 420px; /* 카드 너비 */
   margin: 100px auto 80px; /* 위·아래 여백 + 가운데 정렬 */

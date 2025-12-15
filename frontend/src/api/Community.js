@@ -3,11 +3,21 @@ import { api, apiWithCookie } from "./axios";
 // 게시글 생성
 export async function createPost(title, contents, authorId) {
   try {
-    const res = await apiWithCookie.post("/posts", {
-      title,
-      contents,
-      user_id: authorId,
-    });
+    const token = localStorage.getItem("token");
+
+    const res = await apiWithCookie.post(
+      "/posts",
+      {
+        title,
+        contents,
+        user_id: authorId,
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
     return res.data;
   } catch (err) {
     console.error("게시글 작성 실패:", err);
@@ -52,12 +62,22 @@ export async function getPostDetail(postId) {
 }
 
 // 게시글 수정
-export async function updatePost(postId, { title, contents }) {
+export async function updatePost(postId, title, contents) {
+  console.log(title, contents);
   try {
-    const res = await apiWithCookie.put(`/posts/${postId}`, {
-      title,
-      contents,
-    });
+    const token = localStorage.getItem("token");
+    const res = await api.put(
+      `/posts/${postId}`,
+      {
+        title,
+        contents,
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
     return res.data;
   } catch (err) {
     console.error("게시글 수정 실패:", err);
@@ -68,7 +88,12 @@ export async function updatePost(postId, { title, contents }) {
 // 게시글 삭제
 export async function deletePost(postId) {
   try {
-    const res = await apiWithCookie.delete(`/posts/${postId}`);
+    const token = localStorage.getItem("token");
+    const res = await api.delete(`/posts/${postId}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
     return res.data;
   } catch (err) {
     console.error("게시글 삭제 실패:", err);
@@ -102,7 +127,6 @@ export async function getPostReport() {
 }
 
 export async function recoverPostReport(post_id, user_id) {
-  console.log(user_id);
   try {
     const res = await apiWithCookie.post(`/posts/report/delete/${post_id}`, {
       user_id,

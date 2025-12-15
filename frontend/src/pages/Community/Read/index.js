@@ -8,7 +8,11 @@ import {
   updateComment,
   deleteComment,
 } from "../../../api/Comment";
-import { createPostReport, getPostDetail } from "../../../api/Community";
+import {
+  createPostReport,
+  deletePost,
+  getPostDetail,
+} from "../../../api/Community";
 import {
   getPostReactionById,
   updatePostReactionById,
@@ -90,6 +94,7 @@ const CommunityRead = ({ userInfo }) => {
           contents: data.contents || "",
           create_at: data.create_at || "",
           is_public: data.is_public || "0",
+          user_id: data.user_id,
         });
       } catch (error) {
         console.error(error);
@@ -214,6 +219,22 @@ const CommunityRead = ({ userInfo }) => {
       }
     }
   };
+  const handlePostDelete = async () => {
+    console.log(post.user_id, userInfo.user_id);
+    if (post.user_id !== userInfo.user_id) {
+      alert("삭제할 권한이 없습니다.");
+      return;
+    } else {
+      try {
+        await deletePost(post.id);
+        alert("게시글이 삭제되었습니다.");
+        navigate("/community");
+      } catch (error) {
+        console.error("게시글 삭제 중 오류:", error);
+        alert("게시글 삭제에 실패하였습니다.");
+      }
+    }
+  };
   return (
     <div
       className="community-container flex-column black"
@@ -264,6 +285,22 @@ const CommunityRead = ({ userInfo }) => {
               </button>
             </div>
             <div className="flex-end gap-5 ">
+              {post.user_id === userInfo?.user_id && (
+                <>
+                  <button
+                    onClick={() => navigate(`/community/write/${id}`)}
+                    className="bg-blue btn-ghost"
+                  >
+                    수정
+                  </button>
+                  <button
+                    onClick={handlePostDelete}
+                    className="bg-blue btn-ghost"
+                  >
+                    삭제
+                  </button>
+                </>
+              )}
               {/* 링크 복사 버튼 추가 */}
               <div>
                 <button onClick={handleClipBoard} className="bg-green">

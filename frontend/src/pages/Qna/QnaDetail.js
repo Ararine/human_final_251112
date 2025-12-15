@@ -53,10 +53,8 @@ export default function QnaDetail({ userInfo }) {
       }}
     >
       <div className="card bg-white">
-        <h2>제목: {qna.title}</h2>
-        <div className="post-content">
-          <p>{qna.contents}</p>
-        </div>
+        <h2 style={{ textAlign: "center" }}>제목: {qna.title}</h2>
+        <div className="post-content">{qna.contents}</div>
 
         {userInfo?.user_id === qna.user_id && (
           <div className="flex-end">

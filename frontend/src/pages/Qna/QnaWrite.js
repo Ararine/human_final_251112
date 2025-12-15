@@ -35,41 +35,41 @@ export default function QnaWrite({ userInfo }) {
   };
 
   return (
-    <div style={{ padding: "20px" }}>
-      <h2>Q&A 작성하기</h2>
-
-      <input
-        type="text"
-        name="title"
-        placeholder="제목"
-        value={form.title}
-        onChange={handleChange}
-        style={{ width: "100%", padding: "10px", marginBottom: "10px" }}
-      />
-
-      <textarea
-        name="contents"
-        placeholder="내용"
-        rows="10"
-        value={form.contents}
-        onChange={handleChange}
-        style={{ width: "100%", padding: "10px" }}
-      />
-
-      <button
-        onClick={handleSubmit}
-        style={{
-          marginTop: "20px",
-          padding: "10px 20px",
-          backgroundColor: "#4CAF50",
-          color: "white",
-          border: "none",
-          borderRadius: "5px",
-          cursor: "pointer",
-        }}
+    <div
+      className="qna-container flex-column flex-center black"
+      style={{
+        minWidth: "60%",
+        width: "60%",
+        margin: "20px auto",
+        padding: "0 16px",
+        textAlign: "center",
+      }}
+    >
+      <div
+        className="card bg-white flex-column gap-5"
+        style={{ width: "100%" }}
       >
-        등록하기
-      </button>
+        <h2>Q&A 작성하기</h2>
+        <input
+          type="text"
+          name="title"
+          placeholder="제목"
+          value={form.title}
+          onChange={handleChange}
+        />
+
+        <textarea
+          name="contents"
+          placeholder="내용"
+          rows="10"
+          value={form.contents}
+          onChange={handleChange}
+        />
+
+        <button className="bg-blue btn-ghost" onClick={handleSubmit}>
+          등록하기
+        </button>
+      </div>
     </div>
   );
 }

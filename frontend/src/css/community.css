@@ -16,6 +16,22 @@
   background: white !important;
   cursor: default !important;
 }
+
+.community-container .card input {
+  color: black;
+
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.community-container .card input::placeholder {
+  color: #999; /* 연한 회색 (가장 많이 씀) */
+  text-align: left;
+}
+.community-container .card input:focus {
+  border: 2px solid #000; /* 진한 검은색 */
+}
+
 .post-info {
   background: #ffffff; /* 밝은 흰색 배경 */
   padding: 16px 18px;
@@ -43,6 +59,8 @@
 .post-content {
   padding: 20px;
   min-height: 200px;
+  white-space: pre-wrap;
+  word-break: break-word;
 }
 
 .comment {

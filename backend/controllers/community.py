@@ -1,15 +1,16 @@
-from fastapi import status, Body, Path, Query
+from fastapi import status, Body, Path, Query, Depends
 from fastapi.responses import JSONResponse
 
 from services import community
+from utils import verify_token
 
 # 게시글 조회
-async def create_post(body: dict = Body(...)):
+async def create_post(body: dict = Body(...), user=Depends(verify_token)):
     try:
         post_id = community.create_post(
             title=body.get("title"),
             contents=body.get("contents"),
-            user_id=body.get("user_id")
+            user_id=user["user_id"]
         )
         return JSONResponse({"message": "게시글 생성 완료", "post_id": post_id}, status_code=status.HTTP_201_CREATED)
     except Exception as e:
@@ -68,14 +69,14 @@ async def read_post(post_id: int = Path(...)):
 # 게시글 수정
 async def update_post(
     post_id: int = Path(...), 
-    body: dict = Body(...)
+    body: dict = Body(...), user=Depends(verify_token)
 ):
     try:
         # TODO 관리자 혹은 해당 작성자만 조회 가능하게 수정
         title = body.get("title")
         contents = body.get("contents")
-
-        updated = community.update_post(post_id, title, contents)
+        user_id=user["user_id"]
+        updated = community.update_post(post_id, title, contents, user_id)
 
         if not updated:
             return JSONResponse(
@@ -94,10 +95,11 @@ async def update_post(
         )
 
 # 게시글 삭제
-async def delete_post(post_id: int = Path(...)):
+async def delete_post(post_id: int = Path(...), user=Depends(verify_token)):
     try:
         # TODO 관리자 혹은 해당 작성자만 삭제 가능하게 수정
-        deleted = community.delete_post(post_id)
+        user_id = user["user_id"]
+        deleted = community.delete_post(post_id, user_id)
         if not deleted:
             return JSONResponse(
                 {"message": "게시글 없음"}, 

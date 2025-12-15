@@ -22,13 +22,13 @@ def get_post(post_id: int):
     return post_data
 
 # 게시글 수정
-def update_post(post_id: int, title: str, contents: str):
-    updated = post.update_post_by_id(post_id, title, contents)
+def update_post(post_id: int, title: str, contents: str,user_id:int):
+    updated = post.update_post_by_id(post_id, title, contents, user_id)
     return updated
 
 # 게시글 삭제
-def delete_post(post_id: int):
-    deleted = post.delete_post_by_id(post_id)
+def delete_post(post_id: int, user_id:int):
+    deleted = post.delete_post_by_id(post_id, user_id)
     return deleted
 
 # 게시글 삭제 - 관리자 

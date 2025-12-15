@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams, useLocation } from "react-router-dom";
 import { getQnaDetail, updateQna, deleteQna } from "../../api/Qna";
-// import "../../css/form.css";
 
 export default function QnaEdit() {
   const { id } = useParams();
@@ -65,51 +64,62 @@ export default function QnaEdit() {
   };
 
   return (
-    <div className="form-container">
-      <h2 className="form-title">Q&A 수정하기</h2>
+    <div
+      className="qna-container flex-column flex-center black"
+      style={{
+        minWidth: "50%",
+        width: "50%",
+        margin: "20px auto",
+        padding: "0 16px",
+        textAlign: "center",
+      }}
+    >
+      <div
+        className="card bg-white flex-column gap-5"
+        style={{ width: "100%" }}
+      >
+        <h2 className="form-title">Q&A 수정하기</h2>
+        {/* ← 여기 스타일 변경됨 */}
+        <div className="form-meta flex-end gap-5">
+          <p>
+            작성일:{" "}
+            {meta.created_at
+              ? meta.created_at.slice(0, 16).replace("T", " ")
+              : "-"}
+          </p>
+          <p>공개 여부: {meta.is_public === 1 ? "공개" : "비공개"}</p>
+        </div>
+        {/* ------------------------------- */}
 
-      {/* ← 여기 스타일 변경됨 */}
-      <div className="form-meta">
-        <p>
-          작성일:{" "}
-          {meta.created_at
-            ? meta.created_at.slice(0, 16).replace("T", " ")
-            : "-"}
-        </p>
-        <p>공개 여부: {meta.is_public === 1 ? "공개" : "비공개"}</p>
-      </div>
-      {/* ------------------------------- */}
-
-      <div className="form-input-wrapper">
-        <input
-          type="text"
-          name="title"
-          className="form-input"
-          value={form.title}
-          onChange={handleChange}
-        />
         <label className={`form-input-label ${form.title ? "active" : ""}`}>
           제목
         </label>
-      </div>
-
-      <div className="form-textarea-wrapper">
-        <textarea
-          name="contents"
-          className="form-textarea"
-          value={form.contents}
+        <input
+          type="text"
+          name="title"
+          value={form.title}
           onChange={handleChange}
         />
+
         <label
           className={`form-textarea-label ${form.contents ? "active" : ""}`}
         >
           내용
         </label>
-      </div>
+        <textarea
+          name="contents"
+          rows="10"
+          value={form.contents}
+          onChange={handleChange}
+        />
 
-      <button className="form-btn-submit" onClick={handleSubmit}>
-        수정 완료
-      </button>
+        <button
+          className="form-btn-submit btn-ghost bg-blue"
+          onClick={handleSubmit}
+        >
+          수정 완료
+        </button>
+      </div>
     </div>
   );
 }

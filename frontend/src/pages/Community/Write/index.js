@@ -1,9 +1,9 @@
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { createPost } from "../../../api/Community";
-// import "../../../css/form.css";
+import { useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import { createPost, getPostDetail, updatePost } from "../../../api/Community";
 
 export default function CommunityWrite({ userInfo }) {
+  const { id } = useParams();
   const navigate = useNavigate();
 
   const [form, setForm] = useState({
@@ -25,7 +25,11 @@ export default function CommunityWrite({ userInfo }) {
     }
 
     try {
-      await createPost(form.title, form.contents, userInfo?.user_id);
+      if (id) {
+        await updatePost(id, form.title, form.contents);
+      } else {
+        await createPost(form.title, form.contents);
+      }
       alert("게시글 작성 완료!");
       navigate("/community");
     } catch (error) {
@@ -34,40 +38,64 @@ export default function CommunityWrite({ userInfo }) {
     }
   };
 
+  const fetchPostData = async () => {
+    try {
+      if (id) {
+        const data = await getPostDetail(id);
+        setForm(data.data[0]);
+      }
+    } catch (err) {
+      console.error("데이터 불러오기 실패", err);
+    }
+  };
+  useEffect(() => {
+    fetchPostData();
+  }, [id]);
   return (
-    <div className="form-container">
-      <h2 className="form-title">게시글 작성하기</h2>
+    <div
+      className="community-container flex-column flex-center black"
+      style={{
+        minWidth: "60%",
+        width: "60%",
+        margin: "20px auto",
+        padding: "0 16px",
+        textAlign: "center",
+      }}
+    >
+      <div
+        className="card bg-white flex-column gap-5"
+        style={{ width: "100%" }}
+      >
+        <h2 className="form-title">게시글 작성하기</h2>
+        <div className="flex-column">
+          <input
+            type="text"
+            name="title"
+            placeholder="제목"
+            value={form.title}
+            onChange={handleChange}
+          />
+        </div>
 
-      <div className="form-input-wrapper">
-        <input
-          type="text"
-          name="title"
-          className="form-input"
-          value={form.title}
-          onChange={handleChange}
-        />
-        <label className={`form-input-label ${form.title ? "active" : ""}`}>
-          제목
-        </label>
-      </div>
+        <div className="flex-column">
+          <label>내용</label>
+          <textarea
+            name="contents"
+            placeholder="내용"
+            value={form.contents}
+            onChange={handleChange}
+            rows={10}
+          />
+        </div>
 
-      <div className="form-textarea-wrapper">
-        <textarea
-          name="contents"
-          className="form-textarea"
-          value={form.contents}
-          onChange={handleChange}
-        />
-        <label
-          className={`form-textarea-label ${form.contents ? "active" : ""}`}
+        <button
+          className="bg-blue btn-ghost"
+          onClick={handleSubmit}
+          style={{ width: "100%" }}
         >
-          내용
-        </label>
+          작성 완료
+        </button>
       </div>
-
-      <button className="form-btn-submit" onClick={handleSubmit}>
-        작성 완료
-      </button>
     </div>
   );
 }

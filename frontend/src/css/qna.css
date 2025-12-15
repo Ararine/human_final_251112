@@ -15,3 +15,16 @@
   -webkit-box-orient: vertical;
   word-break: break-word;
 }
+
+.qna-container .card input {
+  color: black;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+.qna-container .card input::placeholder {
+  color: #999; /* 연한 회색 (가장 많이 씀) */
+  text-align: left;
+}
+.qna-container .card input:focus {
+  border: 2px solid #000;
+}

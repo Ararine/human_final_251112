@@ -51,18 +51,18 @@ def fetch_post_by_id(post_id: int):
     return df.to_dict(orient="records")
 
 # 게시글 수정
-def update_post_by_id(post_id: int, title: str, contents: str):
-    query = text("UPDATE post SET title=:title, contents=:contents WHERE id=:post_id")
+def update_post_by_id(post_id: int, title: str, contents: str, user_id=int):
+    query = text("UPDATE post SET title=:title, contents=:contents WHERE id=:post_id AND user_id= :user_id")
     with engine.connect() as conn:
-        result = conn.execute(query, {"title": title, "contents": contents, "post_id": post_id})
+        result = conn.execute(query, {"title": title, "contents": contents, "post_id": post_id, "user_id":user_id})
         conn.commit()
         return result.rowcount > 0
 
 # 게시글 삭제
-def delete_post_by_id(post_id: int):
-    query = text("DELETE FROM post WHERE id=:post_id")
+def delete_post_by_id(post_id: int, user_id:int):
+    query = text("DELETE FROM post WHERE id=:post_id AND user_id = :user_id")
     with engine.connect() as conn:
-        result = conn.execute(query, {"post_id": post_id})
+        result = conn.execute(query, {"post_id": post_id, "user_id":user_id})
         conn.commit()
         deleted = result.rowcount > 0
     return deleted
