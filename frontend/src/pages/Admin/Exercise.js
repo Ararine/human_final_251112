@@ -159,14 +159,12 @@ const Exercise = () => {
               value={form.name}
               onChange={(e) => setForm({ ...form, name: e.target.value })}
             />
-
             <label>카테고리</label>
             <input
               type="text"
               value={form.category}
               onChange={(e) => setForm({ ...form, category: e.target.value })}
             />
-
             <label>링크</label>
             <input
               type="text"

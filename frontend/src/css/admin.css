@@ -248,9 +248,13 @@
 
 .modal-box {
   width: 360px;
+  color: black;
   background: white;
   padding: 20px;
   border-radius: 12px;
+}
+.modal-box {
+  color: black;
 }
 
 .modal-box h3 {
@@ -265,11 +269,13 @@
 
 .modal-box input,
 .modal-box select {
+  color: black;
   width: 100%;
   margin-top: 6px;
   padding: 9px;
   border: 1px solid #ccc;
   border-radius: 8px;
+  box-sizing: border-box;
 }
 
 .modal-actions {
